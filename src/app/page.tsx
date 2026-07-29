@@ -149,7 +149,7 @@ export default function DiscoverPage({
               {/* Content & Action Panel */}
               <div className="relative z-10 w-full flex flex-col md:flex-row items-start md:items-center justify-between px-margin-mobile md:px-margin-desktop gap-8 max-w-7xl mx-auto">
                 {/* Typography overlay (left aligned) */}
-                <div className="max-w-2xl text-left select-none mt-20 md:mt-0">
+                <div className="max-w-2xl text-left select-none mt-0">
                   <span className="inline-block px-4 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-xs uppercase tracking-widest mb-4 font-bold shadow-sm">
                     Signature Heritage Dish
                   </span>
@@ -184,7 +184,7 @@ export default function DiscoverPage({
                 {/* Floating Glassmorphic Masterclass Card (right aligned) */}
                 <div
                   onClick={() => setIsHeroVideoOpen(true)}
-                  className="bg-surface/85 backdrop-blur-md p-6 rounded-2xl border border-outline-variant/40 shadow-xl max-w-sm w-full cursor-pointer hover:scale-102 hover:border-primary/40 hover:bg-surface/95 transition-all duration-300 group flex items-center gap-5"
+                  className="bg-surface/85 backdrop-blur-md p-6 rounded-2xl border border-outline-variant/40 shadow-xl w-full max-w-xs md:max-w-sm cursor-pointer hover:scale-102 hover:border-primary/40 hover:bg-surface/95 transition-all duration-300 group flex items-center gap-5"
                 >
                   <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-surface-container-high border border-outline-variant/30">
                     <img src={featuredRecipe.imageUrl} alt="Thumbnail" className="w-full h-full object-cover" />
@@ -195,7 +195,7 @@ export default function DiscoverPage({
                     </div>
                   </div>
 
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <span className="inline-block text-[9.5px] font-black uppercase text-outline bg-primary-fixed text-on-primary-fixed px-2.5 py-0.5 rounded tracking-wider mb-1.5 animate-pulse">
                       Watch Video
                     </span>

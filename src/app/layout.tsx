@@ -29,7 +29,13 @@ export default function RootLayout({
         </div>
 
         {/* Global Footer */}
-        <footer className="bg-surface-container-high w-full mt-16 border-t border-outline-variant/20 pb-20 md:pb-0 relative overflow-hidden">
+        <footer
+          className="bg-surface-container-high w-full mt-16 border-t border-outline-variant/20 pb-24 md:pb-12 relative overflow-hidden"
+          style={{
+            backgroundImage: "radial-gradient(rgba(22, 52, 34, 0.05) 1.5px, transparent 1.5px)",
+            backgroundSize: "20px 20px"
+          }}
+        >
           {/* Opaque Cooking Images Ribbon (Modernized grid overlay) */}
           <div className="w-full grid grid-cols-3 sm:grid-cols-6 border-b border-outline-variant/20 bg-black/5">
             {[
@@ -70,55 +76,65 @@ export default function RootLayout({
             ))}
           </div>
 
-          {/* Footer Text Links Area */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 px-margin-mobile md:px-margin-desktop py-12 max-w-7xl mx-auto relative z-10">
-            {/* Brand Manifesto Reading Block */}
-            <div className="lg:col-span-7 bg-surface-container-low/55 rounded-2xl p-6 md:p-8 border border-outline-variant/30 flex flex-col justify-between shadow-xs">
-              <div>
-                <span className="inline-block px-3 py-1 rounded-full bg-primary-container text-primary font-label-md text-[10px] uppercase tracking-wider mb-4 font-black">
-                  Our Mission
-                </span>
-                <h4 className="font-headline-sm text-lg md:text-xl font-bold text-primary mb-3 uppercase tracking-wider">
-                  Keiya&apos;s Home Flavour&apos;s
-                </h4>
-                <p className="font-body-md text-sm md:text-base text-on-surface-variant leading-relaxed max-w-xl">
-                  We believe that traditional cooking is not about copying the past, but about passing down the warmth of home. Keiya&apos;s Home Flavour&apos;s serves as a premium, curated archive of heritage family recipes, combining detailed step-by-step guidance with live masterclass cooking videos to keep kitchen wisdom alive.
-                </p>
+          {/* Footer Text Area with Dot Pattern */}
+          <div className="px-margin-mobile md:px-margin-desktop py-16 max-w-7xl mx-auto relative z-10 flex flex-col gap-10">
+            {/* Full Width Brand Manifesto (Wide text layout to minimize line count) */}
+            <div className="w-full">
+              <span className="inline-block px-3 py-1 rounded-full bg-primary-container text-primary font-label-md text-[10px] uppercase tracking-wider mb-4 font-black">
+                Our Mission
+              </span>
+              <h4 className="font-headline-md text-xl md:text-2xl font-black text-primary mb-4 uppercase tracking-wider">
+                Keiya&apos;s Home Flavour&apos;s
+              </h4>
+              <p className="font-body-md text-base md:text-lg text-on-surface-variant leading-relaxed max-w-5xl">
+                We believe that traditional cooking is not about copying the past, but about passing down the warmth of home. Keiya&apos;s Home Flavour&apos;s serves as a premium, curated archive of heritage family recipes, combining detailed step-by-step guidance with live masterclass cooking videos to keep kitchen wisdom alive.
+              </p>
+            </div>
+
+            {/* Divider Line */}
+            <div className="w-full border-t border-outline-variant/20"></div>
+
+            {/* Bottom Row: Navigation Menus & Copyright */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+              {/* Col 1: Explore */}
+              <div className="space-y-3">
+                <p className="font-label-md text-xs font-black text-primary uppercase tracking-widest">Explore</p>
+                <div className="flex flex-col gap-2">
+                  <Link href="/" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
+                    The Story
+                  </Link>
+                  <Link href="/" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
+                    Recipes
+                  </Link>
+                  <Link href="/upload" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
+                    Submit Recipe
+                  </Link>
+                </div>
               </div>
-              <div className="mt-8 pt-6 border-t border-outline-variant/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <p className="font-body-sm text-xs text-outline leading-normal">
-                  © {new Date().getFullYear()} KEIYA&apos;S HOME FLAVOUR&apos;S. AUTHENTIC HOME FLAVOURS, REIMAGINED.
-                </p>
+
+              {/* Col 2: Legal */}
+              <div className="space-y-3">
+                <p className="font-label-md text-xs font-black text-primary uppercase tracking-widest">Legal</p>
+                <div className="flex flex-col gap-2">
+                  <a href="#" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
+                    Privacy Policy
+                  </a>
+                  <a href="#" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
+                    Terms of Service
+                  </a>
+                </div>
+              </div>
+
+              {/* Col 3: Copyright & Socials */}
+              <div className="space-y-4 md:text-right md:flex md:flex-col md:items-end">
                 <div className="flex gap-4">
                   <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Menu QR Code">qr_code_2</span>
                   <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Camera/Gallery">photo_camera</span>
                   <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Contact Email">alternate_email</span>
                 </div>
-              </div>
-            </div>
-
-            {/* Navigation Menus block */}
-            <div className="lg:col-span-5 bg-surface-container-low/30 rounded-2xl p-6 md:p-8 border border-outline-variant/20 grid grid-cols-2 gap-8 items-start shadow-xs">
-              <div className="space-y-3">
-                <p className="font-label-md text-sm text-primary font-black uppercase tracking-wider">Explore</p>
-                <Link href="/" className="block font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
-                  The Story
-                </Link>
-                <Link href="/" className="block font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
-                  Recipes
-                </Link>
-                <Link href="/upload" className="block font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
-                  Submit Recipe
-                </Link>
-              </div>
-              <div className="space-y-3">
-                <p className="font-label-md text-sm text-primary font-black uppercase tracking-wider">Legal</p>
-                <a href="#" className="block font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
-                  Privacy Policy
-                </a>
-                <a href="#" className="block font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
-                  Terms of Service
-                </a>
+                <p className="font-body-sm text-xs text-outline leading-relaxed max-w-xs">
+                  © {new Date().getFullYear()} KEIYA&apos;S HOME FLAVOUR&apos;S. AUTHENTIC HOME FLAVOURS, REIMAGINED.
+                </p>
               </div>
             </div>
           </div>

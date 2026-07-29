@@ -32,8 +32,7 @@ export default function RootLayout({
         <footer
           className="bg-primary w-full mt-16 border-t border-primary/20 pb-24 md:pb-12 relative overflow-hidden"
           style={{
-            backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.05) 1.5px, transparent 1.5px)",
-            backgroundSize: "20px 20px"
+            backgroundImage: "repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 12px)",
           }}
         >
           {/* Opaque Cooking Images Ribbon (Modernized grid overlay) */}

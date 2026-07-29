@@ -71,39 +71,52 @@ export default function RootLayout({
           </div>
 
           {/* Footer Text Links Area */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter px-margin-mobile md:px-margin-desktop py-12 max-w-7xl mx-auto relative z-10">
-            <div>
-              <h4 className="font-headline-sm text-headline-sm font-bold text-primary mb-4 uppercase tracking-wider">
-                Keiya&apos;s Home Flavour&apos;s
-              </h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant max-w-sm mb-6 leading-relaxed">
-                © {new Date().getFullYear()} KEIYA&apos;S HOME FLAVOUR&apos;S. AUTHENTIC HOME FLAVOURS, REIMAGINED.
-              </p>
-              <div className="flex gap-4">
-                <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85">qr_code_2</span>
-                <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85">photo_camera</span>
-                <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85">alternate_email</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 px-margin-mobile md:px-margin-desktop py-12 max-w-7xl mx-auto relative z-10">
+            {/* Brand Manifesto Reading Block */}
+            <div className="lg:col-span-7 bg-surface-container-low/55 rounded-2xl p-6 md:p-8 border border-outline-variant/30 flex flex-col justify-between shadow-xs">
+              <div>
+                <span className="inline-block px-3 py-1 rounded-full bg-primary-container text-primary font-label-md text-[10px] uppercase tracking-wider mb-4 font-black">
+                  Our Mission
+                </span>
+                <h4 className="font-headline-sm text-lg md:text-xl font-bold text-primary mb-3 uppercase tracking-wider">
+                  Keiya&apos;s Home Flavour&apos;s
+                </h4>
+                <p className="font-body-md text-sm md:text-base text-on-surface-variant leading-relaxed max-w-xl">
+                  We believe that traditional cooking is not about copying the past, but about passing down the warmth of home. Keiya&apos;s Home Flavour&apos;s serves as a premium, curated archive of heritage family recipes, combining detailed step-by-step guidance with live masterclass cooking videos to keep kitchen wisdom alive.
+                </p>
+              </div>
+              <div className="mt-8 pt-6 border-t border-outline-variant/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <p className="font-body-sm text-xs text-outline leading-normal">
+                  © {new Date().getFullYear()} KEIYA&apos;S HOME FLAVOUR&apos;S. AUTHENTIC HOME FLAVOURS, REIMAGINED.
+                </p>
+                <div className="flex gap-4">
+                  <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Menu QR Code">qr_code_2</span>
+                  <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Camera/Gallery">photo_camera</span>
+                  <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Contact Email">alternate_email</span>
+                </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-8">
+
+            {/* Navigation Menus block */}
+            <div className="lg:col-span-5 bg-surface-container-low/30 rounded-2xl p-6 md:p-8 border border-outline-variant/20 grid grid-cols-2 gap-8 items-start shadow-xs">
               <div className="space-y-3">
-                <p className="font-label-md text-label-md text-primary font-bold">Explore</p>
-                <Link href="/" className="block font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
+                <p className="font-label-md text-sm text-primary font-black uppercase tracking-wider">Explore</p>
+                <Link href="/" className="block font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
                   The Story
                 </Link>
-                <Link href="/" className="block font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
+                <Link href="/" className="block font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
                   Recipes
                 </Link>
-                <Link href="/upload" className="block font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
+                <Link href="/upload" className="block font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
                   Submit Recipe
                 </Link>
               </div>
               <div className="space-y-3">
-                <p className="font-label-md text-label-md text-primary font-bold">Legal</p>
-                <a href="#" className="block font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
+                <p className="font-label-md text-sm text-primary font-black uppercase tracking-wider">Legal</p>
+                <a href="#" className="block font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
                   Privacy Policy
                 </a>
-                <a href="#" className="block font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors">
+                <a href="#" className="block font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
                   Terms of Service
                 </a>
               </div>

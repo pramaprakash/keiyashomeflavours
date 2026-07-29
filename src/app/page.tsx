@@ -215,18 +215,88 @@ export default function DiscoverPage({
             </div>
           </div>
         </section>
+        {/* Chef Portfolio Bento Profile Section */}
+        <section className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto pt-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-stretch">
+            {/* Left Column: Chef Portrait Card */}
+            <div className="lg:col-span-4 bg-surface-container-low rounded-2xl p-6 border border-outline-variant/30 flex flex-col items-center text-center shadow-xs">
+              <div className="w-40 h-40 rounded-full overflow-hidden border-2 border-primary/20 shadow-md mb-4 bg-white flex items-center justify-center flex-shrink-0">
+                <img
+                  src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=400&auto=format&fit=crop"
+                  alt="Chef Keiya"
+                  className="w-full h-full object-cover scale-102"
+                />
+              </div>
+              <span className="inline-block px-3 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-[10px] uppercase tracking-wider mb-2 font-bold">
+                Culinary Director
+              </span>
+              <h3 className="font-headline-sm text-lg font-black text-primary uppercase tracking-wider">
+                Chef Keiya
+              </h3>
+              <p className="font-body-sm text-xs text-on-surface-variant mt-1.5 leading-relaxed max-w-xs">
+                Specialized in South Indian heritage culinary arts, fermentation chemistry, and modern vegetable-centric gastronomy.
+              </p>
+              <div className="flex gap-3 mt-4 pt-4 border-t border-outline-variant/20 w-full justify-center">
+                <a href="#portfolio" className="text-[10px] font-black text-primary hover:text-secondary uppercase tracking-wider flex items-center gap-1 transition-colors">
+                  <span className="material-symbols-outlined text-xs">folder_open</span>
+                  View Creations
+                </a>
+              </div>
+            </div>
+
+            {/* Right Column: Experience, Stats & Philosophy */}
+            <div className="lg:col-span-8 bg-surface-container-low/40 rounded-2xl p-6 md:p-8 border border-outline-variant/20 flex flex-col justify-between shadow-xs">
+              <div>
+                <span className="inline-block px-3 py-1 rounded-full bg-primary-container text-primary font-label-md text-[10px] uppercase tracking-wider mb-4 font-black">
+                  My Philosophy
+                </span>
+                <p className="font-body-lg text-base md:text-lg text-on-surface-variant italic leading-relaxed mb-6 font-medium">
+                  &quot;Culinary art is a dialogue between memory and innovation. My work focuses on capturing the soul of traditional home recipes—their rich temperings, slow roasts, and fermented rhythms—and presenting them with refined aesthetics and modern techniques.&quot;
+                </p>
+
+                {/* Specialties tags */}
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {["Heritage Tadka", "Fermentation Science", "Sugar-Concentration", "Plant-Based Gastronomy", "Digital Masterclasses"].map((tag) => (
+                    <span key={tag} className="text-[10.5px] font-bold text-primary bg-primary/5 border border-primary/10 px-3 py-1 rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Stats Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-outline-variant/20">
+                {[
+                  { value: "12+", label: "Years Culinary Exp" },
+                  { value: "150+", label: "Developed Recipes" },
+                  { value: "30+", label: "Masterclass Lessons" },
+                  { value: "4.9★", label: "Student Rating" },
+                ].map((stat, i) => (
+                  <div key={i} className="text-center p-3 rounded-xl bg-surface-container-lowest/50 border border-outline-variant/10 shadow-xs">
+                    <div className="font-headline-sm text-xl md:text-2xl font-black text-primary mb-1">
+                      {stat.value}
+                    </div>
+                    <div className="text-[10px] font-bold text-outline uppercase tracking-wider">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Recipe Grid Feed */}
         <section className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto py-16">
           <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
             <div>
-              <h3 className="font-headline-lg text-headline-lg text-primary mb-1">
+              <h3 id="portfolio" className="font-headline-lg text-headline-lg text-primary mb-1 scroll-mt-24">
                 {selectedCategory === "all"
-                  ? "Daily Creations"
-                  : `${categories.find((c) => c.id === selectedCategory)?.name} Recipes`}
+                  ? "Signature Creations Portfolio"
+                  : `${categories.find((c) => c.id === selectedCategory)?.name} Showcase`}
               </h3>
               <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Showing {filteredRecipes.length} delicious culinary guides
+                Showing {filteredRecipes.length} curated culinary works
               </p>
             </div>
 

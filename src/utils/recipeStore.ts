@@ -45,7 +45,7 @@ const DEFAULT_RECIPES: Recipe[] = [
     serves: 4,
     calories: "180 kcal",
     difficulty: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1618449840665-9ed506d73a34?q=80&w=1600&auto=format&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=100&w=2560&auto=format&fit=crop",
     videoUrl: "https://www.youtube.com/embed/3c_vU-0fR90", // A high-quality South Indian style cooking embed video
     flavorProfile: {
       spicy: 2,

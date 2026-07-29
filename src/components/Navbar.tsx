@@ -95,10 +95,10 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
 
   return (
     <header
-      className={`fixed left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-7xl rounded-full border bg-surface/85 backdrop-blur-md flex items-center px-4 md:px-6 transition-all duration-300 ${
+      className={`fixed left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-7xl rounded-full border bg-surface/75 backdrop-blur-xl flex items-center px-4 md:px-6 transition-all duration-500 hover:border-primary/30 ${
         isScrolled
-          ? "border-primary/20 shadow-[0_8px_32px_rgba(22,52,34,0.12)] h-16 top-2"
-          : "border-outline-variant/30 shadow-[0_12px_40px_rgba(45,75,55,0.06)] h-20 top-4"
+          ? "border-primary/20 shadow-[0_12px_36px_rgba(22,52,34,0.12)] hover:shadow-[0_12px_45px_rgba(22,52,34,0.18)] h-16 top-2"
+          : "border-outline-variant/30 shadow-[0_16px_48px_rgba(45,75,55,0.08)] hover:shadow-[0_16px_56px_rgba(45,75,55,0.14)] h-20 top-4"
       }`}
     >
       <div className="flex justify-between items-center w-full gap-2 md:gap-4 relative">
@@ -221,10 +221,10 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-md text-xs font-bold transition-all duration-300 select-none ${
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-label-md text-xs font-bold transition-all duration-300 select-none ${
                   isActive
-                    ? "bg-primary text-on-primary shadow-md scale-102"
-                    : "text-on-surface-variant hover:text-primary hover:bg-surface-container-high/40"
+                    ? "bg-primary text-on-primary shadow-md scale-[1.03] border border-primary/10"
+                    : "text-on-surface-variant hover:text-primary hover:bg-primary/5"
                 }`}
               >
                 <span

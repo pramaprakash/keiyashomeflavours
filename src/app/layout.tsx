@@ -30,48 +30,48 @@ export default function RootLayout({
 
         {/* Global Footer */}
         <footer
-          className="bg-surface-container-high w-full mt-16 border-t border-outline-variant/20 pb-24 md:pb-12 relative overflow-hidden"
+          className="bg-primary w-full mt-16 border-t border-primary/20 pb-24 md:pb-12 relative overflow-hidden"
           style={{
-            backgroundImage: "radial-gradient(rgba(22, 52, 34, 0.05) 1.5px, transparent 1.5px)",
+            backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.05) 1.5px, transparent 1.5px)",
             backgroundSize: "20px 20px"
           }}
         >
           {/* Opaque Cooking Images Ribbon (Modernized grid overlay) */}
-          <div className="w-full grid grid-cols-3 sm:grid-cols-6 border-b border-outline-variant/20 bg-black/5">
+          <div className="w-full grid grid-cols-3 sm:grid-cols-6 border-b border-white/5 bg-black/10">
             {[
               {
-                alt: "Beetroot Pachadi",
-                url: "https://lh3.googleusercontent.com/aida-public/AB6AXuACY6K7RH67m6vgzql94jsTXX8IbHz0QBM76RVhlNIDFbmpbVhXlVUr6pTk9nI1NcOL_Mxfum0jQxU3B201OeP6X_0i3CdzYjeTFe9-PmFb2YgLilv4bxKdW6cZyimfQW56b_m958tHlte54XvI2rG7titAVor5aTLkJFuC78TIZPJF0FjXWgIUfdgM8mHuH1A5q5kG3wxN-2E-NkNcPnMQ591aNHeEeGlj0azIcRuYlgbGgCYSB7bc",
+                alt: "Kitchen preparation",
+                url: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=400&auto=format&fit=crop",
               },
               {
-                alt: "Dosa Spread",
-                url: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?q=80&w=300&auto=format&fit=crop",
+                alt: "Indian spices and chopping board",
+                url: "https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=400&auto=format&fit=crop",
               },
               {
-                alt: "Cooking Curry",
-                url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBhQdPTajuew8Zg-TxtWMetOeDXoJRaJFhw8Pjs5uaseY1H_yfBJBJmTg4MwQk3YutB_DdBdfRVDzZoJMHBqiR6Ky0r09Iuz9n2AmALpqNVD5T2D6ecFAE8Q0TiQ65FzXJu-y-wnpzAvOvyC6YaEqbOwGuf69lgtZWRQ0bdWQi1BQGsm3sAjkIBAwbe8UGqhh0W_JNaYmG98owP_77o55bjBFYB9X-mwfX5IebmKuhB_KUGK1xsYzus",
+                alt: "Gourmet plating",
+                url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=400&auto=format&fit=crop",
               },
               {
-                alt: "Fresh Salad",
-                url: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=300&auto=format&fit=crop",
+                alt: "Stirring aromatic curry",
+                url: "https://images.unsplash.com/photo-1560684352-8497838a2229?q=80&w=400&auto=format&fit=crop",
               },
               {
-                alt: "Yogurt Blend",
-                url: "https://lh3.googleusercontent.com/aida-public/AB6AXuAp3V7wq94nIBBCw0TkuYZb1kNudmbRMIcGzNjsA1WTrpOZQv2Whg-8-ryJJGK9yk33ffHp_LZHSbb5peNDm5ddWcPFCwNKr-d7PHcYyk_QAkTgRUmLIzeYAXhQeiuEQlZkFQ4f9gYPKvUb0ZIwpjL4XkHQgLTy1kZXZNWr9u_JN0V-jU_NqvUTxAM3ql5AyeHwA0VDfDQeFZj_rX8k5Bm7MB78O2RgYzhcuIuqnXDraohHMqq93LoJ",
+                alt: "Fresh ground herbs and garlic",
+                url: "https://images.unsplash.com/photo-1506368249639-73a05d6f6488?q=80&w=400&auto=format&fit=crop",
               },
               {
-                alt: "Mustard Seeds Spicing",
-                url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBsnq7RI9ro8EOUdov3sdUUfaW8hU26ua-qKCrjdDtJinXi-0yY87OMvqATy8JBCF-qAaNoOz22wBR98K5IF3gfY8gKe0fmSbU3WvI0kVY8G0HynMXS9jtg3g0jcNTINaOnkHNnTGCvrKRh5x9lwEnRvda6cofwKWj3vtnMNRhpYPYBa7fwlQ-HjlTAMkaW4YrE34RqNvd1v-sOSAccwsqBMW0whsFHccIDyNnjjAAFDiSyHLbbWhdK",
+                alt: "Slow simmering sauce",
+                url: "https://images.unsplash.com/photo-1495521821757-a1efb6729352?q=80&w=400&auto=format&fit=crop",
               },
             ].map((img, i) => (
-              <div key={i} className="relative aspect-square overflow-hidden h-28 w-full group">
+              <div key={i} className="relative aspect-square overflow-hidden h-28 w-full group border-r border-white/5 last:border-r-0">
                 <img
                   src={img.url}
                   alt={img.alt}
-                  className="w-full h-full object-cover opacity-25 grayscale hover:opacity-75 hover:grayscale-0 transition-all duration-500 ease-out transform group-hover:scale-103"
+                  className="w-full h-full object-cover opacity-30 grayscale hover:opacity-85 hover:grayscale-0 transition-all duration-500 ease-out transform group-hover:scale-103"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-primary/5 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-primary/20 pointer-events-none"></div>
               </div>
             ))}
           </div>
@@ -83,29 +83,29 @@ export default function RootLayout({
               {/* Brand Note Column (Left Side of Explore) */}
               <div className="md:col-span-6 space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/35 shadow-xs bg-white flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10 shadow-sm bg-white flex items-center justify-center">
                     <img src="/logo.jpg" alt="Keiya's Home Flavours Logo" className="w-full h-full object-cover scale-105" />
                   </div>
-                  <h4 className="font-headline-sm text-base md:text-lg font-black text-primary uppercase tracking-wider">
+                  <h4 className="font-headline-sm text-base md:text-lg font-black text-white uppercase tracking-wider">
                     Keiya&apos;s Home Flavour&apos;s
                   </h4>
                 </div>
-                <p className="font-body-sm text-sm text-on-surface-variant leading-relaxed w-full">
+                <p className="font-body-sm text-sm text-on-primary/75 leading-relaxed w-full">
                   We believe that traditional cooking is not about copying the past, but about passing down the warmth of home. Keiya&apos;s Home Flavour&apos;s serves as a premium, curated archive of heritage family recipes, combining detailed step-by-step guidance with live masterclass cooking videos to keep kitchen wisdom alive.
                 </p>
               </div>
 
               {/* Explore Column */}
               <div className="md:col-span-3 space-y-3">
-                <p className="font-label-md text-xs font-black text-primary uppercase tracking-widest pt-2">Explore</p>
+                <p className="font-label-md text-xs font-black text-secondary-fixed-dim uppercase tracking-widest pt-2">Explore</p>
                 <div className="flex flex-col gap-2">
-                  <Link href="/" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
+                  <Link href="/" className="font-body-sm text-sm text-on-primary/75 hover:text-white transition-colors">
                     The Story
                   </Link>
-                  <Link href="/" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
+                  <Link href="/" className="font-body-sm text-sm text-on-primary/75 hover:text-white transition-colors">
                     Recipes
                   </Link>
-                  <Link href="/upload" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
+                  <Link href="/upload" className="font-body-sm text-sm text-on-primary/75 hover:text-white transition-colors">
                     Submit Recipe
                   </Link>
                 </div>
@@ -113,12 +113,12 @@ export default function RootLayout({
 
               {/* Legal Column */}
               <div className="md:col-span-3 space-y-3">
-                <p className="font-label-md text-xs font-black text-primary uppercase tracking-widest pt-2">Legal</p>
+                <p className="font-label-md text-xs font-black text-secondary-fixed-dim uppercase tracking-widest pt-2">Legal</p>
                 <div className="flex flex-col gap-2">
-                  <a href="#" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
+                  <a href="#" className="font-body-sm text-sm text-on-primary/75 hover:text-white transition-colors">
                     Privacy Policy
                   </a>
-                  <a href="#" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
+                  <a href="#" className="font-body-sm text-sm text-on-primary/75 hover:text-white transition-colors">
                     Terms of Service
                   </a>
                 </div>
@@ -126,14 +126,14 @@ export default function RootLayout({
             </div>
 
             {/* Sub-Footer Divider & Content */}
-            <div className="w-full border-t border-outline-variant/15 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="font-body-sm text-xs text-outline leading-relaxed">
+            <div className="w-full border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="font-body-sm text-xs text-on-primary/50 leading-relaxed">
                 © {new Date().getFullYear()} KEIYA&apos;S HOME FLAVOUR&apos;S. AUTHENTIC HOME FLAVOURS, REIMAGINED.
               </p>
               <div className="flex gap-4">
-                <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Menu QR Code">qr_code_2</span>
-                <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Camera/Gallery">photo_camera</span>
-                <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Contact Email">alternate_email</span>
+                <span className="material-symbols-outlined text-secondary-fixed-dim cursor-pointer hover:text-white transition-colors" title="Menu QR Code">qr_code_2</span>
+                <span className="material-symbols-outlined text-secondary-fixed-dim cursor-pointer hover:text-white transition-colors" title="Camera/Gallery">photo_camera</span>
+                <span className="material-symbols-outlined text-secondary-fixed-dim cursor-pointer hover:text-white transition-colors" title="Contact Email">alternate_email</span>
               </div>
             </div>
           </div>

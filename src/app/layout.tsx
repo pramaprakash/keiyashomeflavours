@@ -29,12 +29,16 @@ export default function RootLayout({
         </div>
 
         {/* Global Footer */}
-        <footer
-          className="bg-primary w-full mt-16 border-t border-primary/20 pb-24 md:pb-12 relative overflow-hidden"
-          style={{
-            backgroundImage: "repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 12px)",
-          }}
-        >
+        <footer className="bg-primary w-full mt-16 border-t border-primary/20 pb-24 md:pb-12 relative overflow-hidden">
+          {/* Decorative Floating Culinary Outline Watermarks */}
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none">
+            <span className="material-symbols-outlined absolute text-[120px] -left-10 top-12 text-white/[0.02] -rotate-12">skillet</span>
+            <span className="material-symbols-outlined absolute text-[140px] left-[20%] bottom-8 text-white/[0.02] rotate-45">restaurant</span>
+            <span className="material-symbols-outlined absolute text-[100px] left-[40%] top-6 text-white/[0.02] -rotate-45">soup_kitchen</span>
+            <span className="material-symbols-outlined absolute text-[150px] right-[25%] top-16 text-white/[0.02] rotate-12">flatware</span>
+            <span className="material-symbols-outlined absolute text-[130px] -right-12 bottom-6 -rotate-12">nutrition</span>
+            <span className="material-symbols-outlined absolute text-[90px] right-[45%] bottom-12 text-white/[0.02] rotate-[30deg]">kettle</span>
+          </div>
           {/* Opaque Cooking Images Ribbon (Modernized grid overlay) */}
           <div className="w-full grid grid-cols-3 sm:grid-cols-6 border-b border-white/5 bg-black/10">
             {[

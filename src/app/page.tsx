@@ -135,9 +135,9 @@ export default function DiscoverPage({
         {/* Featured Recipe Hero Banner */}
         {featuredRecipe && (
           <>
-            <section className="relative w-full min-h-[85vh] md:h-[85vh] flex items-center py-24 md:py-0 overflow-hidden">
+            <section className="relative w-full min-h-[85vh] md:h-[85vh] flex items-center py-24 md:py-0">
               {/* Background Image with Parallax & Hover Shift */}
-              <div className="absolute inset-0 z-0">
+              <div className="absolute inset-0 z-0 overflow-hidden">
                 <div
                   className="w-full h-full bg-cover bg-center transition-transform duration-1000 hover:scale-103"
                   style={{ backgroundImage: `url('${featuredRecipe.imageUrl}')` }}

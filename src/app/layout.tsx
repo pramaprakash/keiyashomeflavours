@@ -90,7 +90,7 @@ export default function RootLayout({
                     Keiya&apos;s Home Flavour&apos;s
                   </h4>
                 </div>
-                <p className="font-body-sm text-sm text-on-surface-variant leading-relaxed max-w-md">
+                <p className="font-body-sm text-sm text-on-surface-variant leading-relaxed w-full">
                   We believe that traditional cooking is not about copying the past, but about passing down the warmth of home. Keiya&apos;s Home Flavour&apos;s serves as a premium, curated archive of heritage family recipes, combining detailed step-by-step guidance with live masterclass cooking videos to keep kitchen wisdom alive.
                 </p>
               </div>

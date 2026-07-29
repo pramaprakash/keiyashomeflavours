@@ -87,7 +87,7 @@ export default function DiscoverPage({
     <>
       <Navbar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
-      <main className="pt-24 pb-20">
+      <main className="pt-0 pb-20">
         {/* Featured Recipe Hero Banner */}
         {featuredRecipe && (
           <>

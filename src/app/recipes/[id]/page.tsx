@@ -97,7 +97,7 @@ export default function RecipeDetailPage({ params }: PageProps) {
     <>
       <Navbar showSearch={false} />
 
-      <main className="pt-24 pb-32">
+      <main className="pt-0 pb-32">
         {/* Hero Section containing the video player */}
         <section className="relative w-full h-[60vh] md:h-[75vh] bg-surface-container-low overflow-hidden">
           <div className="w-full h-full max-w-5xl mx-auto p-4 md:p-8 flex items-center justify-center">

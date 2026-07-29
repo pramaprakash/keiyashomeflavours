@@ -124,7 +124,7 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
 
         {/* Center Section: Prominent Autocomplete Search Box */}
         {showSearch && (
-          <div className="flex-grow flex-1 mx-2 sm:mx-4 md:mx-6 max-w-md lg:max-w-xl relative group">
+          <div className="flex-grow flex-1 mx-2 sm:mx-4 md:mx-6 min-w-[180px] max-w-md lg:max-w-xl relative group">
             {/* Search Icon */}
             <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors text-lg pointer-events-none select-none z-10">
               search

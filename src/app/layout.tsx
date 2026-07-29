@@ -78,26 +78,28 @@ export default function RootLayout({
 
           {/* Footer Text Area with Dot Pattern */}
           <div className="px-margin-mobile md:px-margin-desktop py-16 max-w-7xl mx-auto relative z-10 flex flex-col gap-10">
-            {/* Full Width Brand Manifesto (Wide text layout to minimize line count) */}
-            <div className="w-full">
-              <span className="inline-block px-3 py-1 rounded-full bg-primary-container text-primary font-label-md text-[10px] uppercase tracking-wider mb-4 font-black">
-                Our Mission
-              </span>
-              <h4 className="font-headline-md text-xl md:text-2xl font-black text-primary mb-4 uppercase tracking-wider">
-                Keiya&apos;s Home Flavour&apos;s
-              </h4>
-              <p className="font-body-md text-base md:text-lg text-on-surface-variant leading-relaxed max-w-5xl">
-                We believe that traditional cooking is not about copying the past, but about passing down the warmth of home. Keiya&apos;s Home Flavour&apos;s serves as a premium, curated archive of heritage family recipes, combining detailed step-by-step guidance with live masterclass cooking videos to keep kitchen wisdom alive.
-              </p>
-            </div>
+            {/* Grid Layout: Brand Note on the Left, Explore & Legal on the Right */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+              {/* Brand Note Column (Left Side of Explore) */}
+              <div className="md:col-span-6 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/35 shadow-xs bg-white flex items-center justify-center">
+                    <img src="/logo.jpg" alt="Keiya's Home Flavours Logo" className="w-full h-full object-cover scale-105" />
+                  </div>
+                  <h4 className="font-headline-sm text-base md:text-lg font-black text-primary uppercase tracking-wider">
+                    Keiya&apos;s Home Flavour&apos;s
+                  </h4>
+                </div>
+                <p className="font-body-sm text-sm text-on-surface-variant leading-relaxed max-w-md">
+                  We believe that traditional cooking is not about copying the past, but about passing down the warmth of home. Keiya&apos;s Home Flavour&apos;s serves as a premium, curated archive of heritage family recipes, combining detailed step-by-step guidance with live masterclass cooking videos to keep kitchen wisdom alive.
+                </p>
+              </div>
 
-            {/* Divider Line */}
-            <div className="w-full border-t border-outline-variant/20"></div>
+              {/* Spacer Column / Offset */}
+              <div className="hidden md:block md:col-span-1"></div>
 
-            {/* Bottom Row: Navigation Menus */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-start">
               {/* Explore Column */}
-              <div className="space-y-3">
+              <div className="md:col-span-2 space-y-3">
                 <p className="font-label-md text-xs font-black text-primary uppercase tracking-widest">Explore</p>
                 <div className="flex flex-col gap-2">
                   <Link href="/" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
@@ -113,7 +115,7 @@ export default function RootLayout({
               </div>
 
               {/* Legal Column */}
-              <div className="space-y-3">
+              <div className="md:col-span-3 space-y-3">
                 <p className="font-label-md text-xs font-black text-primary uppercase tracking-widest">Legal</p>
                 <div className="flex flex-col gap-2">
                   <a href="#" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">

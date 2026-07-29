@@ -49,6 +49,50 @@ export default function DiscoverPage({
     setFeaturedRecipe(featured || null);
   }, []);
 
+  const trendingRecipes = recipes.filter((r) => r.id === "beetroot-pachadi" || r.id === "masala-dosa");
+  const seasonalRecipes = recipes.filter((r) => r.id === "traditional-avial");
+
+  const cuisines = [
+    {
+      name: "South Indian Breakfasts",
+      description: "Overnight fermented batter, airy textures, and crispy tawa sweeps.",
+      image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?q=80&w=400&auto=format&fit=crop",
+      query: "breakfast",
+      tag: "Tempered Classics"
+    },
+    {
+      name: "Traditional Curries",
+      description: "Rich blends of fresh grated coconut, native vegetables, and curry leaves.",
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBhQdPTajuew8Zg-TxtWMetOeDXoJRaJFhw8Pjs5uaseY1H_yfBJBJmTg4MwQk3YutB_DdBdfRVDzZoJMHBqiR6Ky0r09Iuz9n2AmALpqNVD5T2D6ecFAE8Q0TiQ65FzXJu-y-wnpzAvOvyC6YaEqbOwGuf69lgtZWRQ0bdWQi1BQGsm3sAjkIBAwbe8UGqhh0W_JNaYmG98owP_77o55bjBFYB9X-mwfX5IebmKuhB_KUGK1xsYzus",
+      query: "main",
+      tag: "Heritage Feasts"
+    },
+    {
+      name: "Signature Fusion",
+      description: "Authentic profiles reimagined with modern culinary twists.",
+      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuACY6K7RH67m6vgzql94jsTXX8IbHz0QBM76RVhlNIDFbmpbVhXlVUr6pTk9nI1NcOL_Mxfum0jQxU3B201OeP6X_0i3CdzYjeTFe9-PmFb2YgLilv4bxKdW6cZyimfQW56b_m958tHlte54XvI2rG7titAVor5aTLkJFuC78TIZPJF0FjXWgIUfdgM8mHuH1A5q5kG3wxN-2E-NkNcPnMQ591aNHeEeGlj0azIcRuYlgbGgCYSB7bc",
+      query: "main",
+      tag: "Chef's Special"
+    },
+    {
+      name: "Sweet Creations",
+      description: "Traditional cardamoms, slow-roasted sugars, and rich festival desserts.",
+      image: "https://images.unsplash.com/photo-1587314168485-3236d6710814?q=80&w=400&auto=format&fit=crop",
+      query: "dessert",
+      tag: "Festive Endings"
+    }
+  ];
+
+  const handleCuisineClick = (categoryQuery: string) => {
+    setSelectedCategory(categoryQuery);
+    setTimeout(() => {
+      const el = document.getElementById("search-results");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 50);
+  };
+
   // Filter recipes based on search query and selected category
   useEffect(() => {
     let result = recipes;
@@ -215,128 +259,160 @@ export default function DiscoverPage({
             </div>
           </div>
         </section>
-        {/* Chef Portfolio Bento Profile Section */}
-        <section className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto pt-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-stretch">
-            {/* Left Column: Chef Portrait Card */}
-            <div className="lg:col-span-4 bg-surface-container-low rounded-2xl p-6 border border-outline-variant/30 flex flex-col items-center text-center shadow-xs">
-              <div className="w-40 h-40 rounded-full overflow-hidden border-2 border-primary/20 shadow-md mb-4 bg-white flex items-center justify-center flex-shrink-0">
-                <img
-                  src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=400&auto=format&fit=crop"
-                  alt="Chef Keiya"
-                  className="w-full h-full object-cover scale-102"
-                />
-              </div>
-              <span className="inline-block px-3 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-[10px] uppercase tracking-wider mb-2 font-bold">
-                Culinary Director
-              </span>
-              <h3 className="font-headline-sm text-lg font-black text-primary uppercase tracking-wider">
-                Chef Keiya
-              </h3>
-              <p className="font-body-sm text-xs text-on-surface-variant mt-1.5 leading-relaxed max-w-xs">
-                Specialized in South Indian heritage culinary arts, fermentation chemistry, and modern vegetable-centric gastronomy.
-              </p>
-              <div className="flex gap-3 mt-4 pt-4 border-t border-outline-variant/20 w-full justify-center">
-                <a href="#portfolio" className="text-[10px] font-black text-primary hover:text-secondary uppercase tracking-wider flex items-center gap-1 transition-colors">
-                  <span className="material-symbols-outlined text-xs">folder_open</span>
-                  View Creations
-                </a>
-              </div>
-            </div>
-
-            {/* Right Column: Experience, Stats & Philosophy */}
-            <div className="lg:col-span-8 bg-surface-container-low/40 rounded-2xl p-6 md:p-8 border border-outline-variant/20 flex flex-col justify-between shadow-xs">
-              <div>
-                <span className="inline-block px-3 py-1 rounded-full bg-primary-container text-primary font-label-md text-[10px] uppercase tracking-wider mb-4 font-black">
-                  My Philosophy
-                </span>
-                <p className="font-body-lg text-base md:text-lg text-on-surface-variant italic leading-relaxed mb-6 font-medium">
-                  &quot;Culinary art is a dialogue between memory and innovation. My work focuses on capturing the soul of traditional home recipes—their rich temperings, slow roasts, and fermented rhythms—and presenting them with refined aesthetics and modern techniques.&quot;
-                </p>
-
-                {/* Specialties tags */}
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {["Heritage Tadka", "Fermentation Science", "Sugar-Concentration", "Plant-Based Gastronomy", "Digital Masterclasses"].map((tag) => (
-                    <span key={tag} className="text-[10.5px] font-bold text-primary bg-primary/5 border border-primary/10 px-3 py-1 rounded-full">
-                      {tag}
-                    </span>
-                  ))}
+        {/* Conditional Content Layout */}
+        {!searchQuery && selectedCategory === "all" ? (
+          <>
+            {/* 1. Trending Recipes Section */}
+            <section className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto py-16">
+              <div className="flex items-center gap-2 mb-8">
+                <span className="material-symbols-outlined text-primary text-2xl font-black">local_fire_department</span>
+                <div>
+                  <h3 className="font-headline-lg text-headline-lg text-primary mb-1">
+                    Trending Recipes
+                  </h3>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant">
+                    Our most-viewed and highest-rated masterclasses this week
+                  </p>
                 </div>
               </div>
-
-              {/* Stats Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-outline-variant/20">
-                {[
-                  { value: "12+", label: "Years Culinary Exp" },
-                  { value: "150+", label: "Developed Recipes" },
-                  { value: "30+", label: "Masterclass Lessons" },
-                  { value: "4.9★", label: "Student Rating" },
-                ].map((stat, i) => (
-                  <div key={i} className="text-center p-3 rounded-xl bg-surface-container-lowest/50 border border-outline-variant/10 shadow-xs">
-                    <div className="font-headline-sm text-xl md:text-2xl font-black text-primary mb-1">
-                      {stat.value}
-                    </div>
-                    <div className="text-[10px] font-bold text-outline uppercase tracking-wider">
-                      {stat.label}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter">
+                {trendingRecipes.map((recipe) => (
+                  <div key={recipe.id} className="relative group">
+                    <RecipeCard recipe={recipe} />
+                    <div className="absolute top-4 left-4 z-20">
+                      <span className="bg-primary text-on-primary text-[9px] font-black uppercase tracking-wider px-2.5 py-1 rounded shadow-md flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[11px] font-black">visibility</span>
+                        9.8k Views
+                      </span>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-        </section>
+            </section>
 
-        {/* Recipe Grid Feed */}
-        <section className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto py-16">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-            <div>
-              <h3 id="portfolio" className="font-headline-lg text-headline-lg text-primary mb-1 scroll-mt-24">
-                {selectedCategory === "all"
-                  ? "Signature Creations Portfolio"
-                  : `${categories.find((c) => c.id === selectedCategory)?.name} Showcase`}
-              </h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant">
-                Showing {filteredRecipes.length} curated culinary works
-              </p>
+            {/* 2. Cuisines & Themes Grid Showcase */}
+            <section className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto py-16 bg-surface-container-low/40 rounded-3xl border border-outline-variant/10">
+              <div className="flex items-center gap-2 mb-8 px-6">
+                <span className="material-symbols-outlined text-primary text-2xl font-black">restaurant_menu</span>
+                <div>
+                  <h3 className="font-headline-lg text-headline-lg text-primary mb-1">
+                    Explore Cuisines & Themes
+                  </h3>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant">
+                    Discover handpicked collections categorized by culinary style
+                  </p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter px-6">
+                {cuisines.map((c, i) => (
+                  <div
+                    key={i}
+                    onClick={() => handleCuisineClick(c.query)}
+                    className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-outline-variant/35 shadow-sm group cursor-pointer hover:scale-102 transition-all duration-300"
+                  >
+                    {/* Background Image */}
+                    <img src={c.image} alt={c.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    {/* Dark gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10"></div>
+                    
+                    {/* Text Details */}
+                    <div className="absolute inset-x-0 bottom-0 p-4 z-10 flex flex-col justify-end h-full">
+                      <span className="inline-block self-start px-2.5 py-0.5 rounded bg-primary text-on-primary text-[8px] font-black uppercase tracking-wider mb-2">
+                        {c.tag}
+                      </span>
+                      <h4 className="text-white font-headline-sm text-sm font-bold uppercase tracking-wider mb-1 line-clamp-1">
+                        {c.name}
+                      </h4>
+                      <p className="text-white/70 text-[10px] line-clamp-2 leading-relaxed">
+                        {c.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 3. Seasonal Recipes Section */}
+            <section className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto py-16">
+              <div className="flex items-center gap-2 mb-8">
+                <span className="material-symbols-outlined text-primary text-2xl font-black">filter_hdr</span>
+                <div>
+                  <h3 className="font-headline-lg text-headline-lg text-primary mb-1">
+                    Seasonal Specials
+                  </h3>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant">
+                    Heritage culinary creations crafted for current seasons and festivals
+                  </p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter">
+                {seasonalRecipes.map((recipe) => (
+                  <div key={recipe.id} className="relative group">
+                    <RecipeCard recipe={recipe} />
+                    <div className="absolute top-4 left-4 z-20">
+                      <span className="bg-secondary-container text-on-secondary-container text-[9px] font-black uppercase tracking-wider px-2.5 py-1 rounded shadow-md flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[11px] font-black">wb_sunny</span>
+                        Monsoon Special
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        ) : (
+          /* Search Results & Filter Grid Feed */
+          <section id="search-results" className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto py-16 scroll-mt-24">
+            <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+              <div>
+                <h3 className="font-headline-lg text-headline-lg text-primary mb-1">
+                  {selectedCategory === "all"
+                    ? "Search Results"
+                    : `${categories.find((c) => c.id === selectedCategory)?.name} Recipes`}
+                </h3>
+                <p className="font-body-sm text-body-sm text-on-surface-variant">
+                  Showing {filteredRecipes.length} matching culinary guides
+                </p>
+              </div>
+
+              {searchQuery && (
+                <span className="text-sm font-semibold text-primary bg-primary-fixed px-3 py-1 rounded-full flex items-center gap-2">
+                  Search: &quot;{searchQuery}&quot;
+                  <button onClick={() => setSearchQuery("")} className="material-symbols-outlined text-xs font-black">
+                    close
+                  </button>
+                </span>
+              )}
             </div>
 
-            {searchQuery && (
-              <span className="text-sm font-semibold text-primary bg-primary-fixed px-3 py-1 rounded-full flex items-center gap-2">
-                Search: &quot;{searchQuery}&quot;
-                <button onClick={() => setSearchQuery("")} className="material-symbols-outlined text-xs font-black">
-                  close
+            {filteredRecipes.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter">
+                {filteredRecipes.map((recipe) => (
+                  <RecipeCard key={recipe.id} recipe={recipe} />
+                ))}
+              </div>
+            ) : (
+              <div className="bg-surface-container-low rounded-2xl p-12 text-center border border-outline-variant/20 max-w-md mx-auto">
+                <span className="material-symbols-outlined text-6xl text-primary mb-4 opacity-50">
+                  sentiment_dissatisfied
+                </span>
+                <h4 className="font-headline-sm text-headline-sm text-primary mb-2">No recipes found</h4>
+                <p className="font-body-sm text-body-sm text-on-surface-variant mb-6">
+                  We couldn&apos;t find any recipes matching your criteria. Try adjusting your filters or search terms.
+                </p>
+                <button
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSelectedCategory("all");
+                  }}
+                  className="bg-primary text-on-primary px-6 py-2.5 rounded-xl text-sm font-bold shadow hover:opacity-90 active:scale-95 transition-all"
+                >
+                  Clear Filters
                 </button>
-              </span>
+              </div>
             )}
-          </div>
-
-          {filteredRecipes.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter">
-              {filteredRecipes.map((recipe) => (
-                <RecipeCard key={recipe.id} recipe={recipe} />
-              ))}
-            </div>
-          ) : (
-            <div className="bg-surface-container-low rounded-2xl p-12 text-center border border-outline-variant/20 max-w-md mx-auto">
-              <span className="material-symbols-outlined text-6xl text-primary mb-4 opacity-50">
-                sentiment_dissatisfied
-              </span>
-              <h4 className="font-headline-sm text-headline-sm text-primary mb-2">No recipes found</h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mb-6">
-                We couldn&apos;t find any recipes matching your criteria. Try adjusting your filters or search terms.
-              </p>
-              <button
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedCategory("all");
-                }}
-                className="bg-primary text-on-primary px-6 py-2.5 rounded-xl text-sm font-bold shadow hover:opacity-90 active:scale-95 transition-all"
-              >
-                Clear Filters
-              </button>
-            </div>
-          )}
-        </section>
+          </section>
+        )}
       </main>
     </>
   );

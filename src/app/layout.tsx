@@ -94,9 +94,9 @@ export default function RootLayout({
             {/* Divider Line */}
             <div className="w-full border-t border-outline-variant/20"></div>
 
-            {/* Bottom Row: Navigation Menus & Copyright */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-              {/* Col 1: Explore */}
+            {/* Bottom Row: Navigation Menus */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-start">
+              {/* Explore Column */}
               <div className="space-y-3">
                 <p className="font-label-md text-xs font-black text-primary uppercase tracking-widest">Explore</p>
                 <div className="flex flex-col gap-2">
@@ -112,7 +112,7 @@ export default function RootLayout({
                 </div>
               </div>
 
-              {/* Col 2: Legal */}
+              {/* Legal Column */}
               <div className="space-y-3">
                 <p className="font-label-md text-xs font-black text-primary uppercase tracking-widest">Legal</p>
                 <div className="flex flex-col gap-2">
@@ -124,17 +124,17 @@ export default function RootLayout({
                   </a>
                 </div>
               </div>
+            </div>
 
-              {/* Col 3: Copyright & Socials */}
-              <div className="space-y-4 md:text-right md:flex md:flex-col md:items-end">
-                <div className="flex gap-4">
-                  <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Menu QR Code">qr_code_2</span>
-                  <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Camera/Gallery">photo_camera</span>
-                  <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Contact Email">alternate_email</span>
-                </div>
-                <p className="font-body-sm text-xs text-outline leading-relaxed max-w-xs">
-                  © {new Date().getFullYear()} KEIYA&apos;S HOME FLAVOUR&apos;S. AUTHENTIC HOME FLAVOURS, REIMAGINED.
-                </p>
+            {/* Sub-Footer Divider & Content */}
+            <div className="w-full border-t border-outline-variant/15 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="font-body-sm text-xs text-outline leading-relaxed">
+                © {new Date().getFullYear()} KEIYA&apos;S HOME FLAVOUR&apos;S. AUTHENTIC HOME FLAVOURS, REIMAGINED.
+              </p>
+              <div className="flex gap-4">
+                <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Menu QR Code">qr_code_2</span>
+                <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Camera/Gallery">photo_camera</span>
+                <span className="material-symbols-outlined text-primary cursor-pointer hover:opacity-85" title="Contact Email">alternate_email</span>
               </div>
             </div>
           </div>

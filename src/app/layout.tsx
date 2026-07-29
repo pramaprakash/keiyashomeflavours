@@ -95,12 +95,9 @@ export default function RootLayout({
                 </p>
               </div>
 
-              {/* Spacer Column / Offset */}
-              <div className="hidden md:block md:col-span-1"></div>
-
               {/* Explore Column */}
-              <div className="md:col-span-2 space-y-3">
-                <p className="font-label-md text-xs font-black text-primary uppercase tracking-widest">Explore</p>
+              <div className="md:col-span-3 space-y-3">
+                <p className="font-label-md text-xs font-black text-primary uppercase tracking-widest pt-2">Explore</p>
                 <div className="flex flex-col gap-2">
                   <Link href="/" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
                     The Story
@@ -116,7 +113,7 @@ export default function RootLayout({
 
               {/* Legal Column */}
               <div className="md:col-span-3 space-y-3">
-                <p className="font-label-md text-xs font-black text-primary uppercase tracking-widest">Legal</p>
+                <p className="font-label-md text-xs font-black text-primary uppercase tracking-widest pt-2">Legal</p>
                 <div className="flex flex-col gap-2">
                   <a href="#" className="font-body-sm text-sm text-on-surface-variant hover:text-primary transition-colors">
                     Privacy Policy

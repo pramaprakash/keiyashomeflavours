@@ -147,7 +147,7 @@ export default function DiscoverPage({
               </div>
 
               {/* Content & Action Panel */}
-              <div className="relative z-10 h-full flex flex-col md:flex-row items-end md:items-center justify-between px-margin-mobile md:px-margin-desktop pb-12 md:pb-0 max-w-7xl mx-auto w-full gap-8">
+              <div className="relative z-10 h-full flex flex-col md:flex-row items-end md:items-center justify-between px-margin-mobile md:px-margin-desktop pt-24 pb-12 md:pb-0 max-w-7xl mx-auto w-full gap-8">
                 {/* Typography overlay (left aligned) */}
                 <div className="max-w-2xl text-left select-none mt-20 md:mt-0">
                   <span className="inline-block px-4 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-xs uppercase tracking-widest mb-4 font-bold shadow-sm">

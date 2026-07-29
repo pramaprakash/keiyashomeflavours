@@ -43,7 +43,7 @@ export default function SavedPage() {
     <>
       <Navbar showSearch={false} />
 
-      <main className="pt-24 pb-32 max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
+      <main className="pt-28 pb-32 max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
         {/* Header */}
         <div className="mb-12">
           <span className="inline-block px-4 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-xs uppercase tracking-widest mb-3 font-bold">

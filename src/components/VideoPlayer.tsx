@@ -6,9 +6,10 @@ interface VideoPlayerProps {
   videoUrl: string;
   coverImageUrl: string;
   title: string;
+  onClose?: () => void;
 }
 
-export default function VideoPlayer({ videoUrl, coverImageUrl, title }: VideoPlayerProps) {
+export default function VideoPlayer({ videoUrl, coverImageUrl, title, onClose }: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   // Helper to parse YouTube IDs and return embed URL
@@ -96,7 +97,10 @@ export default function VideoPlayer({ videoUrl, coverImageUrl, title }: VideoPla
       
       {/* Close/Stop video button */}
       <button
-        onClick={() => setIsPlaying(false)}
+        onClick={() => {
+          setIsPlaying(false);
+          if (onClose) onClose();
+        }}
         className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 text-white hover:bg-black/90 flex items-center justify-center z-10 transition-colors"
         aria-label="Close video"
       >

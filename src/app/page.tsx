@@ -213,19 +213,22 @@ export default function DiscoverPage({
             {/* Cinema Video Modal Overlay */}
             {isHeroVideoOpen && (
               <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-[100] flex items-center justify-center p-4 md:p-12 animate-fade-in">
-                <div className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-outline-variant/25">
+                {/* Floating Viewport close button - always visible, never cut off */}
+                <button
+                  onClick={() => setIsHeroVideoOpen(false)}
+                  className="fixed top-4 right-4 md:top-8 md:right-8 w-12 h-12 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-all border border-white/20 z-[110] cursor-pointer shadow-lg hover:scale-105 active:scale-95"
+                  aria-label="Close masterclass"
+                >
+                  <span className="material-symbols-outlined text-2xl font-black">close</span>
+                </button>
+
+                <div className="relative w-full max-w-4xl aspect-video max-h-[calc(100vh-6rem)] bg-black rounded-2xl overflow-hidden shadow-2xl border border-outline-variant/25">
                   <VideoPlayer
                     videoUrl={featuredRecipe.videoUrl}
                     coverImageUrl={featuredRecipe.imageUrl}
                     title={featuredRecipe.title}
+                    onClose={() => setIsHeroVideoOpen(false)}
                   />
-                  <button
-                    onClick={() => setIsHeroVideoOpen(false)}
-                    className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-colors border border-white/20 z-50 cursor-pointer"
-                    aria-label="Close masterclass"
-                  >
-                    <span className="material-symbols-outlined">close</span>
-                  </button>
                 </div>
               </div>
             )}

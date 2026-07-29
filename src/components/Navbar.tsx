@@ -89,8 +89,6 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
 
   const navLinks = [
     { name: "Discover", href: "/", icon: "explore" },
-    { name: "Saved", href: "/saved", icon: "bookmark" },
-    { name: "Submit", href: "/upload", icon: "add_circle" },
   ];
 
   return (

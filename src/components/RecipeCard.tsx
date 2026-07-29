@@ -7,14 +7,21 @@ import { Recipe, isFavorite, toggleFavorite } from "@/utils/recipeStore";
 interface RecipeCardProps {
   recipe: Recipe;
   onFavoriteToggle?: () => void;
+  showFavorite?: boolean;
 }
 
-export default function RecipeCard({ recipe, onFavoriteToggle }: RecipeCardProps) {
+export default function RecipeCard({
+  recipe,
+  onFavoriteToggle,
+  showFavorite = true,
+}: RecipeCardProps) {
   const [fav, setFav] = useState(false);
 
   useEffect(() => {
-    setFav(isFavorite(recipe.id));
-  }, [recipe.id]);
+    if (showFavorite) {
+      setFav(isFavorite(recipe.id));
+    }
+  }, [recipe.id, showFavorite]);
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -53,22 +60,25 @@ export default function RecipeCard({ recipe, onFavoriteToggle }: RecipeCardProps
           <span className="absolute top-4 left-4 inline-block px-3 py-1 rounded-full bg-surface/90 backdrop-blur-sm text-primary font-label-md text-xs uppercase tracking-wider font-bold">
             {recipe.category}
           </span>
-          {/* Favorite Button */}
-          <button
-            onClick={handleFavoriteClick}
-            className="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface/90 backdrop-blur-sm flex items-center justify-center text-primary shadow-sm hover:scale-110 active:scale-95 transition-all duration-200"
-            aria-label="Add to favorites"
-          >
-            <span
-              className="material-symbols-outlined transition-colors duration-200"
-              style={{
-                fontVariationSettings: fav ? "'FILL' 1, 'wght' 400" : "'FILL' 0, 'wght' 400",
-                color: fav ? "var(--color-error)" : "inherit",
-              }}
+
+          {/* Favorite Button (Optional) */}
+          {showFavorite && (
+            <button
+              onClick={handleFavoriteClick}
+              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface/90 backdrop-blur-sm flex items-center justify-center text-primary shadow-sm hover:scale-110 active:scale-95 transition-all duration-200"
+              aria-label="Add to favorites"
             >
-              favorite
-            </span>
-          </button>
+              <span
+                className="material-symbols-outlined transition-colors duration-200"
+                style={{
+                  fontVariationSettings: fav ? "'FILL' 1, 'wght' 400" : "'FILL' 0, 'wght' 400",
+                  color: fav ? "var(--color-error)" : "inherit",
+                }}
+              >
+                favorite
+              </span>
+            </button>
+          )}
 
           {/* Play Video Indicator */}
           {recipe.videoUrl && (
@@ -93,25 +103,9 @@ export default function RecipeCard({ recipe, onFavoriteToggle }: RecipeCardProps
                 {recipe.difficulty}
               </span>
             </div>
-            <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mb-4 leading-relaxed">
+            <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 leading-relaxed">
               {recipe.description}
             </p>
-          </div>
-
-          {/* Footer Stats */}
-          <div className="pt-3 border-t border-outline-variant/30 grid grid-cols-3 gap-1 text-center">
-            <div>
-              <p className="text-[10px] font-semibold text-outline uppercase tracking-wider">Prep</p>
-              <p className="text-xs font-bold text-primary">{recipe.prepTime}</p>
-            </div>
-            <div>
-              <p className="text-[10px] font-semibold text-outline uppercase tracking-wider">Serves</p>
-              <p className="text-xs font-bold text-primary">{recipe.serves} Pax</p>
-            </div>
-            <div>
-              <p className="text-[10px] font-semibold text-outline uppercase tracking-wider">Calories</p>
-              <p className="text-xs font-bold text-primary">{recipe.calories.split(" ")[0]}</p>
-            </div>
           </div>
         </div>
       </div>

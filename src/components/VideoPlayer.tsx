@@ -7,30 +7,48 @@ interface VideoPlayerProps {
   coverImageUrl: string;
   title: string;
   onClose?: () => void;
+  initialPlaying?: boolean;
 }
 
-export default function VideoPlayer({ videoUrl, coverImageUrl, title, onClose }: VideoPlayerProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
+export default function VideoPlayer({
+  videoUrl,
+  coverImageUrl,
+  title,
+  onClose,
+  initialPlaying = true,
+}: VideoPlayerProps) {
+  const [isPlaying, setIsPlaying] = useState(initialPlaying);
 
   // Helper to parse YouTube IDs and return embed URL
-  const getYoutubeEmbedUrl = (url: string): string | null => {
-    if (!url) return null;
-    
-    // If it's already an embed link, return it
+  const getYoutubeEmbedUrl = (url: string): string => {
+    if (!url) {
+      return "https://www.youtube.com/embed/6XvU9l13_wM?rel=0&enablejsapi=1";
+    }
+
+    if (url.length === 11 && !url.includes("/") && !url.includes(".")) {
+      return `https://www.youtube.com/embed/${url}?rel=0&enablejsapi=1`;
+    }
+
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+
+    if (match && match[2] && match[2].length === 11) {
+      return `https://www.youtube.com/embed/${match[2]}?rel=0&enablejsapi=1`;
+    }
+
     if (url.includes("/embed/")) {
+      const parts = url.split("/embed/")[1]?.split("?")[0];
+      if (parts && parts.length === 11) {
+        return `https://www.youtube.com/embed/${parts}?rel=0&enablejsapi=1`;
+      }
       return url;
     }
 
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-
-    if (match && match[2].length === 11) {
-      return `https://www.youtube.com/embed/${match[2]}?autoplay=1&rel=0`;
-    }
-    return null;
+    return url;
   };
 
-  const youtubeEmbedUrl = getYoutubeEmbedUrl(videoUrl);
+  const formattedVideoUrl = getYoutubeEmbedUrl(videoUrl);
+  const isYouTube = formattedVideoUrl.includes("youtube.com/embed");
 
   const handlePlayClick = () => {
     setIsPlaying(true);
@@ -38,7 +56,7 @@ export default function VideoPlayer({ videoUrl, coverImageUrl, title, onClose }:
 
   if (!isPlaying) {
     return (
-      <div className="relative w-full h-full group cursor-pointer overflow-hidden rounded-2xl shadow-xl" onClick={handlePlayClick}>
+      <div className="relative w-full h-full group cursor-pointer overflow-hidden rounded-2xl shadow-xl bg-black" onClick={handlePlayClick}>
         {/* Poster Image */}
         <img
           src={coverImageUrl}
@@ -74,21 +92,23 @@ export default function VideoPlayer({ videoUrl, coverImageUrl, title, onClose }:
   // If playing, render actual video source
   return (
     <div className="relative w-full h-full aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black">
-      {youtubeEmbedUrl ? (
+      {isYouTube ? (
         <iframe
-          src={youtubeEmbedUrl}
+          src={formattedVideoUrl}
           title={title}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
-          className="w-full h-full absolute inset-0"
+          className="w-full h-full absolute inset-0 z-0"
         ></iframe>
       ) : (
         <video
           src={videoUrl}
           controls
           autoPlay
-          className="w-full h-full absolute inset-0"
+          playsInline
+          className="w-full h-full absolute inset-0 z-0 object-cover"
           poster={coverImageUrl}
         >
           Your browser does not support the video tag.

@@ -21,6 +21,9 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
   const [isFocused, setIsFocused] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // Local state to make input interactive on all pages (controlled input fix)
+  const [localSearch, setLocalSearch] = useState(searchQuery);
+
   // Hydrate all recipes for autocompletion
   useEffect(() => {
     setAllRecipes(getRecipes());
@@ -37,13 +40,18 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Update suggestions based on input
+  // Sync local search when external prop changes (e.g. URL query parsed or cleared)
   useEffect(() => {
-    if (searchQuery.trim() === "") {
+    setLocalSearch(searchQuery);
+  }, [searchQuery]);
+
+  // Update suggestions based on local search
+  useEffect(() => {
+    if (localSearch.trim() === "") {
       setSuggestions([]);
       return;
     }
-    const q = searchQuery.toLowerCase();
+    const q = localSearch.toLowerCase();
     const filtered = allRecipes.filter(
       (r) =>
         r.title.toLowerCase().includes(q) ||
@@ -51,9 +59,10 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
         r.category.toLowerCase().includes(q)
     );
     setSuggestions(filtered.slice(0, 5));
-  }, [searchQuery, allRecipes]);
+  }, [localSearch, allRecipes]);
 
   const handleSearchChange = (val: string) => {
+    setLocalSearch(val);
     if (onSearchChange) {
       onSearchChange(val);
     } else {
@@ -62,7 +71,12 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
   };
 
   const handleClear = () => {
-    handleSearchChange("");
+    setLocalSearch("");
+    if (onSearchChange) {
+      onSearchChange("");
+    } else {
+      router.push("/");
+    }
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -81,150 +95,150 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
 
   return (
     <header
-      className={`fixed left-4 right-4 z-50 w-[calc(100%-2rem)] max-w-7xl mx-auto rounded-full border bg-surface/85 backdrop-blur-md flex items-center px-4 md:px-6 transition-all duration-300 ${
+      className={`fixed left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-7xl rounded-full border bg-surface/85 backdrop-blur-md flex items-center px-4 md:px-6 transition-all duration-300 ${
         isScrolled
           ? "border-primary/20 shadow-[0_8px_32px_rgba(22,52,34,0.12)] h-16 top-2"
           : "border-outline-variant/30 shadow-[0_12px_40px_rgba(45,75,55,0.06)] h-20 top-4"
       }`}
     >
-        <div className="flex justify-between items-center w-full gap-4 relative">
-          {/* Left Section: Brand Logo */}
-          <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div
-                className={`rounded-full overflow-hidden border border-outline-variant/35 shadow-sm flex-shrink-0 bg-white flex items-center justify-center transition-all duration-300 ${
-                  isScrolled ? "w-9 h-9" : "w-11 h-11"
+      <div className="flex justify-between items-center w-full gap-2 md:gap-4 relative">
+        {/* Left Section: Brand Logo */}
+        <div className="flex-shrink-0">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div
+              className={`rounded-full overflow-hidden border border-outline-variant/35 shadow-sm flex-shrink-0 bg-white flex items-center justify-center transition-all duration-300 ${
+                isScrolled ? "w-9 h-9" : "w-11 h-11"
+              }`}
+            >
+              <img
+                src="/logo.jpg"
+                alt="Keiya's Home Flavours Logo"
+                className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-300"
+              />
+            </div>
+            <h1 className="hidden lg:block font-headline-md text-base lg:text-lg tracking-tight font-black bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent hover:opacity-90 transition-opacity select-none drop-shadow-xs">
+              KEIYA&apos;S HOME FLAVOUR&apos;S
+            </h1>
+          </Link>
+        </div>
+
+        {/* Center Section: Prominent Autocomplete Search Box */}
+        {showSearch && (
+          <div className="flex-grow flex-1 mx-2 sm:mx-4 md:mx-6 max-w-md lg:max-w-xl relative group">
+            {/* Search Icon */}
+            <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors text-lg pointer-events-none select-none z-10">
+              search
+            </span>
+
+            {/* Input field */}
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="What you planned to cook today?"
+              value={localSearch}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+              className="w-full bg-surface-container-low border border-outline-variant/20 rounded-full py-2.5 pl-10 pr-9 text-xs sm:text-sm text-on-background focus:outline-none focus:border-primary/50 focus:bg-surface-container-lowest transition-all shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] placeholder-outline"
+            />
+
+            {/* Clear Button */}
+            {localSearch && (
+              <button
+                type="button"
+                onClick={handleClear}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-primary flex items-center justify-center p-0.5 rounded-full hover:bg-surface-container-high transition-all"
+                aria-label="Clear search"
+              >
+                <span className="material-symbols-outlined text-sm font-black">close</span>
+              </button>
+            )}
+
+            {/* Suggestions Dropdown */}
+            {isFocused && (
+              <div className="absolute top-12 left-0 right-0 bg-surface/95 backdrop-blur-md rounded-2xl border border-outline-variant/40 shadow-2xl p-2 z-50 flex flex-col gap-1 max-h-72 overflow-y-auto animate-fade-in">
+                {suggestions.length > 0 ? (
+                  <>
+                    <div className="text-[9px] font-bold text-outline uppercase tracking-wider px-3 py-1 border-b border-outline-variant/20 mb-1 select-none">
+                      Recipe Suggestions
+                    </div>
+                    {suggestions.map((recipe) => (
+                      <div
+                        key={recipe.id}
+                        onMouseDown={() => handleSuggestionClick(recipe.id)}
+                        className="flex items-center gap-3 p-2 rounded-xl hover:bg-surface-container-high transition-colors cursor-pointer select-none"
+                      >
+                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-surface-variant flex-shrink-0">
+                          <img src={recipe.imageUrl} alt={recipe.title} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-grow">
+                          <div className="text-xs font-bold text-primary flex justify-between items-center">
+                            <span>{recipe.title}</span>
+                            <span className="text-[8px] font-semibold text-outline uppercase tracking-wider bg-surface-container px-2 py-0.5 rounded">
+                              {recipe.category}
+                            </span>
+                          </div>
+                          <p className="text-[10px] text-on-surface-variant line-clamp-1 mt-0.5">
+                            {recipe.description}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                ) : localSearch.trim() !== "" ? (
+                  <div className="p-4 text-center text-xs text-outline select-none">
+                    No matching recipes found
+                  </div>
+                ) : (
+                  <>
+                    <div className="text-[9px] font-bold text-outline uppercase tracking-wider px-3 py-1 border-b border-outline-variant/20 mb-1 select-none">
+                      Featured Cooking Guides
+                    </div>
+                    {allRecipes.slice(0, 3).map((recipe) => (
+                      <div
+                        key={recipe.id}
+                        onMouseDown={() => handleSuggestionClick(recipe.id)}
+                        className="flex items-center gap-3 p-2 rounded-xl hover:bg-surface-container-high transition-colors cursor-pointer select-none"
+                      >
+                        <span className="material-symbols-outlined text-primary text-sm flex-shrink-0 ml-1">
+                          auto_awesome
+                        </span>
+                        <div className="text-xs font-semibold text-primary">{recipe.title}</div>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Right Section: SPA Segmented Control Tab Bar */}
+        <div className="hidden sm:flex items-center bg-surface-container-low p-1 rounded-full border border-outline-variant/20 shadow-inner flex-shrink-0">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-md text-xs font-bold transition-all duration-300 select-none ${
+                  isActive
+                    ? "bg-primary text-on-primary shadow-md scale-102"
+                    : "text-on-surface-variant hover:text-primary hover:bg-surface-container-high/40"
                 }`}
               >
-                <img
-                  src="/logo.jpg"
-                  alt="Keiya's Home Flavours Logo"
-                  className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-300"
-                />
-              </div>
-              <h1 className="hidden md:block font-headline-md text-base lg:text-lg tracking-tight font-black bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent hover:opacity-90 transition-opacity select-none drop-shadow-xs">
-                KEIYA&apos;S HOME FLAVOUR&apos;S
-              </h1>
-            </Link>
-          </div>
-
-          {/* Center Section: Prominent Autocomplete Search Box */}
-          {showSearch && (
-            <div className="flex-grow max-w-xs sm:max-w-md md:max-w-xl mx-auto relative group">
-              {/* Search Icon */}
-              <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors text-lg pointer-events-none select-none z-10">
-                search
-              </span>
-
-              {/* Input field */}
-              <input
-                ref={inputRef}
-                type="text"
-                placeholder="What you planned to cook today?"
-                value={searchQuery}
-                onChange={(e) => handleSearchChange(e.target.value)}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setTimeout(() => setIsFocused(false), 200)}
-                className="w-full bg-surface-container-low border border-outline-variant/20 rounded-full py-2.5 pl-10 pr-9 text-xs sm:text-sm text-on-background focus:outline-none focus:border-primary/50 focus:bg-surface-container-lowest transition-all shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] placeholder-outline"
-              />
-
-              {/* Clear Button */}
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={handleClear}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-primary flex items-center justify-center p-0.5 rounded-full hover:bg-surface-container-high transition-all"
-                  aria-label="Clear search"
+                <span
+                  className="material-symbols-outlined text-sm"
+                  style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
                 >
-                  <span className="material-symbols-outlined text-sm font-black">close</span>
-                </button>
-              )}
-
-              {/* Suggestions Dropdown */}
-              {isFocused && (
-                <div className="absolute top-12 left-0 right-0 bg-surface/95 backdrop-blur-md rounded-2xl border border-outline-variant/40 shadow-2xl p-2 z-50 flex flex-col gap-1 max-h-72 overflow-y-auto animate-fade-in">
-                  {suggestions.length > 0 ? (
-                    <>
-                      <div className="text-[9px] font-bold text-outline uppercase tracking-wider px-3 py-1 border-b border-outline-variant/20 mb-1 select-none">
-                        Recipe Suggestions
-                      </div>
-                      {suggestions.map((recipe) => (
-                        <div
-                          key={recipe.id}
-                          onMouseDown={() => handleSuggestionClick(recipe.id)}
-                          className="flex items-center gap-3 p-2 rounded-xl hover:bg-surface-container-high transition-colors cursor-pointer select-none"
-                        >
-                          <div className="w-10 h-10 rounded-lg overflow-hidden bg-surface-variant flex-shrink-0">
-                            <img src={recipe.imageUrl} alt={recipe.title} className="w-full h-full object-cover" />
-                          </div>
-                          <div className="flex-grow">
-                            <div className="text-xs font-bold text-primary flex justify-between items-center">
-                              <span>{recipe.title}</span>
-                              <span className="text-[8px] font-semibold text-outline uppercase tracking-wider bg-surface-container px-2 py-0.5 rounded">
-                                {recipe.category}
-                              </span>
-                            </div>
-                            <p className="text-[10px] text-on-surface-variant line-clamp-1 mt-0.5">
-                              {recipe.description}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </>
-                  ) : searchQuery.trim() !== "" ? (
-                    <div className="p-4 text-center text-xs text-outline select-none">
-                      No matching recipes found
-                    </div>
-                  ) : (
-                    <>
-                      <div className="text-[9px] font-bold text-outline uppercase tracking-wider px-3 py-1 border-b border-outline-variant/20 mb-1 select-none">
-                        Featured Cooking Guides
-                      </div>
-                      {allRecipes.slice(0, 3).map((recipe) => (
-                        <div
-                          key={recipe.id}
-                          onMouseDown={() => handleSuggestionClick(recipe.id)}
-                          className="flex items-center gap-3 p-2 rounded-xl hover:bg-surface-container-high transition-colors cursor-pointer select-none"
-                        >
-                          <span className="material-symbols-outlined text-primary text-sm flex-shrink-0 ml-1">
-                            auto_awesome
-                          </span>
-                          <div className="text-xs font-semibold text-primary">{recipe.title}</div>
-                        </div>
-                      ))}
-                    </>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Right Section: SPA Segmented Control Tab Bar */}
-          <div className="hidden sm:flex items-center bg-surface-container-low p-1 rounded-full border border-outline-variant/20 shadow-inner">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-md text-xs font-bold transition-all duration-300 select-none ${
-                    isActive
-                      ? "bg-primary text-on-primary shadow-md scale-102"
-                      : "text-on-surface-variant hover:text-primary hover:bg-surface-container-high/40"
-                  }`}
-                >
-                  <span
-                    className="material-symbols-outlined text-sm"
-                    style={{ fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0" }}
-                  >
-                    {link.icon}
-                  </span>
-                  <span className="hidden lg:inline">{link.name}</span>
-                </Link>
-              );
-            })}
-          </div>
+                  {link.icon}
+                </span>
+                <span className="hidden lg:inline">{link.name}</span>
+              </Link>
+            );
+          })}
         </div>
-      </header>
+      </div>
+    </header>
   );
 }

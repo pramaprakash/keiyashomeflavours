@@ -135,7 +135,7 @@ export default function DiscoverPage({
         {/* Featured Recipe Hero Banner */}
         {featuredRecipe && (
           <>
-            <section className="relative w-full h-[75vh] md:h-[85vh] overflow-hidden">
+            <section className="relative w-full min-h-[85vh] md:h-[85vh] flex items-center py-24 md:py-0 overflow-hidden">
               {/* Background Image with Parallax & Hover Shift */}
               <div className="absolute inset-0 z-0">
                 <div
@@ -147,7 +147,7 @@ export default function DiscoverPage({
               </div>
 
               {/* Content & Action Panel */}
-              <div className="relative z-10 h-full flex flex-col md:flex-row items-end md:items-center justify-between px-margin-mobile md:px-margin-desktop pt-24 pb-12 md:pb-0 max-w-7xl mx-auto w-full gap-8">
+              <div className="relative z-10 w-full flex flex-col md:flex-row items-start md:items-center justify-between px-margin-mobile md:px-margin-desktop gap-8 max-w-7xl mx-auto">
                 {/* Typography overlay (left aligned) */}
                 <div className="max-w-2xl text-left select-none mt-20 md:mt-0">
                   <span className="inline-block px-4 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-xs uppercase tracking-widest mb-4 font-bold shadow-sm">

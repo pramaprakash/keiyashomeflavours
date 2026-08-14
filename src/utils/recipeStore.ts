@@ -370,7 +370,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
     calories: "180 kcal",
     difficulty: "Easy",
     imageUrl: "/images/parippu_curry_thumbnail.jpg",
-    videoUrl: "https://www.youtube.com/embed/5r-zZ5v9X0c",
+    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
     flavorProfile: { spicy: 2, tangy: 1, creamy: 5 },
     story: "The iconic first course of the authentic Kerala Onam Sadya, poured hot over steaming Matta rice with a splash of pure ghee.",
     chef: {
@@ -379,13 +379,16 @@ export const DEFAULT_RECIPES: Recipe[] = [
       avatarUrl: "/images/chef_keiya_avatar.jpg"
     },
     ingredients: [
-      { name: "Pigeon Pea / Moong Dal", amount: "1 cup roasted", benefit: "Protein-rich golden lentil foundation", imageUrl: "/images/pigeon_pea_user.jpg" },
-      { name: "Coconut Milk (1st & 2nd Extract)", amount: "2 cups fresh", benefit: "Rich creamy coconut consistency", imageUrl: "/images/grated_coconut.jpg" },
-      { name: "Shallots & Garlic", amount: "6 shallots, 4 cloves", benefit: "Lightly golden sautéed aromatics", imageUrl: "/images/shallots_user.jpg" },
-      { name: "Green Chilies & Ginger", amount: "3 chilies, 1 inch ginger", benefit: "Fresh zesty heat cooked with dal", imageUrl: "/images/ginger_user_root.jpg" },
+      { name: "Pigeon Pea", amount: "1 cup roasted", benefit: "Protein-rich golden lentil base", imageUrl: "/images/pigeon_pea_user.jpg" },
+      { name: "Green Chilly", amount: "3 slit", benefit: "Fresh sharp heat", imageUrl: "/images/green_chilly.jpg" },
+      { name: "Turmeric Powder", amount: "1/2 tsp", benefit: "Vibrant golden hue", imageUrl: "/images/turmeric_powder_user.jpg" },
+      { name: "Grated Coconut", amount: "1 cup fresh", benefit: "Rich creamy coconut base", imageUrl: "/images/grated_coconut.jpg" },
+      { name: "Salt", amount: "To taste", benefit: "Essential flavor seasoning", imageUrl: "/images/salt_user.jpg" },
       { name: "Pure Coconut Oil (Velichenna)", amount: "2 tbsp", benefit: "Traditional Kerala sautéing oil", imageUrl: "/images/coconut_oil_user.jpg" },
-      { name: "Curry Leaves & Dried Red Chilies", amount: "2 sprigs, 2 whole", benefit: "Signature Sadya tempering aroma", imageUrl: "/images/curry_leaves.jpg" },
-      { name: "Turmeric, Cumin & Sea Salt", amount: "1/2 tsp turmeric, 1 tsp cumin", benefit: "Golden hue & essential spice seasoning", imageUrl: "/images/turmeric_powder_user.jpg" }
+      { name: "Ginger", amount: "1 inch chopped", benefit: "Zesty digestive aromatic", imageUrl: "/images/ginger_user_root.jpg" },
+      { name: "Garlic", amount: "4 cloves", benefit: "Savory aromatic depth", imageUrl: "/images/garlic.jpg" },
+      { name: "Shallots", amount: "6 sliced", benefit: "Golden sautéed sweet aromatic", imageUrl: "/images/shallots_user.jpg" },
+      { name: "Curry Leaves", amount: "2 sprigs", benefit: "Signature Sadya aroma", imageUrl: "/images/curry_leaves.jpg" }
     ],
     steps: [
       { stepNumber: 1, text: "Cook the dal with green chilies, ginger, salt, turmeric, roasted cumin powder, and the second extract of coconut milk. Add enough water and pressure cook until done." },
@@ -471,62 +474,10 @@ const sanitizeRecipe = (r: Recipe): Recipe => {
 
 // Recipe Store
 export const getRecipes = (): Recipe[] => {
-  if (!isBrowser()) return DEFAULT_RECIPES.map(sanitizeRecipe);
-  const stored = localStorage.getItem('khf_recipes_v43');
-  if (!stored) {
-    localStorage.setItem('khf_recipes_v43', JSON.stringify(DEFAULT_RECIPES));
-    return DEFAULT_RECIPES.map(sanitizeRecipe);
-  }
-  try {
-    const list = JSON.parse(stored);
-    const validIds = new Set(DEFAULT_RECIPES.map(r => r.id));
-    const filtered = Array.isArray(list) ? list.filter(r => validIds.has(r.id)) : [];
-    const dbMap = new Map<string, Recipe>();
-    filtered.forEach(r => dbMap.set(r.id, r));
-    const result = DEFAULT_RECIPES.map(def => {
-      const dbItem = dbMap.get(def.id);
-      if (!dbItem) return def;
-      return {
-        ...dbItem,
-        ingredients: def.ingredients && def.ingredients.length > 0 ? def.ingredients : dbItem.ingredients,
-        steps: def.steps && def.steps.length > 0 ? def.steps : dbItem.steps,
-      };
-    });
-    return result.map(sanitizeRecipe);
-  } catch {
-    return DEFAULT_RECIPES.map(sanitizeRecipe);
-  }
+  return DEFAULT_RECIPES.map(sanitizeRecipe);
 };
 
 export const fetchRecipesFromDB = async (): Promise<Recipe[]> => {
-  try {
-    const res = await fetch('/api/recipes', { cache: 'no-store' });
-    const data = await res.json();
-    if (data.success && Array.isArray(data.recipes)) {
-      const dbMap = new Map<string, Recipe>();
-      data.recipes.forEach((r: Recipe) => {
-        if (r && r.id) dbMap.set(r.id, r);
-      });
-
-      const merged = DEFAULT_RECIPES.map((def) => {
-        const dbItem = dbMap.get(def.id);
-        if (!dbItem) return def;
-        return {
-          ...dbItem,
-          ingredients: def.ingredients && def.ingredients.length > 0 ? def.ingredients : dbItem.ingredients,
-          steps: def.steps && def.steps.length > 0 ? def.steps : dbItem.steps,
-          videoUrl: dbItem.videoUrl || def.videoUrl,
-        };
-      }).map(sanitizeRecipe);
-
-      if (isBrowser()) {
-        localStorage.setItem('khf_recipes_v43', JSON.stringify(merged));
-      }
-      return merged;
-    }
-  } catch (err) {
-    console.error('Failed to fetch recipes from DB API:', err);
-  }
   return getRecipes();
 };
 

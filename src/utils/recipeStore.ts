@@ -814,14 +814,16 @@ const sanitizeRecipe = (r: Recipe): Recipe => {
 // Recipe Store
 export const getRecipes = (): Recipe[] => {
   if (!isBrowser()) return DEFAULT_RECIPES.map(sanitizeRecipe);
-  const stored = localStorage.getItem('khf_recipes_v39');
+  const stored = localStorage.getItem('khf_recipes_v40');
   if (!stored) {
-    localStorage.setItem('khf_recipes_v39', JSON.stringify(DEFAULT_RECIPES));
+    localStorage.setItem('khf_recipes_v40', JSON.stringify(DEFAULT_RECIPES));
     return DEFAULT_RECIPES.map(sanitizeRecipe);
   }
   try {
     const list = JSON.parse(stored);
-    const result = Array.isArray(list) && list.length > 0 ? list : DEFAULT_RECIPES;
+    const validIds = new Set(DEFAULT_RECIPES.map(r => r.id));
+    const filtered = Array.isArray(list) ? list.filter(r => validIds.has(r.id)) : [];
+    const result = filtered.length > 0 ? filtered : DEFAULT_RECIPES;
     return result.map(sanitizeRecipe);
   } catch {
     return DEFAULT_RECIPES.map(sanitizeRecipe);
@@ -833,9 +835,11 @@ export const fetchRecipesFromDB = async (): Promise<Recipe[]> => {
     const res = await fetch('/api/recipes', { cache: 'no-store' });
     const data = await res.json();
     if (data.success && Array.isArray(data.recipes) && data.recipes.length > 0) {
-      const sanitized = data.recipes.map(sanitizeRecipe);
+      const validIds = new Set(DEFAULT_RECIPES.map(r => r.id));
+      const filtered = data.recipes.filter((r: Recipe) => validIds.has(r.id));
+      const sanitized = (filtered.length > 0 ? filtered : DEFAULT_RECIPES).map(sanitizeRecipe);
       if (isBrowser()) {
-        localStorage.setItem('khf_recipes_v39', JSON.stringify(sanitized));
+        localStorage.setItem('khf_recipes_v40', JSON.stringify(sanitized));
       }
       return sanitized;
     }

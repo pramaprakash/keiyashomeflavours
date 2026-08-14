@@ -22,33 +22,36 @@ export default function VideoPlayer({
   // Helper to parse YouTube IDs and return embed URL
   const getYoutubeEmbedUrl = (url: string): string => {
     if (!url) {
-      return "https://www.youtube.com/embed/6XvU9l13_wM?rel=0&enablejsapi=1";
+      return "https://www.youtube-nocookie.com/embed/5r-zZ5v9X0c?rel=0&enablejsapi=1";
     }
+
+    let videoId: string | null = null;
 
     if (url.length === 11 && !url.includes("/") && !url.includes(".")) {
-      return `https://www.youtube.com/embed/${url}?rel=0&enablejsapi=1`;
-    }
+      videoId = url;
+    } else {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
 
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-
-    if (match && match[2] && match[2].length === 11) {
-      return `https://www.youtube.com/embed/${match[2]}?rel=0&enablejsapi=1`;
-    }
-
-    if (url.includes("/embed/")) {
-      const parts = url.split("/embed/")[1]?.split("?")[0];
-      if (parts && parts.length === 11) {
-        return `https://www.youtube.com/embed/${parts}?rel=0&enablejsapi=1`;
+      if (match && match[2] && match[2].length === 11) {
+        videoId = match[2];
+      } else if (url.includes("/embed/")) {
+        const parts = url.split("/embed/")[1]?.split("?")[0];
+        if (parts && parts.length === 11) {
+          videoId = parts;
+        }
       }
-      return url;
+    }
+
+    if (videoId) {
+      return `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&enablejsapi=1`;
     }
 
     return url;
   };
 
   const formattedVideoUrl = getYoutubeEmbedUrl(videoUrl);
-  const isYouTube = formattedVideoUrl.includes("youtube.com/embed");
+  const isYouTube = formattedVideoUrl.includes("youtube.com/embed") || formattedVideoUrl.includes("youtube-nocookie.com/embed");
 
   const handlePlayClick = () => {
     setIsPlaying(true);
@@ -98,7 +101,7 @@ export default function VideoPlayer({
           title={title}
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
+          referrerPolicy="no-referrer-when-downgrade"
           allowFullScreen
           className="w-full h-full absolute inset-0 z-0"
         ></iframe>

@@ -472,9 +472,9 @@ const sanitizeRecipe = (r: Recipe): Recipe => {
 // Recipe Store
 export const getRecipes = (): Recipe[] => {
   if (!isBrowser()) return DEFAULT_RECIPES.map(sanitizeRecipe);
-  const stored = localStorage.getItem('khf_recipes_v42');
+  const stored = localStorage.getItem('khf_recipes_v43');
   if (!stored) {
-    localStorage.setItem('khf_recipes_v42', JSON.stringify(DEFAULT_RECIPES));
+    localStorage.setItem('khf_recipes_v43', JSON.stringify(DEFAULT_RECIPES));
     return DEFAULT_RECIPES.map(sanitizeRecipe);
   }
   try {
@@ -483,7 +483,15 @@ export const getRecipes = (): Recipe[] => {
     const filtered = Array.isArray(list) ? list.filter(r => validIds.has(r.id)) : [];
     const dbMap = new Map<string, Recipe>();
     filtered.forEach(r => dbMap.set(r.id, r));
-    const result = DEFAULT_RECIPES.map(def => dbMap.get(def.id) || def);
+    const result = DEFAULT_RECIPES.map(def => {
+      const dbItem = dbMap.get(def.id);
+      if (!dbItem) return def;
+      return {
+        ...dbItem,
+        ingredients: def.ingredients && def.ingredients.length > 0 ? def.ingredients : dbItem.ingredients,
+        steps: def.steps && def.steps.length > 0 ? def.steps : dbItem.steps,
+      };
+    });
     return result.map(sanitizeRecipe);
   } catch {
     return DEFAULT_RECIPES.map(sanitizeRecipe);
@@ -500,10 +508,19 @@ export const fetchRecipesFromDB = async (): Promise<Recipe[]> => {
         if (r && r.id) dbMap.set(r.id, r);
       });
 
-      const merged = DEFAULT_RECIPES.map((def) => dbMap.get(def.id) || def).map(sanitizeRecipe);
+      const merged = DEFAULT_RECIPES.map((def) => {
+        const dbItem = dbMap.get(def.id);
+        if (!dbItem) return def;
+        return {
+          ...dbItem,
+          ingredients: def.ingredients && def.ingredients.length > 0 ? def.ingredients : dbItem.ingredients,
+          steps: def.steps && def.steps.length > 0 ? def.steps : dbItem.steps,
+          videoUrl: dbItem.videoUrl || def.videoUrl,
+        };
+      }).map(sanitizeRecipe);
 
       if (isBrowser()) {
-        localStorage.setItem('khf_recipes_v42', JSON.stringify(merged));
+        localStorage.setItem('khf_recipes_v43', JSON.stringify(merged));
       }
       return merged;
     }

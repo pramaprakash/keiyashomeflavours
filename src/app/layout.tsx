@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -22,23 +21,9 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
         />
+
       </head>
       <body className="bg-background text-on-background font-body-md min-h-full flex flex-col" suppressHydrationWarning>
-        {/* Google Tag (gtag.js) */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-L7HQJ0EF1V"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-L7HQJ0EF1V');
-          `}
-        </Script>
-
         {/* Main Content Area */}
         <div className="flex-grow">
           {children}

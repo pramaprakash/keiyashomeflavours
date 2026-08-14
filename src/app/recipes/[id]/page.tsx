@@ -50,8 +50,37 @@ export default function RecipeDetailPage({ params }: PageProps) {
     );
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "Recipe",
+    name: recipe.title,
+    image: [recipe.imageUrl],
+    author: {
+      "@type": "Person",
+      name: recipe.chef?.name || "Chef Keiya",
+    },
+    datePublished: recipe.createdDate,
+    description: recipe.description,
+    prepTime: "PT20M",
+    cookTime: "PT25M",
+    totalTime: "PT45M",
+    keywords: "Kerala Parippu Curry, Onam Sadya, Indian Vegetarian",
+    recipeYield: `${recipe.serves || 6} servings`,
+    recipeCategory: recipe.category,
+    recipeCuisine: "Kerala Indian",
+    recipeIngredient: recipe.ingredients.map((ing) => `${ing.amount} ${ing.name}`),
+    recipeInstructions: recipe.steps.map((step) => ({
+      "@type": "HowToStep",
+      text: typeof step === "string" ? step : step.text,
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar showSearch={false} />
 
       <main className="pt-0 pb-32">

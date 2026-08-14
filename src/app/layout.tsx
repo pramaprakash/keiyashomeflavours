@@ -3,12 +3,57 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Keiya's Home Flavour's | Authentic Heritage Reimagined",
-  description: "A premium culinary space displaying heritage recipes and cooking videos.",
+  metadataBase: new URL("https://keiyashomeflavours.com"),
+  title: {
+    default: "Keiya's Home Flavours | Authentic Kerala Onam Sadya Recipes",
+    template: "%s | Keiya's Home Flavours",
+  },
+  description:
+    "Discover authentic Kerala Onam Sadya recipes, cinema-style masterclass videos, and step-by-step culinary guides by Chef Keiya.",
+  keywords: [
+    "Keiya's Home Flavours",
+    "Onam Sadya Recipes",
+    "Kerala Parippu Curry",
+    "Kerala Cuisine",
+    "Authentic Indian Vegetarian Recipes",
+    "Sadya Delicacies",
+    "Chef Keiya",
+  ],
+  authors: [{ name: "Chef Keiya" }],
+  creator: "Chef Keiya",
+  publisher: "Keiya's Home Flavours",
   icons: {
     icon: "/logo.jpg",
     shortcut: "/logo.jpg",
     apple: "/logo.jpg",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://keiyashomeflavours.com",
+    title: "Keiya's Home Flavours | Authentic Kerala Onam Sadya Recipes",
+    description:
+      "Discover authentic Kerala Onam Sadya recipes, cinema-style masterclass videos, and step-by-step culinary guides by Chef Keiya.",
+    siteName: "Keiya's Home Flavours",
+    images: [
+      {
+        url: "/logo.jpg",
+        width: 800,
+        height: 800,
+        alt: "Keiya's Home Flavours Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Keiya's Home Flavours | Authentic Kerala Onam Sadya Recipes",
+    description:
+      "Discover authentic Kerala Onam Sadya recipes, cinema-style masterclass videos, and step-by-step culinary guides by Chef Keiya.",
+    images: ["/logo.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

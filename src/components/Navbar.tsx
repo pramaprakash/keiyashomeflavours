@@ -89,6 +89,7 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
 
   const navLinks = [
     { name: "Discover", href: "/", icon: "explore" },
+    { name: "Admin Portal", href: "/admin", icon: "admin_panel_settings" },
   ];
 
   return (

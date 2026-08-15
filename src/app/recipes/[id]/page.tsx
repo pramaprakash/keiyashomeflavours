@@ -84,7 +84,7 @@ export default function RecipeDetailPage({ params }: PageProps) {
       <Navbar showSearch={false} />
 
       <main className="pt-0 pb-32">
-        <section className="relative w-full bg-surface-container-low py-12 pt-24 md:pt-28 flex items-center justify-center">
+        <section className="relative w-full bg-surface-container-low py-12 pt-28 md:pt-36 flex items-center justify-center">
           <div className="w-full max-w-5xl mx-auto px-4">
             <div className="w-full aspect-video relative">
               <VideoPlayer

@@ -40,15 +40,20 @@ export default function DiscoverPage({
   // Load published recipes from DB & store
   useEffect(() => {
     const loadRecipes = async () => {
-      // 1. Initial fast load from local cache
+      // 1. Initial fast load from local cache & defaults
       const cached = getRecipes();
       const cachedPublished = cached.filter((r) => r.status === "published" || !r.status);
       setRecipes(cachedPublished);
 
       // 2. Fetch fresh published recipes directly from MongoDB Cloud database
       const dbRecipes = await fetchRecipesFromDB();
-      const publishedOnly = dbRecipes.filter((r) => r.status === "published" || !r.status);
-      setRecipes(publishedOnly);
+      const map = new Map<string, Recipe>();
+      cachedPublished.forEach((r) => map.set(r.id, r));
+      dbRecipes.forEach((r) => {
+        if (r.status === "published" || !r.status) map.set(r.id, r);
+      });
+
+      setRecipes(Array.from(map.values()));
     };
 
     loadRecipes();
@@ -102,7 +107,7 @@ export default function DiscoverPage({
     <>
       <Navbar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
-      <main className="pt-6 pb-20">
+      <main className="pt-28 md:pt-32 pb-20">
         {/* Interactive Onam Sadya Banana Leaf Navigator */}
         <section className="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
           <OnamSadyaNavigator

@@ -89,7 +89,6 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
 
   const navLinks = [
     { name: "Discover", href: "/", icon: "explore" },
-    { name: "Admin Portal", href: "/admin", icon: "admin_panel_settings" },
   ];
 
   return (
@@ -213,9 +212,9 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
         )}
 
         {/* Right Section: SPA Segmented Control Tab Bar */}
-        <div className="flex items-center bg-surface-container-low p-1 rounded-full border border-outline-variant/20 shadow-inner flex-shrink-0">
+        <div className="hidden sm:flex items-center bg-surface-container-low p-1 rounded-full border border-outline-variant/20 shadow-inner flex-shrink-0">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href || (link.href === "/admin" && pathname.startsWith("/admin"));
+            const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}

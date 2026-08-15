@@ -9,11 +9,11 @@ const IngredientSubSchema = new Schema(
   {
     id: { type: String },
     name: { type: String, required: true },
-    amount: { type: String, required: true },
-    benefit: { type: String },
-    imageUrl: { type: String },
+    amount: { type: String, default: "As needed" },
+    benefit: { type: String, default: "" },
+    imageUrl: { type: String, default: "" },
   },
-  { _id: false }
+  { _id: false, strict: false }
 );
 
 const RecipeSchema = new Schema<IRecipeDoc>(

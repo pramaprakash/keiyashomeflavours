@@ -146,7 +146,28 @@ export default function AdminDashboardPage() {
         alert("Please enter a recipe title.");
         return;
       }
-      await saveRecipe({ ...editingRecipe, status: targetStatus });
+      // Clean and ensure every ingredient has valid properties and images
+      const cleanedIngredients = editingRecipe.ingredients
+        .filter((ing) => ing && ing.name && ing.name.trim() !== "")
+        .map((ing) => {
+          const matchedMaster = masterIngredients.find(
+            (m) => m.name.toLowerCase() === ing.name.trim().toLowerCase()
+          );
+          return {
+            name: ing.name.trim(),
+            amount: ing.amount && ing.amount.trim() ? ing.amount.trim() : "As needed",
+            benefit: ing.benefit || matchedMaster?.benefit || "",
+            imageUrl: ing.imageUrl || matchedMaster?.imageUrl || "",
+          };
+        });
+
+      const recipeToSave: Recipe = {
+        ...editingRecipe,
+        ingredients: cleanedIngredients,
+        status: targetStatus,
+      };
+
+      await saveRecipe(recipeToSave);
       loadData();
       setEditingRecipe(null);
       alert(
@@ -347,13 +368,17 @@ export default function AdminDashboardPage() {
                     key={r.id}
                     className="flex items-center justify-between p-4 rounded-xl bg-surface-container-low border border-outline-variant/20 gap-4 hover:border-primary/30 transition-all"
                   >
-                    <div className="flex items-center gap-3 min-w-0">
+                    <Link
+                      href={`/recipes/${r.id}`}
+                      className="flex items-center gap-3 min-w-0 group/card cursor-pointer"
+                      title={`View ${r.title} detail page`}
+                    >
                       <div className="w-14 h-14 rounded-lg overflow-hidden bg-surface-variant flex-shrink-0 border border-outline-variant/30 relative">
-                        <img src={r.imageUrl} alt={r.title} className="w-full h-full object-cover" />
+                        <img src={r.imageUrl} alt={r.title} className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-300" />
                       </div>
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
-                          <h4 className="font-bold text-sm text-primary truncate">{r.title}</h4>
+                          <h4 className="font-bold text-sm text-primary group-hover/card:text-secondary transition-colors truncate">{r.title}</h4>
                           <span
                             className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${
                               isPublished
@@ -371,7 +396,7 @@ export default function AdminDashboardPage() {
                           {r.ingredients.length} Ingredients • {r.steps.length} Steps
                         </p>
                       </div>
-                    </div>
+                    </Link>
 
                     <div className="flex items-center gap-2 flex-shrink-0">
                       {/* Publish / Unpublish Toggle */}

@@ -542,7 +542,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
 const isBrowser = () => typeof window !== 'undefined';
 
 const MASTER_INGREDIENTS_KEY = 'khf_master_ingredients_v46';
-const RECIPES_KEY = 'khf_recipes_v40';
+const RECIPES_KEY = 'khf_recipes_v41';
 
 // Master Ingredients Store
 export const getMasterIngredients = (): MasterIngredient[] => {

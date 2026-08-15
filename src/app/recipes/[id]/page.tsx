@@ -1,6 +1,7 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import VideoPlayer from "@/components/VideoPlayer";
@@ -14,40 +15,51 @@ export default function RecipeDetailPage({ params }: PageProps) {
   const resolvedParams = use(params);
   const id = resolvedParams.id;
 
+  const router = useRouter();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const r = getRecipeById(id);
-    if (r) {
-      setRecipe(r);
+    let isMounted = true;
+    const initial = getRecipeById(id);
+    if (initial) {
+      setRecipe(initial);
+      setLoading(false);
     }
-    fetchRecipesFromDB().then((all) => {
-      const found = all.find((item) => item.id === id);
-      if (found) setRecipe(found);
-    });
-  }, [id]);
 
-  if (!recipe) {
+    fetchRecipesFromDB().then((all) => {
+      if (!isMounted) return;
+      const found = all.find((item) => item.id === id);
+      if (found) {
+        setRecipe(found);
+        setLoading(false);
+      } else if (!initial) {
+        setLoading(false);
+        router.replace("/");
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [id, router]);
+
+  if (loading && !recipe) {
     return (
       <>
         <Navbar showSearch={false} />
         <div className="pt-32 pb-20 flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-          <span className="material-symbols-outlined text-6xl text-primary mb-4 opacity-50">
-            search_off
-          </span>
-          <h2 className="font-headline-lg text-headline-lg text-primary mb-2">Recipe Not Found</h2>
-          <p className="font-body-md text-body-md text-on-surface-variant mb-6 max-w-md">
-            We couldn&apos;t find the recipe you were looking for. It may have been deleted or moved.
+          <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4" />
+          <p className="font-body-md text-body-md text-on-surface-variant font-bold">
+            Loading recipe...
           </p>
-          <Link
-            href="/"
-            className="bg-primary text-on-primary px-8 py-3 rounded-xl font-bold shadow hover:opacity-90 active:scale-95 transition-all"
-          >
-            Back to Discover
-          </Link>
         </div>
       </>
     );
+  }
+
+  if (!recipe) {
+    return null;
   }
 
   const jsonLd = {
@@ -158,16 +170,9 @@ export default function RecipeDetailPage({ params }: PageProps) {
                           className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
                         />
                       </div>
-                      <div className="flex justify-between items-start gap-2 mb-1">
-                        <h4 className="font-headline-sm text-sm text-primary font-bold">
-                          {cleanName}
-                        </h4>
-                        {ing.amount && (
-                          <span className="text-[10px] font-bold text-primary bg-primary-container/60 px-2 py-0.5 rounded-md shrink-0">
-                            {ing.amount}
-                          </span>
-                        )}
-                      </div>
+                      <h4 className="font-headline-sm text-sm text-primary font-bold mb-1">
+                        {cleanName}
+                      </h4>
                       {ing.benefit && (
                         <p className="font-body-sm text-[11px] text-outline mt-1.5 leading-relaxed">
                           {ing.benefit}

@@ -502,7 +502,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
     serves: 6,
     calories: "210 kcal",
     difficulty: "Easy",
-    imageUrl: "/images/avial_curry_thumbnail.jpg",
+    imageUrl: "/images/avial_user.jpg",
     videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
     flavorProfile: { spicy: 2, tangy: 3, creamy: 4 },
     story: "Legend says Avial was created by Prince Bhima during exile. It remains the essential center-piece curry of the traditional Kerala Onam Sadya.",
@@ -542,7 +542,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
 const isBrowser = () => typeof window !== 'undefined';
 
 const MASTER_INGREDIENTS_KEY = 'khf_master_ingredients_v46';
-const RECIPES_KEY = 'khf_recipes_v39';
+const RECIPES_KEY = 'khf_recipes_v40';
 
 // Master Ingredients Store
 export const getMasterIngredients = (): MasterIngredient[] => {

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import VideoPlayer from "@/components/VideoPlayer";
-import { fetchRecipesFromDB, getRecipeById, PREDEFINED_INGREDIENTS, Recipe } from "@/utils/recipeStore";
+import { fetchRecipesFromDB, getRecipeById, PREDEFINED_INGREDIENTS, Recipe, slugify } from "@/utils/recipeStore";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -29,7 +29,10 @@ export default function RecipeDetailPage({ params }: PageProps) {
 
     fetchRecipesFromDB().then((all) => {
       if (!isMounted) return;
-      const found = all.find((item) => item.id === id);
+      const cleanId = id.toLowerCase().trim();
+      const found = all.find(
+        (item) => item.id.toLowerCase() === cleanId || slugify(item.title) === cleanId
+      );
       if (found) {
         setRecipe(found);
         setLoading(false);

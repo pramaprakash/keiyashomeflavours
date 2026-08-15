@@ -492,22 +492,26 @@ export const DEFAULT_RECIPES: Recipe[] = [
 
 const isBrowser = () => typeof window !== 'undefined';
 
+const MASTER_INGREDIENTS_KEY = 'khf_master_ingredients_v46';
+const RECIPES_KEY = 'khf_recipes_v37';
+
 // Master Ingredients Store
 export const getMasterIngredients = (): MasterIngredient[] => {
   if (!isBrowser()) return PREDEFINED_INGREDIENTS;
-  const stored = localStorage.getItem('khf_master_ingredients_v45');
+  const stored = localStorage.getItem(MASTER_INGREDIENTS_KEY);
   if (!stored) {
-    localStorage.setItem('khf_master_ingredients_v45', JSON.stringify(PREDEFINED_INGREDIENTS));
+    localStorage.setItem(MASTER_INGREDIENTS_KEY, JSON.stringify(PREDEFINED_INGREDIENTS));
     return PREDEFINED_INGREDIENTS;
   }
   try {
-    return JSON.parse(stored);
+    const list = JSON.parse(stored);
+    return Array.isArray(list) && list.length > 0 ? list : PREDEFINED_INGREDIENTS;
   } catch {
     return PREDEFINED_INGREDIENTS;
   }
 };
 
-export const saveMasterIngredient = (ingredient: MasterIngredient): MasterIngredient => {
+export const saveMasterIngredient = async (ingredient: MasterIngredient): Promise<MasterIngredient> => {
   const list = getMasterIngredients();
   const index = list.findIndex(i => i.id === ingredient.id);
   let updated: MasterIngredient[];
@@ -517,26 +521,31 @@ export const saveMasterIngredient = (ingredient: MasterIngredient): MasterIngred
     updated = [ingredient, ...list];
   }
   if (isBrowser()) {
-    localStorage.setItem('khf_master_ingredients_v4', JSON.stringify(updated));
-    // Sync directly to MongoDB
-    fetch('/api/ingredients', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(ingredient),
-    }).catch(err => console.error('MongoDB async sync ingredient error:', err));
+    localStorage.setItem(MASTER_INGREDIENTS_KEY, JSON.stringify(updated));
+    try {
+      await fetch('/api/ingredients', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(ingredient),
+      });
+    } catch (err) {
+      console.error('MongoDB async sync ingredient error:', err);
+    }
   }
   return ingredient;
 };
 
-export const deleteMasterIngredient = (id: string): boolean => {
+export const deleteMasterIngredient = async (id: string): Promise<boolean> => {
   const list = getMasterIngredients();
   const filtered = list.filter(i => i.id !== id);
   if (list.length === filtered.length) return false;
   if (isBrowser()) {
-    localStorage.setItem('khf_master_ingredients_v4', JSON.stringify(filtered));
-    fetch(`/api/ingredients/${id}`, { method: 'DELETE' }).catch(err =>
-      console.error('MongoDB async delete ingredient error:', err)
-    );
+    localStorage.setItem(MASTER_INGREDIENTS_KEY, JSON.stringify(filtered));
+    try {
+      await fetch(`/api/ingredients/${id}`, { method: 'DELETE' });
+    } catch (err) {
+      console.error('MongoDB async delete ingredient error:', err);
+    }
   }
   return true;
 };
@@ -546,7 +555,7 @@ const sanitizeRecipe = (r: Recipe): Recipe => {
   return {
     ...r,
     ingredients: r.ingredients
-      .filter((ing) => ing && ing.name && ing.name.trim().toLowerCase() !== "ingredient")
+      .filter((ing) => ing && ing.name && ing.name.trim() !== "")
       .map((ing) => {
         let name = ing.name || "";
         name = name.replace(/Grated Coconut\s*&\s*Cumin/gi, "Grated Coconut");
@@ -562,9 +571,9 @@ const sanitizeRecipe = (r: Recipe): Recipe => {
 // Recipe Store
 export const getRecipes = (): Recipe[] => {
   if (!isBrowser()) return DEFAULT_RECIPES.map(sanitizeRecipe);
-  const stored = localStorage.getItem('khf_recipes_v36');
+  const stored = localStorage.getItem(RECIPES_KEY);
   if (!stored) {
-    localStorage.setItem('khf_recipes_v36', JSON.stringify(DEFAULT_RECIPES));
+    localStorage.setItem(RECIPES_KEY, JSON.stringify(DEFAULT_RECIPES));
     return DEFAULT_RECIPES.map(sanitizeRecipe);
   }
   try {
@@ -584,7 +593,7 @@ export const fetchRecipesFromDB = async (): Promise<Recipe[]> => {
     if (data.success && Array.isArray(data.recipes) && data.recipes.length > 0) {
       const sanitized = data.recipes.map(sanitizeRecipe);
       if (isBrowser()) {
-        localStorage.setItem('khf_recipes_v36', JSON.stringify(sanitized));
+        localStorage.setItem(RECIPES_KEY, JSON.stringify(sanitized));
       }
       return sanitized;
     }
@@ -599,11 +608,12 @@ export const fetchMasterIngredientsFromDB = async (): Promise<MasterIngredient[]
     const res = await fetch('/api/ingredients', { cache: 'no-store' });
     const data = await res.json();
     if (data.success && Array.isArray(data.ingredients) && data.ingredients.length > 0) {
-      const validIds = new Set(PREDEFINED_INGREDIENTS.map(i => i.id));
-      const filtered = data.ingredients.filter((i: MasterIngredient) => validIds.has(i.id));
-      const result = filtered.length > 0 ? filtered : PREDEFINED_INGREDIENTS;
+      const map = new Map<string, MasterIngredient>();
+      PREDEFINED_INGREDIENTS.forEach((i) => map.set(i.id, i));
+      data.ingredients.forEach((i: MasterIngredient) => map.set(i.id, i));
+      const result = Array.from(map.values());
       if (isBrowser()) {
-        localStorage.setItem('khf_master_ingredients_v45', JSON.stringify(result));
+        localStorage.setItem(MASTER_INGREDIENTS_KEY, JSON.stringify(result));
       }
       return result;
     }
@@ -613,9 +623,22 @@ export const fetchMasterIngredientsFromDB = async (): Promise<MasterIngredient[]
   return getMasterIngredients();
 };
 
+export const slugify = (text: string): string => {
+  if (!text) return "";
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+};
+
 export const getRecipeById = (id: string): Recipe | undefined => {
   const recipes = getRecipes();
-  return recipes.find(r => r.id === id);
+  const cleanId = id.toLowerCase().trim();
+  return recipes.find(
+    (r) => r.id.toLowerCase() === cleanId || slugify(r.title) === cleanId
+  );
 };
 
 export const saveRecipe = async (recipe: Recipe): Promise<Recipe> => {
@@ -630,7 +653,7 @@ export const saveRecipe = async (recipe: Recipe): Promise<Recipe> => {
   
   if (isBrowser()) {
     // 1. Immediately update LocalStorage for fast UI feedback
-    localStorage.setItem('khf_recipes_v36', JSON.stringify(updated));
+    localStorage.setItem(RECIPES_KEY, JSON.stringify(updated));
 
     // 2. Persist directly to MongoDB Cloud database
     try {
@@ -655,7 +678,7 @@ export const deleteRecipe = async (id: string): Promise<boolean> => {
   const filtered = recipes.filter(r => r.id !== id);
   if (recipes.length === filtered.length) return false;
   if (isBrowser()) {
-    localStorage.setItem('khf_recipes_v36', JSON.stringify(filtered));
+    localStorage.setItem(RECIPES_KEY, JSON.stringify(filtered));
     try {
       await fetch(`/api/recipes/${id}`, { method: 'DELETE' });
     } catch (err) {

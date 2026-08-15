@@ -121,7 +121,7 @@ export default function AdminAddIngredientPage() {
         imageUrl: finalImage,
       };
 
-      saveMasterIngredient(newIngredient);
+      await saveMasterIngredient(newIngredient);
       setIsSubmitting(false);
       setSuccessMsg(`"${name}" successfully saved to Predefined Master Library!`);
 

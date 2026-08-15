@@ -15,6 +15,7 @@ import {
   getMasterIngredients,
   saveMasterIngredient,
   deleteMasterIngredient,
+  slugify,
 } from "@/utils/recipeStore";
 
 export default function AdminDashboardPage() {
@@ -161,8 +162,10 @@ export default function AdminDashboardPage() {
           };
         });
 
+      const recipeSlug = slugify(editingRecipe.title);
       const recipeToSave: Recipe = {
         ...editingRecipe,
+        id: recipeSlug || editingRecipe.id,
         ingredients: cleanedIngredients,
         status: targetStatus,
       };
@@ -245,22 +248,22 @@ export default function AdminDashboardPage() {
   };
 
   // Master Ingredient Library Actions
-  const handleDeleteMasterIng = (id: string) => {
+  const handleDeleteMasterIng = async (id: string) => {
     if (confirm("Are you sure you want to delete this predefined ingredient from the library?")) {
-      deleteMasterIngredient(id);
+      await deleteMasterIngredient(id);
       loadData();
       if (editingMasterIng?.id === id) setEditingMasterIng(null);
     }
   };
 
-  const handleSaveMasterIng = (e: React.FormEvent) => {
+  const handleSaveMasterIng = async (e: React.FormEvent) => {
     e.preventDefault();
     if (editingMasterIng) {
       if (!editingMasterIng.name.trim()) {
         alert("Please enter ingredient name.");
         return;
       }
-      saveMasterIngredient(editingMasterIng);
+      await saveMasterIngredient(editingMasterIng);
       loadData();
       setEditingMasterIng(null);
       alert("Ingredient saved to Master Library & MongoDB!");

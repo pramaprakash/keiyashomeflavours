@@ -219,6 +219,7 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
               <Link
                 key={link.href}
                 href={link.href}
+                title={link.name}
                 className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-label-md text-xs font-bold transition-all duration-300 select-none ${
                   isActive
                     ? "bg-primary text-on-primary shadow-md scale-[1.03] border border-primary/10"
@@ -231,7 +232,7 @@ export default function Navbar({ onSearchChange, searchQuery = "", showSearch = 
                 >
                   {link.icon}
                 </span>
-                <span className="hidden lg:inline">{link.name}</span>
+                <span>{link.name}</span>
               </Link>
             );
           })}

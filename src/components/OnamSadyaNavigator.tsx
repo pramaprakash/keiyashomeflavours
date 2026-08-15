@@ -49,7 +49,7 @@ export default function OnamSadyaNavigator({
       category: "Sour Curd Curry",
       description: "Yam & plantain boiled down in thick sour pepper curd",
       icon: "soup_kitchen",
-      recipeId: "kalan-curry",
+      recipeId: "kurukku-kalan",
     },
     {
       id: "masala",

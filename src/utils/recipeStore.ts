@@ -87,6 +87,14 @@ export const PREDEFINED_INGREDIENTS: MasterIngredient[] = [
     category: "Spices"
   },
   {
+    id: "ing-mustard",
+    name: "Mustard Seeds (Kaduku)",
+    defaultAmount: "1 tsp",
+    benefit: "Essential popping aromatic spice for traditional Kerala oil tempering (Thalippu).",
+    imageUrl: "/images/mustard_user.jpg",
+    category: "Spices"
+  },
+  {
     id: "ing-fenugreek",
     name: "Fenugreek seeds",
     defaultAmount: "1/2 tsp",
@@ -223,6 +231,14 @@ export const PREDEFINED_INGREDIENTS: MasterIngredient[] = [
     category: "Produce"
   },
   {
+    id: "ing-potato",
+    name: "Fresh Potatoes (Urulakkizhangu)",
+    defaultAmount: "2 medium boiled & cubed",
+    benefit: "Comforting starchy staple essential for stew, roast & curries.",
+    imageUrl: "/images/potato_user.jpg",
+    category: "Produce"
+  },
+  {
     id: "ing-ash-gourd",
     name: "White Ash Gourd (Kumbalanga)",
     defaultAmount: "2 cups cubed",
@@ -244,6 +260,22 @@ export const PREDEFINED_INGREDIENTS: MasterIngredient[] = [
     defaultAmount: "1.5 cups chopped",
     benefit: "Mild, crunchy vegetable for thoran and kootu.",
     imageUrl: "/images/snake_gourd_user.jpg",
+    category: "Produce"
+  },
+  {
+    id: "ing-kovakka",
+    name: "Ivy Gourd (Kovakka / Tendli)",
+    defaultAmount: "1.5 cups sliced lengthwise",
+    benefit: "Crunchy green staple perfect for Kerala Kovakka Fry & Mezhukkupuratti.",
+    imageUrl: "/images/kovakka_user.jpg",
+    category: "Produce"
+  },
+  {
+    id: "ing-vellari",
+    name: "Malabar Cucumber (Kani Vellari / Golden Cucumber)",
+    defaultAmount: "2 cups cubed",
+    benefit: "Hydrating, crisp yellow melon essential for Kerala Pulissery, Kalan & Sambar.",
+    imageUrl: "/images/vellari_user.jpg",
     category: "Produce"
   },
   {
@@ -272,10 +304,10 @@ export const PREDEFINED_INGREDIENTS: MasterIngredient[] = [
   },
   {
     id: "ing-beans",
-    name: "French Beans",
-    defaultAmount: "1 cup chopped",
-    benefit: "Crisp green snap and fiber in thoran.",
-    imageUrl: "https://images.unsplash.com/photo-1567375698348-5d9d5ae99de0?q=80&w=400&auto=format&fit=crop",
+    name: "Yardlong Beans (Achinga Payar / Long Beans)",
+    defaultAmount: "1.5 cups finely chopped",
+    benefit: "Tender, crunchy long green beans essential for authentic Achinga Payar Thoran & Mezhukkupuratti.",
+    imageUrl: "/images/long_beans_user.jpg",
     category: "Produce"
   },
   {
@@ -351,6 +383,22 @@ export const PREDEFINED_INGREDIENTS: MasterIngredient[] = [
     category: "Spices"
   },
   {
+    id: "ing-curd",
+    name: "Fresh Whisked Curd (Thayir / Yogurt)",
+    defaultAmount: "1 cup whisked",
+    benefit: "Rich probiotic creamy base for Kerala Kalan, Pulissery, Pachadi & Moru Curry.",
+    imageUrl: "/images/curd_user.jpg",
+    category: "Dairy"
+  },
+  {
+    id: "ing-water",
+    name: "Pure Water (Vellam)",
+    defaultAmount: "As needed",
+    benefit: "Essential fluid for boiling, simmering, and adjusting curry consistency.",
+    imageUrl: "/images/water_user.jpg",
+    category: "Pantry"
+  },
+  {
     id: "ing-salt",
     name: "Pure Sea Salt (Uppu)",
     defaultAmount: "To taste",
@@ -400,6 +448,45 @@ export const DEFAULT_RECIPES: Recipe[] = [
     category: "lunch",
     status: "published",
     createdDate: "2026-08-12T22:56:00.000Z"
+  },
+  {
+    id: "kurukku-kalan",
+    title: "Kurukku Kalan",
+    description: "Kalan is a traditional Kerala Sadhya dish made with raw banana, yam, sour curd, coconut, and aromatic spices. This creamy, tangy, and flavorful dish is a must-have for an authentic Onam Sadhya.",
+    prepTime: "20 Mins",
+    serves: 4,
+    calories: "250 kcal",
+    difficulty: "Medium",
+    imageUrl: "/uploads/1786767293409-Firefly__7_.png",
+    videoUrl: "https://www.youtube.com/embed/RawqnrEo3Ks?si=-DSNa46AZULeli6K",
+    flavorProfile: { spicy: 2, tangy: 2, creamy: 3 },
+    story: "Heritage Kerala Sadhya delicacy simmered down to a thick, rich peppered curd gravity.",
+    chef: {
+      name: "Chef Keiya",
+      role: "Executive Chef & Founder",
+      avatarUrl: "/images/chef_keiya_avatar.jpg"
+    },
+    ingredients: [
+      { name: "Fresh Whisked Curd (Thayir / Yogurt)", amount: "1 cup whisked", benefit: "Rich probiotic creamy base for Kerala Kalan", imageUrl: "/images/curd_user.jpg" },
+      { name: "Raw Plantain (Raw Banana)", amount: "2 peeled & cubed", benefit: "Firm texture perfect for kalan", imageUrl: "/images/raw_banana_user.jpg" },
+      { name: "Grated coconut", amount: "2 cups fresh", benefit: "Essential creamy coconut base", imageUrl: "/images/grated_coconut.jpg" },
+      { name: "Turmeric Powder (Manjal Podi)", amount: "1/2 tsp", benefit: "Vibrant golden color", imageUrl: "/images/turmeric_powder_user.jpg" },
+      { name: "Black Pepper Powder (Kurumulaku)", amount: "1 tsp freshly ground", benefit: "Pungent sharp warmth", imageUrl: "/images/black_pepper_user.jpg" },
+      { name: "Red Chilly Powder (Mulaku Podi)", amount: "1 tbsp", benefit: "Fiery warmth and rich color", imageUrl: "/images/red_chilly_powder_user.jpg" },
+      { name: "Pure Coconut Oil (Velichenna)", amount: "2 tbsp", benefit: "Cold-pressed pure oil", imageUrl: "/images/coconut_oil_user.jpg" },
+      { name: "Curry leaves", amount: "2 sprigs", benefit: "Signature aroma", imageUrl: "/images/curry_leaves.jpg" },
+      { name: "Pure Sea Salt (Uppu)", amount: "To taste", benefit: "Essential seasoning", imageUrl: "/images/salt_user.jpg" }
+    ],
+    steps: [
+      { stepNumber: 1, text: "Peel and cut the raw banana into medium-sized pieces. Cook with salt, turmeric powder, chilly powder, pepper powder, and enough water until tender." },
+      { stepNumber: 2, text: "Once the water has almost dried up, add a coarsely ground paste of coconut, green chilly, and cumin. Mix well." },
+      { stepNumber: 3, text: "Cook until the coconut mixture is well combined and most of the moisture has evaporated." },
+      { stepNumber: 4, text: "Lower the flame and add the whisked curd. Mix gently and heat briefly. Do not let the curd boil. Switch off the flame." },
+      { stepNumber: 5, text: "Mix gently and serve as part of a traditional Kerala Sadhya." }
+    ],
+    category: "signature",
+    status: "published",
+    createdDate: "2026-08-15T04:14:38.990Z"
   }
 ];
 
@@ -408,9 +495,9 @@ const isBrowser = () => typeof window !== 'undefined';
 // Master Ingredients Store
 export const getMasterIngredients = (): MasterIngredient[] => {
   if (!isBrowser()) return PREDEFINED_INGREDIENTS;
-  const stored = localStorage.getItem('khf_master_ingredients_v35');
+  const stored = localStorage.getItem('khf_master_ingredients_v45');
   if (!stored) {
-    localStorage.setItem('khf_master_ingredients_v35', JSON.stringify(PREDEFINED_INGREDIENTS));
+    localStorage.setItem('khf_master_ingredients_v45', JSON.stringify(PREDEFINED_INGREDIENTS));
     return PREDEFINED_INGREDIENTS;
   }
   try {
@@ -474,10 +561,36 @@ const sanitizeRecipe = (r: Recipe): Recipe => {
 
 // Recipe Store
 export const getRecipes = (): Recipe[] => {
-  return DEFAULT_RECIPES.map(sanitizeRecipe);
+  if (!isBrowser()) return DEFAULT_RECIPES.map(sanitizeRecipe);
+  const stored = localStorage.getItem('khf_recipes_v36');
+  if (!stored) {
+    localStorage.setItem('khf_recipes_v36', JSON.stringify(DEFAULT_RECIPES));
+    return DEFAULT_RECIPES.map(sanitizeRecipe);
+  }
+  try {
+    const list = JSON.parse(stored);
+    return Array.isArray(list) && list.length > 0
+      ? list.map(sanitizeRecipe)
+      : DEFAULT_RECIPES.map(sanitizeRecipe);
+  } catch {
+    return DEFAULT_RECIPES.map(sanitizeRecipe);
+  }
 };
 
 export const fetchRecipesFromDB = async (): Promise<Recipe[]> => {
+  try {
+    const res = await fetch('/api/recipes', { cache: 'no-store' });
+    const data = await res.json();
+    if (data.success && Array.isArray(data.recipes) && data.recipes.length > 0) {
+      const sanitized = data.recipes.map(sanitizeRecipe);
+      if (isBrowser()) {
+        localStorage.setItem('khf_recipes_v36', JSON.stringify(sanitized));
+      }
+      return sanitized;
+    }
+  } catch (err) {
+    console.error('Failed to fetch recipes from DB API:', err);
+  }
   return getRecipes();
 };
 
@@ -490,7 +603,7 @@ export const fetchMasterIngredientsFromDB = async (): Promise<MasterIngredient[]
       const filtered = data.ingredients.filter((i: MasterIngredient) => validIds.has(i.id));
       const result = filtered.length > 0 ? filtered : PREDEFINED_INGREDIENTS;
       if (isBrowser()) {
-        localStorage.setItem('khf_master_ingredients_v35', JSON.stringify(result));
+        localStorage.setItem('khf_master_ingredients_v45', JSON.stringify(result));
       }
       return result;
     }
@@ -542,7 +655,7 @@ export const deleteRecipe = async (id: string): Promise<boolean> => {
   const filtered = recipes.filter(r => r.id !== id);
   if (recipes.length === filtered.length) return false;
   if (isBrowser()) {
-    localStorage.setItem('krishnas_kitchen_recipes', JSON.stringify(filtered));
+    localStorage.setItem('khf_recipes_v36', JSON.stringify(filtered));
     try {
       await fetch(`/api/recipes/${id}`, { method: 'DELETE' });
     } catch (err) {

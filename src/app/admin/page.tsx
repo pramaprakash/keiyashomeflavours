@@ -30,6 +30,10 @@ export default function AdminDashboardPage() {
   // Master Ingredient edit modal state
   const [editingMasterIng, setEditingMasterIng] = useState<MasterIngredient | null>(null);
 
+  // Category filter and search state for recipe ingredient selector toolbar
+  const [ingCategoryFilter, setIngCategoryFilter] = useState<string>("All");
+  const [ingSearchQuery, setIngSearchQuery] = useState<string>("");
+
   const loadData = async () => {
     // Fast initial load from cache
     setRecipes(getRecipes());
@@ -153,21 +157,33 @@ export default function AdminDashboardPage() {
     }
   };
 
-  // Select predefined ingredient into recipe
+  // Select predefined ingredient into recipe (Toggle on/off)
   const handleSelectPredefinedIngredient = (master: MasterIngredient) => {
     if (!editingRecipe) return;
-    setEditingRecipe({
-      ...editingRecipe,
-      ingredients: [
-        ...editingRecipe.ingredients,
-        {
-          name: master.name,
-          amount: master.defaultAmount || "1 portion",
-          benefit: master.benefit || "",
-          imageUrl: master.imageUrl || "",
-        },
-      ],
-    });
+    const exists = editingRecipe.ingredients.some(
+      (i) => i.name.toLowerCase() === master.name.toLowerCase()
+    );
+    if (exists) {
+      setEditingRecipe({
+        ...editingRecipe,
+        ingredients: editingRecipe.ingredients.filter(
+          (i) => i.name.toLowerCase() !== master.name.toLowerCase()
+        ),
+      });
+    } else {
+      setEditingRecipe({
+        ...editingRecipe,
+        ingredients: [
+          ...editingRecipe.ingredients,
+          {
+            name: master.name,
+            amount: master.defaultAmount || "1 portion",
+            benefit: master.benefit || "",
+            imageUrl: master.imageUrl || "",
+          },
+        ],
+      });
+    }
   };
 
   const handleAddCustomIngredient = () => {
@@ -602,27 +618,139 @@ export default function AdminDashboardPage() {
                     </button>
                   </div>
 
-                  {/* Predefined Chips Selector */}
-                  <div className="p-3 bg-surface-container-low rounded-xl border border-outline-variant/20">
-                    <p className="text-[11px] text-outline font-bold uppercase mb-2">
-                      Click to add predefined ingredient &amp; image:
-                    </p>
-                    <div className="flex flex-wrap gap-2 max-h-36 overflow-y-auto p-1">
-                      {masterIngredients.map((master) => (
-                        <button
-                          key={master.id}
-                          type="button"
-                          onClick={() => handleSelectPredefinedIngredient(master)}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest border border-outline-variant/40 hover:border-primary text-xs font-bold text-primary shadow-xs hover:scale-105 transition-all cursor-pointer"
-                        >
-                          <img
-                            src={master.imageUrl}
-                            alt={master.name}
-                            className="w-4 h-4 rounded-full object-cover"
-                          />
-                          <span>+ {master.name}</span>
-                        </button>
-                      ))}
+                  {/* Predefined Chips Selector Category-wise */}
+                  <div className="p-3.5 bg-surface-container-low rounded-2xl border border-outline-variant/30 space-y-3">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                      <p className="text-[11px] text-outline font-bold uppercase tracking-wider">
+                        Click ingredient to add to recipe:
+                      </p>
+                      {/* Search Bar */}
+                      <div className="relative w-full sm:w-48">
+                        <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-xs text-outline pointer-events-none">
+                          search
+                        </span>
+                        <input
+                          type="text"
+                          placeholder="Filter ingredients..."
+                          value={ingSearchQuery}
+                          onChange={(e) => setIngSearchQuery(e.target.value)}
+                          className="w-full pl-7 pr-3 py-1 bg-surface-container-lowest border border-outline-variant/40 rounded-lg text-xs font-medium text-primary focus:outline-none focus:border-primary"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Category Filter Pills */}
+                    <div className="flex flex-wrap gap-1.5 border-b border-outline-variant/20 pb-2">
+                      {["All", "Produce", "Spices", "Pantry", "Dairy", "Grains", "Herbs"].map((cat) => {
+                        const count = cat === "All"
+                          ? masterIngredients.length
+                          : masterIngredients.filter((m) => (m.category || "General").toLowerCase() === cat.toLowerCase()).length;
+                        if (cat !== "All" && count === 0) return null;
+                        const isCatActive = ingCategoryFilter.toLowerCase() === cat.toLowerCase();
+                        return (
+                          <button
+                            key={cat}
+                            type="button"
+                            onClick={() => setIngCategoryFilter(cat)}
+                            className={`px-2.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer ${
+                              isCatActive
+                                ? "bg-primary text-on-primary shadow-xs"
+                                : "bg-surface-container-lowest text-outline hover:text-primary hover:bg-surface-container-high border border-outline-variant/30"
+                            }`}
+                          >
+                            {cat} ({count})
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Grouped Category Wise List */}
+                    <div className="max-h-52 overflow-y-auto pr-1 space-y-3">
+                      {(() => {
+                        const categories = Array.from(
+                          new Set(masterIngredients.map((m) => m.category || "General"))
+                        ).sort();
+
+                        const filteredMasters = masterIngredients.filter((master) => {
+                          const matchesCat =
+                            ingCategoryFilter === "All" ||
+                            (master.category || "General").toLowerCase() === ingCategoryFilter.toLowerCase();
+                          const matchesSearch =
+                            !ingSearchQuery.trim() ||
+                            master.name.toLowerCase().includes(ingSearchQuery.toLowerCase()) ||
+                            (master.category || "").toLowerCase().includes(ingSearchQuery.toLowerCase());
+                          return matchesCat && matchesSearch;
+                        });
+
+                        if (filteredMasters.length === 0) {
+                          return (
+                            <p className="text-center py-4 text-xs font-medium text-outline">
+                              No ingredients found for &quot;{ingSearchQuery}&quot;
+                            </p>
+                          );
+                        }
+
+                        // Display by Category Groups
+                        const displayedCategories = ingCategoryFilter === "All" && !ingSearchQuery.trim()
+                          ? categories
+                          : Array.from(new Set(filteredMasters.map((m) => m.category || "General"))).sort();
+
+                        return displayedCategories.map((catName) => {
+                          const catItems = filteredMasters.filter(
+                            (m) => (m.category || "General").toLowerCase() === catName.toLowerCase()
+                          );
+                          if (catItems.length === 0) return null;
+
+                          return (
+                            <div key={catName} className="space-y-1.5">
+                              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-primary border-b border-outline-variant/20 pb-0.5">
+                                <span>
+                                  {catName === "Produce" && "🥬"}
+                                  {catName === "Spices" && "🌶️"}
+                                  {catName === "Pantry" && "🏺"}
+                                  {catName === "Dairy" && "🧈"}
+                                  {catName === "Grains" && "🌾"}
+                                  {catName === "Herbs" && "🌿"}
+                                  {!["Produce","Spices","Pantry","Dairy","Grains","Herbs"].includes(catName) && "🥗"}
+                                </span>
+                                <span>{catName}</span>
+                                <span className="text-outline font-normal">({catItems.length})</span>
+                              </div>
+                              <div className="flex flex-wrap gap-1.5">
+                                {catItems.map((master) => {
+                                  const isSelected = editingRecipe.ingredients.some(
+                                    (i) => i.name.toLowerCase() === master.name.toLowerCase()
+                                  );
+                                  return (
+                                    <button
+                                      key={master.id}
+                                      type="button"
+                                      onClick={() => handleSelectPredefinedIngredient(master)}
+                                      className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold transition-all cursor-pointer border ${
+                                        isSelected
+                                          ? "bg-primary-container text-on-primary-container border-primary/50 shadow-xs"
+                                          : "bg-surface-container-lowest text-primary border-outline-variant/40 hover:border-primary hover:scale-105"
+                                      }`}
+                                    >
+                                      {master.imageUrl && (
+                                        <img
+                                          src={master.imageUrl}
+                                          alt={master.name}
+                                          className="w-4 h-4 rounded-full object-cover shrink-0"
+                                        />
+                                      )}
+                                      <span>{master.name}</span>
+                                      {isSelected && (
+                                        <span className="material-symbols-outlined text-xs font-black text-primary">check</span>
+                                      )}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          );
+                        });
+                      })()}
                     </div>
                   </div>
 

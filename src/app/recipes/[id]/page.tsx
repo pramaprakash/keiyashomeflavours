@@ -130,16 +130,20 @@ export default function RecipeDetailPage({ params }: PageProps) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
               {recipe.ingredients
-                .filter((ing) => ing && ing.name && ing.name.trim().toLowerCase() !== "ingredient")
+                .filter((ing) => ing && ing.name && ing.name.trim() !== "")
                 .map((ing, index) => {
                 const imgUrl =
-                  ing.imageUrl && !ing.imageUrl.includes("_1786")
-                    ? ing.imageUrl
-                    : PREDEFINED_INGREDIENTS.find(
-                        (m) =>
-                          m.name.toLowerCase().includes(ing.name.toLowerCase()) ||
-                          ing.name.toLowerCase().includes(m.name.toLowerCase())
-                      )?.imageUrl || "/images/grated_coconut.jpg";
+                  ing.imageUrl ||
+                  PREDEFINED_INGREDIENTS.find(
+                    (m) =>
+                      m.name.toLowerCase().includes(ing.name.toLowerCase()) ||
+                      ing.name.toLowerCase().includes(m.name.toLowerCase())
+                  )?.imageUrl ||
+                  "/images/grated_coconut.jpg";
+
+                const cleanName = ing.name
+                  .replace(/Grated Coconut\s*&\s*Cumin/gi, "Grated Coconut")
+                  .replace(/Pure Ghee\s*&\s*Curry Leaves/gi, "Curry Leaves");
 
                 return (
                   <div
@@ -150,19 +154,22 @@ export default function RecipeDetailPage({ params }: PageProps) {
                       <div className="w-full aspect-square bg-surface-variant rounded-xl mb-4 overflow-hidden border border-outline-variant/20">
                         <img
                           src={imgUrl}
-                          alt={ing.name}
+                          alt={cleanName}
                           className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
                         />
                       </div>
-                      <h4 className="font-headline-sm text-sm text-primary font-bold">
-                        {ing.name
-                          ? ing.name
-                              .replace(/Grated Coconut\s*&\s*Cumin/gi, "Grated Coconut")
-                              .replace(/Pure Ghee\s*&\s*Curry Leaves/gi, "Curry Leaves")
-                          : ""}
-                      </h4>
+                      <div className="flex justify-between items-start gap-2 mb-1">
+                        <h4 className="font-headline-sm text-sm text-primary font-bold">
+                          {cleanName}
+                        </h4>
+                        {ing.amount && (
+                          <span className="text-[10px] font-bold text-primary bg-primary-container/60 px-2 py-0.5 rounded-md shrink-0">
+                            {ing.amount}
+                          </span>
+                        )}
+                      </div>
                       {ing.benefit && (
-                        <p className="font-body-sm text-[11px] text-outline mt-2 leading-relaxed">
+                        <p className="font-body-sm text-[11px] text-outline mt-1.5 leading-relaxed">
                           {ing.benefit}
                         </p>
                       )}

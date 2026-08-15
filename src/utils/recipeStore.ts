@@ -429,10 +429,12 @@ export const DEFAULT_RECIPES: Recipe[] = [
     ingredients: [
       { name: "Pigeon Pea", amount: "1 cup roasted", benefit: "Protein-rich golden lentil base", imageUrl: "/images/pigeon_pea_user.jpg" },
       { name: "Green Chilly", amount: "3 slit", benefit: "Fresh sharp heat", imageUrl: "/images/green_chilly.jpg" },
-      { name: "Turmeric Powder", amount: "1/2 tsp", benefit: "Vibrant golden hue", imageUrl: "/images/turmeric_powder_user.jpg" },
+      { name: "Turmeric Powder (Manjal Podi)", amount: "1/2 tsp", benefit: "Vibrant golden hue", imageUrl: "/images/turmeric_powder_user.jpg" },
       { name: "Grated Coconut", amount: "1 cup fresh", benefit: "Rich creamy coconut base", imageUrl: "/images/grated_coconut.jpg" },
-      { name: "Salt", amount: "To taste", benefit: "Essential flavor seasoning", imageUrl: "/images/salt_user.jpg" },
+      { name: "Pure Sea Salt (Uppu)", amount: "To taste", benefit: "Essential flavor seasoning", imageUrl: "/images/salt_user.jpg" },
       { name: "Pure Coconut Oil (Velichenna)", amount: "2 tbsp", benefit: "Traditional Kerala sautéing oil", imageUrl: "/images/coconut_oil_user.jpg" },
+      { name: "Mustard Seeds (Kaduku)", amount: "1 tsp", benefit: "Essential popping aromatic spice for oil tempering", imageUrl: "/images/mustard_user.jpg" },
+      { name: "Pure Water (Vellam)", amount: "As needed", benefit: "Essential liquid for pressure cooking lentils", imageUrl: "/images/water_user.jpg" },
       { name: "Ginger", amount: "1 inch chopped", benefit: "Zesty digestive aromatic", imageUrl: "/images/ginger_user_root.jpg" },
       { name: "Garlic", amount: "4 cloves", benefit: "Savory aromatic depth", imageUrl: "/images/garlic.jpg" },
       { name: "Shallots", amount: "6 sliced", benefit: "Golden sautéed sweet aromatic", imageUrl: "/images/shallots_user.jpg" },
@@ -474,6 +476,10 @@ export const DEFAULT_RECIPES: Recipe[] = [
       { name: "Black Pepper Powder (Kurumulaku)", amount: "1 tsp freshly ground", benefit: "Pungent sharp warmth", imageUrl: "/images/black_pepper_user.jpg" },
       { name: "Red Chilly Powder (Mulaku Podi)", amount: "1 tbsp", benefit: "Fiery warmth and rich color", imageUrl: "/images/red_chilly_powder_user.jpg" },
       { name: "Pure Coconut Oil (Velichenna)", amount: "2 tbsp", benefit: "Cold-pressed pure oil", imageUrl: "/images/coconut_oil_user.jpg" },
+      { name: "Mustard Seeds (Kaduku)", amount: "1 tsp", benefit: "Essential popping aromatic spice for oil tempering", imageUrl: "/images/mustard_user.jpg" },
+      { name: "Pure Water (Vellam)", amount: "As needed", benefit: "Essential fluid for boiling vegetables & spices", imageUrl: "/images/water_user.jpg" },
+      { name: "Cumin seeds", amount: "1 tsp", benefit: "Aromatic, earthy warming spice essential for grinding paste", imageUrl: "/images/cumin_seeds.jpg" },
+      { name: "Fenugreek seeds", amount: "1/2 tsp", benefit: "Bittersweet aromatic punch for tempering", imageUrl: "/images/fenugreek.jpg" },
       { name: "Curry leaves", amount: "2 sprigs", benefit: "Signature aroma", imageUrl: "/images/curry_leaves.jpg" },
       { name: "Pure Sea Salt (Uppu)", amount: "To taste", benefit: "Essential seasoning", imageUrl: "/images/salt_user.jpg" }
     ],
@@ -487,13 +493,56 @@ export const DEFAULT_RECIPES: Recipe[] = [
     category: "signature",
     status: "published",
     createdDate: "2026-08-15T04:14:38.990Z"
+  },
+  {
+    id: "kerala-sadya-avial",
+    title: "Kerala Sadya Avial",
+    description: "The crown jewel of Kerala Sadya featuring a colorful medley of garden vegetables cooked with coarsely ground coconut, green chilies, cumin, sour curd, fresh curry leaves, and a drizzle of raw cold-pressed coconut oil.",
+    prepTime: "25 Mins",
+    serves: 6,
+    calories: "210 kcal",
+    difficulty: "Easy",
+    imageUrl: "/images/avial_curry_thumbnail.jpg",
+    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    flavorProfile: { spicy: 2, tangy: 3, creamy: 4 },
+    story: "Legend says Avial was created by Prince Bhima during exile. It remains the essential center-piece curry of the traditional Kerala Onam Sadya.",
+    chef: {
+      name: "Chef Keiya",
+      role: "Executive Chef & Founder",
+      avatarUrl: "/images/chef_keiya_avatar.jpg"
+    },
+    ingredients: [
+      { name: "Raw Plantain (Raw Banana)", amount: "1 peeled & batoned", benefit: "Firm starchy vegetable base for avial", imageUrl: "/images/raw_banana_user.jpg" },
+      { name: "Drumstick (Muringakka)", amount: "2 cut into 2-inch pieces", benefit: "Traditional aromatic Sadya vegetable", imageUrl: "/images/drumstick_user.jpg" },
+      { name: "Carrot", amount: "1 sliced into batons", benefit: "Natural sweet crunch and vibrant orange hue", imageUrl: "/images/carrot_user.jpg" },
+      { name: "Yardlong Beans (Achinga Payar / Long Beans)", amount: "6 cut into 2-inch pieces", benefit: "Fresh green vegetable body", imageUrl: "/images/long_beans_user.jpg" },
+      { name: "Ivy Gourd (Kovakka / Tendli)", amount: "6 quartered lengthwise", benefit: "Subtle crunch and traditional Sadya flavor", imageUrl: "/images/kovakka_user.jpg" },
+      { name: "Grated coconut", amount: "1.5 cups fresh", benefit: "Coarsely ground coconut paste base", imageUrl: "/images/grated_coconut.jpg" },
+      { name: "Green Chilly", amount: "4 slit", benefit: "Fresh aromatic green heat", imageUrl: "/images/green_chilly.jpg" },
+      { name: "Cumin seeds", amount: "1 tsp", benefit: "Aromatic ground coconut paste seasoning", imageUrl: "/images/cumin_seeds.jpg" },
+      { name: "Fresh Whisked Curd (Thayir / Yogurt)", amount: "1/2 cup whisked", benefit: "Tangy rich probiotic finish", imageUrl: "/images/curd_user.jpg" },
+      { name: "Pure Coconut Oil (Velichenna)", amount: "2 tbsp raw", benefit: "Quintessential uncooked aroma drizzled at the end", imageUrl: "/images/coconut_oil_user.jpg" },
+      { name: "Curry leaves", amount: "3 sprigs fresh", benefit: "Crushed fresh for signature Sadya aroma", imageUrl: "/images/curry_leaves.jpg" },
+      { name: "Turmeric Powder (Manjal Podi)", amount: "1/2 tsp", benefit: "Subtle warm yellow tint", imageUrl: "/images/turmeric_powder_user.jpg" },
+      { name: "Pure Sea Salt (Uppu)", amount: "To taste", benefit: "Essential seasoning", imageUrl: "/images/salt_user.jpg" }
+    ],
+    steps: [
+      { stepNumber: 1, text: "Cut all vegetables (raw banana, drumstick, carrot, long beans, kovakka) into uniform 2-inch baton strips." },
+      { stepNumber: 2, text: "Cook vegetables with turmeric powder, salt, and 1/2 cup water in a closed pot on medium heat until tender but firm." },
+      { stepNumber: 3, text: "Coarsely crush grated coconut, green chilies, and cumin seeds in a blender without adding water." },
+      { stepNumber: 4, text: "Add the crushed coconut paste to the cooked vegetables, mix gently without breaking the veggies, and cook for 2-3 minutes on low heat." },
+      { stepNumber: 5, text: "Turn off the heat, stir in whisked sour curd, drizzle raw pure coconut oil over the top, add crushed curry leaves, and cover tightly for 10 minutes before serving." }
+    ],
+    category: "lunch",
+    status: "published",
+    createdDate: "2026-08-15T05:00:00.000Z"
   }
 ];
 
 const isBrowser = () => typeof window !== 'undefined';
 
 const MASTER_INGREDIENTS_KEY = 'khf_master_ingredients_v46';
-const RECIPES_KEY = 'khf_recipes_v37';
+const RECIPES_KEY = 'khf_recipes_v39';
 
 // Master Ingredients Store
 export const getMasterIngredients = (): MasterIngredient[] => {

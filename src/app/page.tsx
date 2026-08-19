@@ -47,13 +47,17 @@ export default function DiscoverPage({
 
       // 2. Fetch fresh published recipes directly from MongoDB Cloud database
       const dbRecipes = await fetchRecipesFromDB();
-      const map = new Map<string, Recipe>();
-      cachedPublished.forEach((r) => map.set(r.id, r));
-      dbRecipes.forEach((r) => {
-        if (r.status === "published" || !r.status) map.set(r.id, r);
-      });
-
-      setRecipes(Array.from(map.values()));
+      if (dbRecipes && dbRecipes.length > 0) {
+        const publishedFromDB = dbRecipes.filter((r) => r.status === "published" || !r.status);
+        if (publishedFromDB.length > 0) {
+          const map = new Map<string, Recipe>();
+          // Fill defaults/cached first
+          cachedPublished.forEach((r) => map.set(r.id, r));
+          // DB recipes take precedence or add additional items
+          publishedFromDB.forEach((r) => map.set(r.id, r));
+          setRecipes(Array.from(map.values()));
+        }
+      }
     };
 
     loadRecipes();

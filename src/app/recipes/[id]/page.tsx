@@ -90,6 +90,11 @@ export default function RecipeDetailPage({ params }: PageProps) {
     })),
   };
 
+  // Sort ingredients strictly in alphabetical order (A to Z) for ALL recipes
+  const sortedIngredients = [...recipe.ingredients]
+    .filter((ing) => ing && ing.name && ing.name.trim() !== "")
+    .sort((a, b) => a.name.trim().localeCompare(b.name.trim()));
+
   return (
     <>
       <script
@@ -129,24 +134,21 @@ export default function RecipeDetailPage({ params }: PageProps) {
           </div>
         </section>
 
-
-
-
-
-        {/* Clean Ingredients List (No Checkboxes or Add buttons) */}
-        <section className="bg-surface-container-low py-16 px-margin-mobile md:px-margin-desktop">
+        {/* Alphabetically Ordered Ingredients List (A to Z) */}
+        <section className="bg-surface-container-low py-16 px-margin-mobile md:px-margin-desktop mt-8">
           <div className="max-w-5xl mx-auto">
             <div className="mb-10">
+              <span className="inline-block px-3.5 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold uppercase tracking-widest mb-2 font-black">
+                Alphabetical A–Z Pantry List
+              </span>
               <h3 className="font-headline-lg text-headline-lg text-primary mb-2 font-bold">The Essentials</h3>
               <p className="font-body-md text-body-md text-on-surface-variant">
-                Curated ingredient list with exact proportions and culinary benefits.
+                Curated ingredient list organized strictly in alphabetical order (A–Z) for every recipe.
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
-              {recipe.ingredients
-                .filter((ing) => ing && ing.name && ing.name.trim() !== "")
-                .map((ing, index) => {
+              {sortedIngredients.map((ing, index) => {
                 const imgUrl =
                   ing.imageUrl ||
                   PREDEFINED_INGREDIENTS.find(
@@ -163,7 +165,7 @@ export default function RecipeDetailPage({ params }: PageProps) {
                 return (
                   <div
                     key={index}
-                    className="p-5 rounded-2xl border border-outline-variant/30 bg-surface-container-lowest flex flex-col justify-between h-full group"
+                    className="p-5 rounded-2xl border border-outline-variant/30 bg-surface-container-lowest flex flex-col justify-between h-full group hover:shadow-md hover:border-primary/30 transition-all duration-300"
                   >
                     <div>
                       <div className="w-full aspect-square bg-surface-variant rounded-xl mb-4 overflow-hidden border border-outline-variant/20">

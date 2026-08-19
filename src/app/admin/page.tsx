@@ -78,9 +78,14 @@ export default function AdminDashboardPage() {
         method: "POST",
         body: formData,
       });
-      const data = await res.json();
-      if (data.success && data.url) {
-        return data.url;
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.url) {
+          return data.url;
+        }
+      } else {
+        const text = await res.text();
+        console.warn("Upload API status error:", res.status, text);
       }
     } catch (err) {
       console.error("Upload API failed, using base64 fallback:", err);

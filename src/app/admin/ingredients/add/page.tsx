@@ -52,11 +52,13 @@ export default function AdminAddIngredientPage() {
           method: "POST",
           body: formData,
         });
-        const data = await res.json();
-        if (data.success && data.url) {
-          setImagePreview(data.url);
-          setImageUrl(data.url);
-          return;
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && data.url) {
+            setImagePreview(data.url);
+            setImageUrl(data.url);
+            return;
+          }
         }
       } catch (err) {
         console.error("API upload error, using local FileReader fallback:", err);

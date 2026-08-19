@@ -29,14 +29,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: "No DB connection configured" });
     }
 
-    const { id } = body;
+    const { id, _id, ...updateData } = body;
     if (!id) {
       return NextResponse.json({ success: false, error: "Ingredient ID required" }, { status: 400 });
     }
 
     const updated = await MasterIngredientModel.findOneAndUpdate(
       { id },
-      { ...body },
+      { $set: { id, ...updateData } },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
 

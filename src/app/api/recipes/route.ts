@@ -31,14 +31,14 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { id } = body;
+    const { id, _id, ...updateData } = body;
     if (!id) {
       return NextResponse.json({ success: false, error: "Recipe ID required" }, { status: 400 });
     }
 
     const updatedRecipe = await RecipeModel.findOneAndUpdate(
       { id },
-      { ...body },
+      { $set: { id, ...updateData } },
       { upsert: true, returnDocument: "after", setDefaultsOnInsert: true }
     );
 

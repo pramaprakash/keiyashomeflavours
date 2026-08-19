@@ -405,6 +405,38 @@ export const PREDEFINED_INGREDIENTS: MasterIngredient[] = [
     benefit: "Essential seasoning that draws out natural flavors and balances taste.",
     imageUrl: "/images/salt_user.jpg",
     category: "Pantry"
+  },
+  {
+    id: "ing-beans",
+    name: "French Beans (Beans / Payar)",
+    defaultAmount: "1 cup chopped",
+    benefit: "Crisp, fiber-rich green pods perfect for Thoran, Avial, Mezhukkupuratti & Sambar.",
+    imageUrl: "/images/beans_user.jpg",
+    category: "Produce"
+  },
+  {
+    id: "ing-cinnamon",
+    name: "Cinnamon Sticks (Karuvapatta)",
+    defaultAmount: "1 inch stick",
+    benefit: "Sweet woody warmth and rich fragrance for Biryani, Ghee Rice, Garam Masala & Kerala Curries.",
+    imageUrl: "/images/cinnamon_user.jpg",
+    category: "Spices"
+  },
+  {
+    id: "ing-clove",
+    name: "Whole Cloves (Krambu / Grambu)",
+    defaultAmount: "4 whole cloves",
+    benefit: "Intense aromatic warm pungent spice essential for Kerala Biryani, Stews, Meat curries & Whole Garam Masala.",
+    imageUrl: "/images/clove_user.jpg",
+    category: "Spices"
+  },
+  {
+    id: "ing-cardamom",
+    name: "Green Cardamom (Elakka)",
+    defaultAmount: "3 pods crushed",
+    benefit: "Sweet floral eucalyptus aroma essential for Payasam, Biryani, Tea, Ghee Rice & Kerala Desserts.",
+    imageUrl: "/images/cardamom_user.jpg",
+    category: "Spices"
   }
 ];
 
@@ -536,13 +568,69 @@ export const DEFAULT_RECIPES: Recipe[] = [
     category: "lunch",
     status: "published",
     createdDate: "2026-08-15T05:00:00.000Z"
+  },
+  {
+    id: "kerala-vegetable-masala-curry",
+    title: "Kerala Vegetable Masala Curry",
+    description: "A rich, fragrant heritage Kerala curry featuring tender garden vegetables simmered in a roasted coconut, onion, tomato, and aromatic spice gravy.",
+    prepTime: "25 Mins",
+    serves: 5,
+    calories: "230 kcal",
+    difficulty: "Medium",
+    imageUrl: "/images/masala_curry_thumbnail.jpg",
+    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    flavorProfile: { spicy: 3, tangy: 2, creamy: 4 },
+    story: "A beloved classic served alongside Appam, Kerala Parotta, Ghee Rice, and Chapati in traditional Malabar and Central Travancore homes.",
+    chef: {
+      name: "Chef Keiya",
+      role: "Executive Chef & Founder",
+      avatarUrl: "/images/chef_keiya_avatar.jpg"
+    },
+    ingredients: [
+      { name: "Potato (Urulaikizhangu)", amount: "2 cubed", benefit: "Tender starchy vegetable base that absorbs rich masala gravy", imageUrl: "/images/potato_user.jpg" },
+      { name: "French Beans (Beans / Payar)", amount: "1 cup chopped", benefit: "Crisp, fiber-rich green pods", imageUrl: "/images/beans_user.jpg" },
+      { name: "Cauliflower", amount: "1 cup florets", benefit: "Absorbs rich spice flavors", imageUrl: "/images/cauliflower_user.jpg" },
+      { name: "Carrot", amount: "1 sliced", benefit: "Natural sweet crunch and vibrant orange hue", imageUrl: "/images/carrot_user.jpg" },
+      { name: "Green Peas (Pachapattani)", amount: "1/2 cup cooked", benefit: "Sweet tender green pearls", imageUrl: "/images/green_peas_user.jpg" },
+      { name: "Onion (Savarola)", amount: "1 sliced", benefit: "Sweet sautéed aromatic base", imageUrl: "/images/onion.jpg" },
+      { name: "Tomatoes (Thakkali)", amount: "1 finely chopped", benefit: "Tangy rich gravy body", imageUrl: "/images/tomato_user.jpg" },
+      { name: "Ginger", amount: "1 inch finely chopped", benefit: "Zesty digestive aromatic warmth", imageUrl: "/images/ginger_user_root.jpg" },
+      { name: "Garlic", amount: "5 cloves crushed", benefit: "Savory aromatic depth", imageUrl: "/images/garlic.jpg" },
+      { name: "Green Chilly", amount: "3 slit", benefit: "Fresh green heat", imageUrl: "/images/green_chilly.jpg" },
+      { name: "Cinnamon Sticks (Karuvapatta)", amount: "1 stick whole", benefit: "Sweet woody aroma", imageUrl: "/images/cinnamon_user.jpg" },
+      { name: "Whole Cloves (Krambu / Grambu)", amount: "3 whole", benefit: "Warm pungent spice fragrance", imageUrl: "/images/clove_user.jpg" },
+      { name: "Green Cardamom (Elakka)", amount: "2 pods crushed", benefit: "Eucalyptus sweet aroma", imageUrl: "/images/cardamom_user.jpg" },
+      { name: "Turmeric Powder (Manjal Podi)", amount: "1/2 tsp", benefit: "Golden color", imageUrl: "/images/turmeric_powder_user.jpg" },
+      { name: "Red Chilly Powder (Mulaku Podi)", amount: "1 tbsp", benefit: "Rich red color & spicy kick", imageUrl: "/images/red_chilly_powder_user.jpg" },
+      { name: "Coriander Powder (Malli Podi)", amount: "1.5 tbsp", benefit: "Earthy body for curry gravy", imageUrl: "/images/coriander_powder_user.jpg" },
+      { name: "Garam Masala", amount: "1 tsp", benefit: "Final aromatic finishing spice blend", imageUrl: "/images/garam_masala_user.jpg" },
+      { name: "Grated coconut (Coconut Milk)", amount: "2 cups for 1st & 2nd extract", benefit: "Rich creamy coconut milk base", imageUrl: "/images/grated_coconut.jpg" },
+      { name: "Pure Coconut Oil (Velichenna)", amount: "2 tbsp", benefit: "Traditional sautéing & tempering oil", imageUrl: "/images/coconut_oil_user.jpg" },
+      { name: "Curry leaves", amount: "2 sprigs", benefit: "Signature aroma", imageUrl: "/images/curry_leaves.jpg" },
+      { name: "Pure Sea Salt (Uppu)", amount: "To taste", benefit: "Essential seasoning", imageUrl: "/images/salt_user.jpg" }
+    ],
+    steps: [
+      { stepNumber: 1, text: "Heat coconut oil in a pan. Add cloves, cardamom, and cinnamon, and sauté until fragrant." },
+      { stepNumber: 2, text: "Add the sliced onion and sauté until it turns soft and lightly golden." },
+      { stepNumber: 3, text: "Add the tomato and cook until it becomes soft." },
+      { stepNumber: 4, text: "Add chilli powder, coriander powder, garam masala, and turmeric powder. Mix well and sauté until the raw smell of the spices disappears." },
+      { stepNumber: 5, text: "Add curry leaves and mix well." },
+      { stepNumber: 6, text: "Add the potatoes and cook them in the second extract of coconut milk along with some water. Season with salt and stir occasionally." },
+      { stepNumber: 7, text: "Once the potatoes are partially cooked, add the beans and cauliflower. Continue cooking until the vegetables are almost done." },
+      { stepNumber: 8, text: "Add the carrots and cooked green peas. Mix gently and cook until all the vegetables are tender and the excess water has reduced." },
+      { stepNumber: 9, text: "Pour in the first extract of coconut milk and mix gently." },
+      { stepNumber: 10, text: "Simmer on low heat and reduce the curry to your desired consistency. Avoid boiling vigorously after adding the first coconut milk." }
+    ],
+    category: "lunch",
+    status: "published",
+    createdDate: "2026-08-19T19:40:00.000Z"
   }
 ];
 
 const isBrowser = () => typeof window !== 'undefined';
 
-const MASTER_INGREDIENTS_KEY = 'khf_master_ingredients_v46';
-const RECIPES_KEY = 'khf_recipes_v42';
+const MASTER_INGREDIENTS_KEY = 'khf_master_ingredients_v53';
+const RECIPES_KEY = 'khf_recipes_v46';
 
 // Master Ingredients Store
 export const getMasterIngredients = (): MasterIngredient[] => {
@@ -570,7 +658,11 @@ export const saveMasterIngredient = async (ingredient: MasterIngredient): Promis
     updated = [ingredient, ...list];
   }
   if (isBrowser()) {
-    localStorage.setItem(MASTER_INGREDIENTS_KEY, JSON.stringify(updated));
+    try {
+      localStorage.setItem(MASTER_INGREDIENTS_KEY, JSON.stringify(updated));
+    } catch (e) {
+      console.warn("LocalStorage setItem quota exceeded for ingredients:", e);
+    }
     try {
       await fetch('/api/ingredients', {
         method: 'POST',
@@ -601,6 +693,7 @@ export const deleteMasterIngredient = async (id: string): Promise<boolean> => {
 
 const sanitizeRecipe = (r: Recipe): Recipe => {
   if (!r || !Array.isArray(r.ingredients)) return r;
+  const masterList = PREDEFINED_INGREDIENTS;
   return {
     ...r,
     ingredients: r.ingredients
@@ -609,9 +702,22 @@ const sanitizeRecipe = (r: Recipe): Recipe => {
         let name = ing.name || "";
         name = name.replace(/Grated Coconut\s*&\s*Cumin/gi, "Grated Coconut");
         name = name.replace(/Pure Ghee\s*&\s*Curry Leaves/gi, "Curry Leaves");
+
+        const matchedMaster = masterList.find(
+          (m) =>
+            m.name.toLowerCase().includes(name.toLowerCase()) ||
+            name.toLowerCase().includes(m.name.toLowerCase())
+        );
+
+        const imageUrl =
+          ing.imageUrl && ing.imageUrl.trim() !== ""
+            ? ing.imageUrl
+            : matchedMaster?.imageUrl || "/images/grated_coconut.jpg";
+
         return {
           ...ing,
           name: name,
+          imageUrl: imageUrl,
         };
       }),
   };
@@ -708,8 +814,12 @@ export const saveRecipe = async (recipe: Recipe): Promise<Recipe> => {
   }
   
   if (isBrowser()) {
-    // 1. Immediately update LocalStorage for fast UI feedback
-    localStorage.setItem(RECIPES_KEY, JSON.stringify(updated));
+    // 1. Update LocalStorage with safety check
+    try {
+      localStorage.setItem(RECIPES_KEY, JSON.stringify(updated));
+    } catch (e) {
+      console.warn("LocalStorage setItem quota exceeded for recipes:", e);
+    }
 
     // 2. Persist directly to MongoDB Cloud database
     try {

@@ -128,56 +128,93 @@ export default function AdminDashboardPage() {
     }
   };
 
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [isPublishing, setIsPublishing] = useState<boolean>(false);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 4000);
+  };
+
   // Toggle publish status directly from list view
   const handleTogglePublishStatus = async (recipeToToggle: Recipe) => {
     const newStatus = recipeToToggle.status === "published" ? "draft" : "published";
     const updated = { ...recipeToToggle, status: newStatus as "draft" | "published" };
-    await saveRecipe(updated);
-    loadData();
-    alert(
-      newStatus === "published"
-        ? `"${updated.title}" has been Published and is now live on the Home Page!`
-        : `"${updated.title}" changed to Draft (hidden from Home Page).`
-    );
+    
+    setIsPublishing(true);
+    setRecipes((prev) => prev.map((r) => (r.id === updated.id ? updated : r)));
+
+    try {
+      await saveRecipe(updated);
+      await loadData();
+      showToast(
+        newStatus === "published"
+          ? `🎉 "${updated.title}" is now Published!`
+          : `ℹ️ "${updated.title}" changed to Draft.`
+      );
+    } catch (err) {
+      console.error(err);
+      showToast("❌ Failed to update recipe status.");
+    } finally {
+      setIsPublishing(false);
+    }
   };
 
   const handleSaveRecipe = async (targetStatus: "draft" | "published" = "published") => {
-    if (editingRecipe) {
-      if (!editingRecipe.title.trim()) {
-        alert("Please enter a recipe title.");
-        return;
+    if (!editingRecipe) return;
+
+    if (!editingRecipe.title.trim()) {
+      alert("Please enter a recipe title.");
+      return;
+    }
+
+    setIsPublishing(true);
+
+    const cleanedIngredients = editingRecipe.ingredients
+      .filter((ing) => ing && ing.name && ing.name.trim() !== "")
+      .map((ing) => {
+        const matchedMaster = masterIngredients.find(
+          (m) => m.name.toLowerCase() === ing.name.trim().toLowerCase()
+        );
+        return {
+          name: ing.name.trim(),
+          amount: ing.amount && ing.amount.trim() ? ing.amount.trim() : "As needed",
+          benefit: ing.benefit || matchedMaster?.benefit || "",
+          imageUrl: ing.imageUrl || matchedMaster?.imageUrl || "",
+        };
+      });
+
+    const recipeSlug = slugify(editingRecipe.title);
+    const recipeToSave: Recipe = {
+      ...editingRecipe,
+      id: recipeSlug || editingRecipe.id,
+      ingredients: cleanedIngredients,
+      status: targetStatus,
+    };
+
+    // Close modal immediately and update state for fast feedback
+    setEditingRecipe(null);
+    setRecipes((prev) => {
+      const idx = prev.findIndex((r) => r.id === recipeToSave.id);
+      if (idx > -1) {
+        return prev.map((r) => (r.id === recipeToSave.id ? recipeToSave : r));
       }
-      // Clean and ensure every ingredient has valid properties and images
-      const cleanedIngredients = editingRecipe.ingredients
-        .filter((ing) => ing && ing.name && ing.name.trim() !== "")
-        .map((ing) => {
-          const matchedMaster = masterIngredients.find(
-            (m) => m.name.toLowerCase() === ing.name.trim().toLowerCase()
-          );
-          return {
-            name: ing.name.trim(),
-            amount: ing.amount && ing.amount.trim() ? ing.amount.trim() : "As needed",
-            benefit: ing.benefit || matchedMaster?.benefit || "",
-            imageUrl: ing.imageUrl || matchedMaster?.imageUrl || "",
-          };
-        });
+      return [recipeToSave, ...prev];
+    });
 
-      const recipeSlug = slugify(editingRecipe.title);
-      const recipeToSave: Recipe = {
-        ...editingRecipe,
-        id: recipeSlug || editingRecipe.id,
-        ingredients: cleanedIngredients,
-        status: targetStatus,
-      };
-
+    try {
       await saveRecipe(recipeToSave);
-      loadData();
-      setEditingRecipe(null);
-      alert(
+      await loadData();
+      showToast(
         targetStatus === "published"
-          ? `Recipe "${editingRecipe.title}" published successfully! It is now live on the Home Page and saved in MongoDB.`
-          : `Recipe "${editingRecipe.title}" saved as a Draft in MongoDB.`
+          ? `🎉 "${recipeToSave.title}" has been Published!`
+          : `💾 "${recipeToSave.title}" saved as Draft.`
       );
+    } catch (err) {
+      console.error(err);
+      showToast("❌ Error saving recipe.");
+    } finally {
+      setIsPublishing(false);
     }
   };
 
@@ -284,6 +321,13 @@ export default function AdminDashboardPage() {
   return (
     <>
       <Navbar showSearch={false} />
+
+      {/* Floating Toast Notification */}
+      {toastMessage && (
+        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[150] bg-primary text-on-primary px-6 py-3 rounded-2xl shadow-2xl font-bold text-sm flex items-center gap-2 border border-primary/20 animate-bounce">
+          <span>{toastMessage}</span>
+        </div>
+      )}
 
       <main className="pt-28 pb-32 max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop">
         {/* Admin Header */}

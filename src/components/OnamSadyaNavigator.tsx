@@ -124,13 +124,49 @@ export default function OnamSadyaNavigator({
       recipeId: "inji-puli",
     },
     {
-      id: "payasam",
-      name: "Palada Payasam",
-      malayalam: "പാലട പായസം",
-      category: "Payasam",
-      description: "Silky rice ada slow cooked in sweetened cardamom milk",
+      id: "beans-carrot-thoran",
+      name: "Beans Carrot Thoran",
+      malayalam: "ബീൻസ് കാര്യറ്റ് തോരൻ",
+      category: "Side Stir-Fry",
+      description: "Crisp green beans & sweet carrots stir-fried with coconut",
+      icon: "restaurant",
+      recipeId: "beans-carrot-thoran",
+    },
+    {
+      id: "payar-mezhukkupuratti",
+      name: "Payar Mezhukkupuratti",
+      malayalam: "പയർ മെഴുക്കുപുരട്ടി",
+      category: "Roast Relish",
+      description: "Long green beans slow roasted in coconut oil & garlic",
+      icon: "skillet",
+      recipeId: "payar-mezhukkupuratti",
+    },
+    {
+      id: "pineapple-pachadi",
+      name: "Pineapple Pachadi",
+      malayalam: "പൈനാപ്പിൾ പച്ചടി",
+      category: "Sweet & Sour",
+      description: "Juicy pineapple cooked in jaggery & coconut mustard curd",
+      icon: "nutrition",
+      recipeId: "pineapple-pachadi",
+    },
+    {
+      id: "parippu-payasam",
+      name: "Parippu Payasam",
+      malayalam: "പരിപ്പു പായസം",
+      category: "Grand Payasam",
+      description: "Roasted moong dal slow cooked in jaggery & thick coconut milk",
       icon: "cookie",
-      recipeId: "palada-payasam",
+      recipeId: "parippu-payasam",
+    },
+    {
+      id: "kerala-olan",
+      name: "Kerala Sadya Olan",
+      malayalam: "ഓലൻ",
+      category: "Coconut Stew",
+      description: "White ash gourd & red cowpeas gently cooked in pure coconut milk",
+      icon: "soup_kitchen",
+      recipeId: "kerala-olan",
     },
   ];
 
@@ -152,7 +188,7 @@ export default function OnamSadyaNavigator({
               The Grand Onam Sadya Experience
             </h3>
             <p className="text-emerald-200/80 text-xs md:text-sm mt-1 max-w-2xl leading-relaxed">
-              Explore the traditional 26-item Kerala festival feast served on a fresh banana leaf. Click any delicacy below to jump directly to its recipe and masterclass instructions.
+              Explore the traditional 12-item Kerala festival feast served on a fresh banana leaf. Click any delicacy below to jump directly to its recipe and masterclass instructions.
             </p>
           </div>
 

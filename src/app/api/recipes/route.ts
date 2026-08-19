@@ -23,7 +23,6 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
     const conn = await connectToDatabase();
 
     if (!conn) {
@@ -31,6 +30,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, message: "No DB connection configured" }, { status: 503 });
     }
 
+    const body = await request.json();
     const { id } = body;
     if (!id) {
       return NextResponse.json({ success: false, error: "Recipe ID required" }, { status: 400 });

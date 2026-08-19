@@ -639,12 +639,19 @@ export const fetchRecipesFromDB = async (): Promise<Recipe[]> => {
   try {
     const res = await fetch('/api/recipes', { cache: 'no-store' });
     const data = await res.json();
-    if (data.success && Array.isArray(data.recipes) && data.recipes.length > 0) {
-      const sanitized = data.recipes.map(sanitizeRecipe);
+    if (data.success && Array.isArray(data.recipes)) {
+      const sanitizedDB = data.recipes.map(sanitizeRecipe);
+      
+      // Always merge default built-in recipes with DB recipes so defaults are never lost
+      const map = new Map<string, Recipe>();
+      DEFAULT_RECIPES.forEach((r) => map.set(r.id, sanitizeRecipe(r)));
+      sanitizedDB.forEach((r: Recipe) => map.set(r.id, r));
+      
+      const merged = Array.from(map.values());
       if (isBrowser()) {
-        localStorage.setItem(RECIPES_KEY, JSON.stringify(sanitized));
+        localStorage.setItem(RECIPES_KEY, JSON.stringify(merged));
       }
-      return sanitized;
+      return merged;
     }
   } catch (err) {
     console.error('Failed to fetch recipes from DB API:', err);

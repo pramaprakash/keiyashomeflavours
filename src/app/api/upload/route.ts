@@ -16,23 +16,28 @@ export async function POST(req: Request) {
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+    const mimeType = file.type || "image/jpeg";
+    const base64Data = buffer.toString("base64");
+    const dataUrl = `data:${mimeType};base64,${base64Data}`;
 
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
+    // Try saving locally to public/uploads if filesystem is writable
+    try {
+      const uploadsDir = path.join(process.cwd(), "public", "uploads");
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+      const cleanFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+      const fileName = `${Date.now()}-${cleanFileName}`;
+      const filePath = path.join(uploadsDir, fileName);
+      fs.writeFileSync(filePath, buffer);
+    } catch (e) {
+      console.warn("Read-only serverless filesystem detected, using persistent cloud Data URL:", e);
     }
 
-    const cleanFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
-    const fileName = `${Date.now()}-${cleanFileName}`;
-    const filePath = path.join(uploadsDir, fileName);
-
-    fs.writeFileSync(filePath, buffer);
-
-    const publicUrl = `/uploads/${fileName}`;
-
+    // Return cloud-persistent Data URL stored in MongoDB Cloud
     return NextResponse.json({
       success: true,
-      url: publicUrl,
+      url: dataUrl,
     });
   } catch (error) {
     console.error("Image upload API error:", error);

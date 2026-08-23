@@ -53,4 +53,6 @@ const RecipeSchema = new Schema<IRecipeDoc>(
   }
 );
 
+RecipeSchema.index({ createdAt: -1 });
+
 export default mongoose.models.Recipe || mongoose.model<IRecipeDoc>("Recipe", RecipeSchema);

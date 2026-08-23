@@ -12,7 +12,7 @@ export async function GET() {
       return NextResponse.json({ success: false, source: "memory", recipes: [] });
     }
 
-    const recipes = await RecipeModel.find({}).sort({ createdAt: -1 });
+    const recipes = await RecipeModel.find({}).sort({ createdAt: -1 }).allowDiskUse(true).lean();
 
     return NextResponse.json({ success: true, source: "mongodb", recipes });
   } catch (error) {

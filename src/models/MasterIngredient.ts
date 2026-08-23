@@ -19,5 +19,7 @@ const MasterIngredientSchema = new Schema<IMasterIngredientDoc>(
   }
 );
 
+MasterIngredientSchema.index({ createdAt: -1 });
+
 export default mongoose.models.MasterIngredient ||
   mongoose.model<IMasterIngredientDoc>("MasterIngredient", MasterIngredientSchema);

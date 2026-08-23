@@ -55,8 +55,80 @@ export interface Recipe {
 
 export const PREDEFINED_INGREDIENTS: MasterIngredient[] = [
   {
+    id: "ing-long-beans",
+    name: "Yardlong Beans (Achinga Payar / Long Beans)",
+    defaultAmount: "1.5 cups finely chopped",
+    benefit: "Tender, crunchy long green beans essential for authentic Achinga Payar Thoran & Mezhukkupuratti.",
+    imageUrl: "/images/long_beans_user.jpg",
+    category: "Produce"
+  },
+  {
+    id: "ing-white-vinegar",
+    name: "White Vinegar (Vinagiri)",
+    defaultAmount: "1 tbsp",
+    benefit: "Sharp acidic punch essential for pickles, vindaloo, fish preserves, and marinations.",
+    imageUrl: "/images/white_vinegar_user.jpg",
+    category: "Pantry"
+  },
+  {
+    id: "ing-sugar",
+    name: "White Sugar (Panchasara)",
+    defaultAmount: "1/2 cup (or to taste)",
+    benefit: "Pure clean sweetness for payasams, beverages, and traditional desserts.",
+    imageUrl: "/images/sugar_user.jpg",
+    category: "Pantry"
+  },
+  {
+    id: "ing-cashews",
+    name: "Cashew Nuts (Kashu Andi)",
+    defaultAmount: "2 tbsp split",
+    benefit: "Buttery crunchy nuts fried golden for ghee garnishing, payasams, and royal curries.",
+    imageUrl: "/images/cashew_user.jpg",
+    category: "Pantry"
+  },
+  {
+    id: "ing-ghee",
+    name: "Pure Ghee (Neyyu)",
+    defaultAmount: "2 tbsp",
+    benefit: "Golden clarified butter delivering heavenly nutty aroma and traditional richness.",
+    imageUrl: "/images/ghee_user.jpg",
+    category: "Dairy"
+  },
+  {
+    id: "ing-condensed-milk",
+    name: "Sweetened Condensed Milk",
+    defaultAmount: "1/2 cup (or to taste)",
+    benefit: "Luscious, creamy sweetness essential for rich Payasams, kheer, and traditional desserts.",
+    imageUrl: "/images/condensed_milk.jpg",
+    category: "Dairy"
+  },
+  {
+    id: "ing-fresh-cream",
+    name: "Fresh Cream",
+    defaultAmount: "1/4 cup",
+    benefit: "Rich, velvety dairy smoothness for gravies, royal curries, and desserts.",
+    imageUrl: "/images/fresh_cream.jpg",
+    category: "Dairy"
+  },
+  {
+    id: "ing-tender-coconut",
+    name: "Tender Coconut (Karikku)",
+    defaultAmount: "1 cup pulp & water",
+    benefit: "Refreshing, sweet, hydrating delicacy used for Elaneer Payasam, puddings, and summer coolers.",
+    imageUrl: "/images/tender_coconut.jpg",
+    category: "Produce"
+  },
+  {
+    id: "ing-raw-mango",
+    name: "Raw Mango (Pacha Manga)",
+    defaultAmount: "1/2 cup sliced",
+    benefit: "Tangy, sharp, appetizing sourness essential for Kerala fish curries, Manga Pulissery, and pickles.",
+    imageUrl: "/images/raw_mango.jpg",
+    category: "Produce"
+  },
+  {
     id: "ing-grated-coconut",
-    name: "Grated coconut",
+    name: "Coconut",
     defaultAmount: "2 cups fresh",
     benefit: "Essential creamy, silky coconut base foundational for heritage recipes.",
     imageUrl: "/images/grated_coconut.jpg",
@@ -303,14 +375,6 @@ export const PREDEFINED_INGREDIENTS: MasterIngredient[] = [
     category: "Produce"
   },
   {
-    id: "ing-beans",
-    name: "Yardlong Beans (Achinga Payar / Long Beans)",
-    defaultAmount: "1.5 cups finely chopped",
-    benefit: "Tender, crunchy long green beans essential for authentic Achinga Payar Thoran & Mezhukkupuratti.",
-    imageUrl: "/images/long_beans_user.jpg",
-    category: "Produce"
-  },
-  {
     id: "ing-green-peas",
     name: "Dried Green Peas",
     defaultAmount: "1 cup soaked",
@@ -407,7 +471,7 @@ export const PREDEFINED_INGREDIENTS: MasterIngredient[] = [
     category: "Pantry"
   },
   {
-    id: "ing-beans",
+    id: "ing-french-beans",
     name: "French Beans (Beans / Payar)",
     defaultAmount: "1 cup chopped",
     benefit: "Crisp, fiber-rich green pods perfect for Thoran, Avial, Mezhukkupuratti & Sambar.",
@@ -629,7 +693,29 @@ export const DEFAULT_RECIPES: Recipe[] = [
 
 const isBrowser = () => typeof window !== 'undefined';
 
-const MASTER_INGREDIENTS_KEY = 'khf_master_ingredients_v53';
+const safeSetItem = (key: string, value: string) => {
+  if (!isBrowser()) return;
+  try {
+    localStorage.setItem(key, value);
+  } catch (e) {
+    try {
+      // Evict obsolete cache keys from older versions to free up space in localStorage
+      const keysToRemove: string[] = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && (k.startsWith("khf_") || k.startsWith("krishnas_")) && k !== key) {
+          keysToRemove.push(k);
+        }
+      }
+      keysToRemove.forEach((k) => localStorage.removeItem(k));
+      localStorage.setItem(key, value);
+    } catch {
+      // Data size exceeds browser storage limit; silently rely on MongoDB Cloud API
+    }
+  }
+};
+
+const MASTER_INGREDIENTS_KEY = 'khf_master_ingredients_v64';
 const RECIPES_KEY = 'khf_recipes_v46';
 
 // Master Ingredients Store
@@ -637,7 +723,7 @@ export const getMasterIngredients = (): MasterIngredient[] => {
   if (!isBrowser()) return PREDEFINED_INGREDIENTS;
   const stored = localStorage.getItem(MASTER_INGREDIENTS_KEY);
   if (!stored) {
-    localStorage.setItem(MASTER_INGREDIENTS_KEY, JSON.stringify(PREDEFINED_INGREDIENTS));
+    safeSetItem(MASTER_INGREDIENTS_KEY, JSON.stringify(PREDEFINED_INGREDIENTS));
     return PREDEFINED_INGREDIENTS;
   }
   try {
@@ -658,11 +744,7 @@ export const saveMasterIngredient = async (ingredient: MasterIngredient): Promis
     updated = [ingredient, ...list];
   }
   if (isBrowser()) {
-    try {
-      localStorage.setItem(MASTER_INGREDIENTS_KEY, JSON.stringify(updated));
-    } catch (e) {
-      console.warn("LocalStorage setItem quota exceeded for ingredients:", e);
-    }
+    safeSetItem(MASTER_INGREDIENTS_KEY, JSON.stringify(updated));
     try {
       await fetch('/api/ingredients', {
         method: 'POST',
@@ -681,7 +763,7 @@ export const deleteMasterIngredient = async (id: string): Promise<boolean> => {
   const filtered = list.filter(i => i.id !== id);
   if (list.length === filtered.length) return false;
   if (isBrowser()) {
-    localStorage.setItem(MASTER_INGREDIENTS_KEY, JSON.stringify(filtered));
+    safeSetItem(MASTER_INGREDIENTS_KEY, JSON.stringify(filtered));
     try {
       await fetch(`/api/ingredients/${id}`, { method: 'DELETE' });
     } catch (err) {
@@ -700,7 +782,7 @@ const sanitizeRecipe = (r: Recipe): Recipe => {
       .filter((ing) => ing && ing.name && ing.name.trim() !== "")
       .map((ing) => {
         let name = ing.name || "";
-        name = name.replace(/Grated Coconut\s*&\s*Cumin/gi, "Grated Coconut");
+        name = name.replace(/Grated Coconut/gi, "Coconut");
         name = name.replace(/Pure Ghee\s*&\s*Curry Leaves/gi, "Curry Leaves");
 
         const matchedMaster = masterList.find(
@@ -728,7 +810,7 @@ export const getRecipes = (): Recipe[] => {
   if (!isBrowser()) return DEFAULT_RECIPES.map(sanitizeRecipe);
   const stored = localStorage.getItem(RECIPES_KEY);
   if (!stored) {
-    localStorage.setItem(RECIPES_KEY, JSON.stringify(DEFAULT_RECIPES));
+    safeSetItem(RECIPES_KEY, JSON.stringify(DEFAULT_RECIPES));
     return DEFAULT_RECIPES.map(sanitizeRecipe);
   }
   try {
@@ -754,9 +836,7 @@ export const fetchRecipesFromDB = async (): Promise<Recipe[]> => {
       sanitizedDB.forEach((r: Recipe) => map.set(r.id, r));
       
       const merged = Array.from(map.values());
-      if (isBrowser()) {
-        localStorage.setItem(RECIPES_KEY, JSON.stringify(merged));
-      }
+      safeSetItem(RECIPES_KEY, JSON.stringify(merged));
       return merged;
     }
   } catch (err) {
@@ -774,9 +854,7 @@ export const fetchMasterIngredientsFromDB = async (): Promise<MasterIngredient[]
       PREDEFINED_INGREDIENTS.forEach((i) => map.set(i.id, i));
       data.ingredients.forEach((i: MasterIngredient) => map.set(i.id, i));
       const result = Array.from(map.values());
-      if (isBrowser()) {
-        localStorage.setItem(MASTER_INGREDIENTS_KEY, JSON.stringify(result));
-      }
+      safeSetItem(MASTER_INGREDIENTS_KEY, JSON.stringify(result));
       return result;
     }
   } catch (err) {
@@ -814,12 +892,8 @@ export const saveRecipe = async (recipe: Recipe): Promise<Recipe> => {
   }
   
   if (isBrowser()) {
-    // 1. Update LocalStorage with safety check
-    try {
-      localStorage.setItem(RECIPES_KEY, JSON.stringify(updated));
-    } catch (e) {
-      console.warn("LocalStorage setItem quota exceeded for recipes:", e);
-    }
+    // 1. Update LocalStorage safely
+    safeSetItem(RECIPES_KEY, JSON.stringify(updated));
 
     // 2. Persist directly to MongoDB Cloud database
     try {
@@ -844,7 +918,7 @@ export const deleteRecipe = async (id: string): Promise<boolean> => {
   const filtered = recipes.filter(r => r.id !== id);
   if (recipes.length === filtered.length) return false;
   if (isBrowser()) {
-    localStorage.setItem(RECIPES_KEY, JSON.stringify(filtered));
+    safeSetItem(RECIPES_KEY, JSON.stringify(filtered));
     try {
       await fetch(`/api/recipes/${id}`, { method: 'DELETE' });
     } catch (err) {
@@ -877,7 +951,7 @@ export const toggleFavorite = (id: string): boolean => {
     updated = [...favorites, id];
     isFav = true;
   }
-  localStorage.setItem('krishnas_kitchen_favorites', JSON.stringify(updated));
+  safeSetItem('krishnas_kitchen_favorites', JSON.stringify(updated));
   return isFav;
 };
 

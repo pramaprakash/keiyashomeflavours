@@ -12,7 +12,7 @@ export async function GET() {
       return NextResponse.json({ success: false, source: "memory", ingredients: [] });
     }
 
-    const ingredients = await MasterIngredientModel.find({}).sort({ createdAt: -1 });
+    const ingredients = await MasterIngredientModel.find({}).sort({ createdAt: -1 }).allowDiskUse(true).lean();
     return NextResponse.json({ success: true, source: "mongodb", ingredients });
   } catch (error) {
     console.error("MongoDB GET Master Ingredients error:", error);

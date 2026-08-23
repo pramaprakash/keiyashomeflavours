@@ -4,7 +4,6 @@ import RecipeModel from "@/models/Recipe";
 import { DEFAULT_RECIPES } from "@/utils/recipeStore";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 export async function GET() {
   try {
@@ -18,7 +17,12 @@ export async function GET() {
     const map = new Map();
     DEFAULT_RECIPES.forEach((r) => map.set(r.id, r));
     if (Array.isArray(dbRecipes)) {
-      dbRecipes.forEach((r: any) => map.set(r.id, r));
+      dbRecipes.forEach((r: any) => {
+        const recipeId = r.id || (r._id ? String(r._id) : null);
+        if (recipeId) {
+          map.set(recipeId, { ...r, id: recipeId });
+        }
+      });
     }
     const merged = Array.from(map.values());
 

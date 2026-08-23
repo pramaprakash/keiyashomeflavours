@@ -642,7 +642,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
     calories: "230 kcal",
     difficulty: "Medium",
     imageUrl: "/images/masala_curry_thumbnail.jpg",
-    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    videoUrl: "https://www.youtube.com/embed/tAgc-rS02ao?si=JmjNB0HUghZE1HD3",
     flavorProfile: { spicy: 3, tangy: 2, creamy: 4 },
     story: "A beloved classic served alongside Appam, Kerala Parotta, Ghee Rice, and Chapati in traditional Malabar and Central Travancore homes.",
     chef: {
@@ -688,6 +688,242 @@ export const DEFAULT_RECIPES: Recipe[] = [
     category: "lunch",
     status: "published",
     createdDate: "2026-08-19T19:40:00.000Z"
+  },
+  {
+    id: "beetroor-kichadi",
+    title: "Beetroot Kichadi",
+    description: "Vibrant magenta-hued Kerala Sadya relish made with grated beetroot, fresh yogurt, ground coconut, green chilies, and tempered mustard seeds & curry leaves.",
+    prepTime: "15 Mins",
+    serves: 4,
+    calories: "140 kcal",
+    difficulty: "Easy",
+    imageUrl: "/uploads/1787488368303-Firefly__3_.png",
+    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    flavorProfile: { spicy: 1, tangy: 3, creamy: 4 },
+    story: "A stunning colorful yogurt-based dish essential for the authentic Onam Sadya plantain leaf layout.",
+    chef: {
+      name: "Chef Keiya",
+      role: "Executive Chef & Founder",
+      avatarUrl: "/images/chef_keiya_avatar.jpg"
+    },
+    ingredients: [
+      { name: "Beetroot", amount: "1 cup grated", benefit: "Vibrant natural pink hue & fiber", imageUrl: "/images/beetroot_user.jpg" },
+      { name: "Fresh Whisked Curd (Thayir / Yogurt)", amount: "1 cup", benefit: "Cooling tangy base", imageUrl: "/images/curd_user.jpg" },
+      { name: "Grated Coconut", amount: "1/2 cup fresh", benefit: "Creamy coconut paste", imageUrl: "/images/grated_coconut.jpg" },
+      { name: "Green Chilly", amount: "2 slit", benefit: "Mild heat", imageUrl: "/images/green_chilly.jpg" },
+      { name: "Mustard Seeds (Kaduku)", amount: "1 tsp", benefit: "Tempered popping seeds", imageUrl: "/images/mustard_user.jpg" },
+      { name: "Curry Leaves", amount: "1 sprig", benefit: "Aromatic finish", imageUrl: "/images/curry_leaves.jpg" }
+    ],
+    steps: [
+      { stepNumber: 1, text: "Grate beetroot and cook with salt, green chilies, and a splash of water until tender." },
+      { stepNumber: 2, text: "Grind coconut, green chilies, and mustard seeds into a smooth paste." },
+      { stepNumber: 3, text: "Stir coconut paste into cooked beetroot and simmer briefly." },
+      { stepNumber: 4, text: "Turn off heat, stir in whisked yogurt, and temper with mustard seeds & curry leaves in coconut oil." }
+    ],
+    category: "lunch",
+    status: "published",
+    createdDate: "2026-08-20T10:00:00.000Z"
+  },
+  {
+    id: "pacha-manga-pachadi",
+    title: "Pacha Manga Pachadi",
+    description: "Tangy and sweet raw mango relish cooked with jaggery, red chilies, mustard seeds, and freshly ground coconut paste.",
+    prepTime: "15 Mins",
+    serves: 4,
+    calories: "160 kcal",
+    difficulty: "Easy",
+    imageUrl: "/uploads/1787488929904-Gemini_Generated_Image_rehsekrehsekrehs.png",
+    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    flavorProfile: { spicy: 2, tangy: 5, creamy: 2 },
+    story: "Delightful sweet-and-sour raw mango preparation that elevates the traditional Sadya taste palette.",
+    chef: {
+      name: "Chef Keiya",
+      role: "Executive Chef & Founder",
+      avatarUrl: "/images/chef_keiya_avatar.jpg"
+    },
+    ingredients: [
+      { name: "Raw Green Mango", amount: "1 cup diced", benefit: "Zesty sour flavor", imageUrl: "/images/raw_mango_user.jpg" },
+      { name: "Organic Jaggery (Vellam)", amount: "3 tbsp", benefit: "Natural sweet balance", imageUrl: "/images/jaggery_user.jpg" },
+      { name: "Grated Coconut", amount: "1/2 cup fresh", benefit: "Creamy paste base", imageUrl: "/images/grated_coconut.jpg" },
+      { name: "Mustard Seeds (Kaduku)", amount: "1 tsp", benefit: "Tempered aroma", imageUrl: "/images/mustard_user.jpg" },
+      { name: "Curry Leaves", amount: "1 sprig", benefit: "Fresh aroma", imageUrl: "/images/curry_leaves.jpg" }
+    ],
+    steps: [
+      { stepNumber: 1, text: "Boil diced green raw mangoes with turmeric, red chili powder, salt, and water until soft." },
+      { stepNumber: 2, text: "Add melted jaggery syrup and simmer for 3 minutes." },
+      { stepNumber: 3, text: "Stir in coarsely ground coconut and mustard seed paste." },
+      { stepNumber: 4, text: "Temper with coconut oil, mustard seeds, and curry leaves." }
+    ],
+    category: "lunch",
+    status: "published",
+    createdDate: "2026-08-20T11:00:00.000Z"
+  },
+  {
+    id: "madhura-curry",
+    title: "Madhura Curry",
+    description: "Sweet pineapple and ripe plantain curry cooked in jaggery syrup, whisked yogurt, ground coconut, and tempered spices.",
+    prepTime: "20 Mins",
+    serves: 4,
+    calories: "220 kcal",
+    difficulty: "Medium",
+    imageUrl: "/uploads/1787489430102-Gemini_Generated_Image_wkfu5dwkfu5dwkfu.png",
+    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    flavorProfile: { spicy: 1, tangy: 3, creamy: 4 },
+    story: "A festive sweet curry served during traditional South Kerala Sadya feasts.",
+    chef: {
+      name: "Chef Keiya",
+      role: "Executive Chef & Founder",
+      avatarUrl: "/images/chef_keiya_avatar.jpg"
+    },
+    ingredients: [
+      { name: "Ripe Plantain (Nendran)", amount: "1 cubed", benefit: "Sweet tropical fruit base", imageUrl: "/images/banana_user.jpg" },
+      { name: "Pineapple", amount: "1 cup chopped", benefit: "Sweet tangy flavor", imageUrl: "/images/pineapple_user.jpg" },
+      { name: "Organic Jaggery (Vellam)", amount: "4 tbsp", benefit: "Deep caramel sweetness", imageUrl: "/images/jaggery_user.jpg" },
+      { name: "Grated Coconut", amount: "1 cup fresh", benefit: "Smooth coconut paste", imageUrl: "/images/grated_coconut.jpg" },
+      { name: "Fresh Whisked Curd", amount: "1/2 cup", benefit: "Tangy contrast", imageUrl: "/images/curd_user.jpg" }
+    ],
+    steps: [
+      { stepNumber: 1, text: "Cook chopped pineapple and ripe plantain with turmeric, chili powder, and water." },
+      { stepNumber: 2, text: "Add jaggery syrup and simmer until fruits absorb the sweetness." },
+      { stepNumber: 3, text: "Add ground coconut-cumin paste and cook on low heat." },
+      { stepNumber: 4, text: "Turn off heat, stir in whisked yogurt, and temper with ghee, mustard seeds, and curry leaves." }
+    ],
+    category: "lunch",
+    status: "published",
+    createdDate: "2026-08-20T12:00:00.000Z"
+  },
+  {
+    id: "vadukapuli-achar",
+    title: "Vadukapuli Achar (Wild Lemon Pickle)",
+    description: "Fiery and tangy wild lemon pickle made with giant Kerala vadukapuli naranga, red chili, asafoetida, and pure sesame oil.",
+    prepTime: "15 Mins",
+    serves: 8,
+    calories: "60 kcal",
+    difficulty: "Easy",
+    imageUrl: "/uploads/1787490803874-Firefly__8_.png",
+    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    flavorProfile: { spicy: 5, tangy: 5, creamy: 1 },
+    story: "Essential spicy side relish placed on the bottom-left corner of the Onam Sadya plantain leaf.",
+    chef: {
+      name: "Chef Keiya",
+      role: "Executive Chef & Founder",
+      avatarUrl: "/images/chef_keiya_avatar.jpg"
+    },
+    ingredients: [
+      { name: "Vadukapuli Lemon", amount: "1 large chopped", benefit: "Intense tangy citrus", imageUrl: "/images/lemon_user.jpg" },
+      { name: "Red Chilly Powder (Mulaku Podi)", amount: "2 tbsp", benefit: "Spicy red heat", imageUrl: "/images/red_chilly_powder_user.jpg" },
+      { name: "Asafoetida (Kayam)", amount: "1/2 tsp", benefit: "Savory digestive aroma", imageUrl: "/images/asafoetida_user.jpg" },
+      { name: "Pure Sesame Oil (Nallennai)", amount: "3 tbsp", benefit: "Pickling oil base", imageUrl: "/images/sesame_oil_user.jpg" },
+      { name: "Fenugreek Powder", amount: "1/2 tsp", benefit: "Bittersweet pickling spice", imageUrl: "/images/fenugreek.jpg" }
+    ],
+    steps: [
+      { stepNumber: 1, text: "Dice fresh vadukapuli lemon into small pieces and toss with salt." },
+      { stepNumber: 2, text: "Heat sesame oil, temper mustard seeds, and turn off heat." },
+      { stepNumber: 3, text: "Add red chili powder, asafoetida, and roasted fenugreek powder into the warm oil." },
+      { stepNumber: 4, text: "Mix oil spice blend into salted lemon pieces and let mature." }
+    ],
+    category: "snack",
+    status: "published",
+    createdDate: "2026-08-21T08:00:00.000Z"
+  },
+  {
+    id: "kaipakka-achar",
+    title: "Kaipakka Achar (Bitter Gourd Pickle)",
+    description: "Crispy fried bitter gourd tossed in spicy pickling gravy with vinegar, asafoetida, garlic, and fresh curry leaves.",
+    prepTime: "20 Mins",
+    serves: 8,
+    calories: "80 kcal",
+    difficulty: "Medium",
+    imageUrl: "/uploads/1787491482689-Firefly.png",
+    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    flavorProfile: { spicy: 4, tangy: 4, creamy: 1 },
+    story: "A unique bitter-spicy-tangy relish that balances the rich sweetness of Sadya Payasams.",
+    chef: {
+      name: "Chef Keiya",
+      role: "Executive Chef & Founder",
+      avatarUrl: "/images/chef_keiya_avatar.jpg"
+    },
+    ingredients: [
+      { name: "Bitter Gourd (Pavakka)", amount: "2 cups finely sliced", benefit: "Crispy bitter base", imageUrl: "/images/bitter_gourd_user.jpg" },
+      { name: "Garlic", amount: "10 cloves sliced", benefit: "Savory depth", imageUrl: "/images/garlic.jpg" },
+      { name: "Ginger", amount: "1 inch julienned", benefit: "Zesty warmth", imageUrl: "/images/ginger_user_root.jpg" },
+      { name: "Red Chilly Powder", amount: "2 tbsp", benefit: "Fiery pickling heat", imageUrl: "/images/red_chilly_powder_user.jpg" }
+    ],
+    steps: [
+      { stepNumber: 1, text: "Thinly slice bitter gourd, salt it, and deep fry until crispy brown." },
+      { stepNumber: 2, text: "Heat sesame oil, sauté ginger, garlic, green chilies, and curry leaves." },
+      { stepNumber: 3, text: "Add chili powder, asafoetida, fenugreek powder, salt, and vinegar." },
+      { stepNumber: 4, text: "Toss fried bitter gourd pieces into the warm pickle gravy." }
+    ],
+    category: "snack",
+    status: "published",
+    createdDate: "2026-08-21T09:00:00.000Z"
+  },
+  {
+    id: "inji-puli",
+    title: "Inji Puli (Ginger Tamarind Relish)",
+    description: "Dark, tangy, sweet, and spicy ginger relish cooked with dark tamarind, jaggery, green chilies, and coconut oil.",
+    prepTime: "25 Mins",
+    serves: 10,
+    calories: "90 kcal",
+    difficulty: "Easy",
+    imageUrl: "/uploads/1787492220510-Firefly_copy.png",
+    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    flavorProfile: { spicy: 4, tangy: 5, creamy: 1 },
+    story: "Considered equivalent to 108 dishes in traditional Kerala Sadya lore.",
+    chef: {
+      name: "Chef Keiya",
+      role: "Executive Chef & Founder",
+      avatarUrl: "/images/chef_keiya_avatar.jpg"
+    },
+    ingredients: [
+      { name: "Ginger", amount: "1 cup finely chopped", benefit: "Zesty digestive base", imageUrl: "/images/ginger_user_root.jpg" },
+      { name: "Tamarind (Puli)", amount: "Lemon sized ball extracted", benefit: "Deep tangy body", imageUrl: "/images/tamarind_user.jpg" },
+      { name: "Organic Jaggery (Vellam)", amount: "4 tbsp melted", benefit: "Caramel sweetness", imageUrl: "/images/jaggery_user.jpg" },
+      { name: "Green Chilly", amount: "5 finely chopped", benefit: "Spicy heat", imageUrl: "/images/green_chilly.jpg" }
+    ],
+    steps: [
+      { stepNumber: 1, text: "Finely chop ginger and green chilies and fry in coconut oil until dark golden brown." },
+      { stepNumber: 2, text: "Add thick tamarind extract, salt, chili powder, and turmeric." },
+      { stepNumber: 3, text: "Simmer until reduced to a thick dark sauce, then stir in jaggery syrup." },
+      { stepNumber: 4, text: "Finish with roasted fenugreek powder and oil tempering." }
+    ],
+    category: "snack",
+    status: "published",
+    createdDate: "2026-08-21T10:00:00.000Z"
+  },
+  {
+    id: "payar-mezhukupurati",
+    title: "Payar Mezhukkupuratti (Long Beans Stir Fry)",
+    description: "Classic Kerala style stir-fried yardlong green beans sautéed with shallots, crushed garlic, red chili flakes, and coconut oil.",
+    prepTime: "15 Mins",
+    serves: 4,
+    calories: "120 kcal",
+    difficulty: "Easy",
+    imageUrl: "/uploads/1787492763085-Gemini_Generated_Image_j8wy5j8wy5j8wy5j.png",
+    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    flavorProfile: { spicy: 2, tangy: 1, creamy: 2 },
+    story: "Standard home-style and Sadya vegetable side dish prized for its crisp texture and garlic-shallot aroma.",
+    chef: {
+      name: "Chef Keiya",
+      role: "Executive Chef & Founder",
+      avatarUrl: "/images/chef_keiya_avatar.jpg"
+    },
+    ingredients: [
+      { name: "Yardlong Beans (Achinga Payar)", amount: "2 cups chopped", benefit: "Crisp green pod fiber", imageUrl: "/images/long_beans_user.jpg" },
+      { name: "Shallots (Kunjulli)", amount: "10 crushed", benefit: "Sweet sautéed aromatic", imageUrl: "/images/shallots_user.jpg" },
+      { name: "Garlic", amount: "6 cloves crushed", benefit: "Garlicky depth", imageUrl: "/images/garlic.jpg" },
+      { name: "Crushed Red Chilly Flakes", amount: "1 tbsp", benefit: "Coarse chili warmth", imageUrl: "/images/red_chilly_powder_user.jpg" },
+      { name: "Pure Coconut Oil", amount: "2 tbsp", benefit: "Kerala sautéing oil", imageUrl: "/images/coconut_oil_user.jpg" }
+    ],
+    steps: [
+      { stepNumber: 1, text: "Chop long beans into 1-inch pieces and steam with salt, turmeric, and 2 tbsp water." },
+      { stepNumber: 2, text: "Heat coconut oil, coarse crush shallots, garlic, and red chili flakes, and sauté until fragrant." },
+      { stepNumber: 3, text: "Add steamed long beans and stir-fry on medium heat for 5 minutes until glossy and coated." }
+    ],
+    category: "lunch",
+    status: "published",
+    createdDate: "2026-08-21T11:00:00.000Z"
   }
 ];
 
@@ -716,7 +952,7 @@ const safeSetItem = (key: string, value: string) => {
 };
 
 const MASTER_INGREDIENTS_KEY = 'khf_master_ingredients_v64';
-const RECIPES_KEY = 'khf_recipes_v47';
+const RECIPES_KEY = 'khf_recipes_v58';
 
 // Master Ingredients Store
 export const getMasterIngredients = (): MasterIngredient[] => {
@@ -774,34 +1010,40 @@ export const deleteMasterIngredient = async (id: string): Promise<boolean> => {
 };
 
 const sanitizeRecipe = (r: Recipe): Recipe => {
-  if (!r || !Array.isArray(r.ingredients)) return r;
+  if (!r) return r;
+  const recipeId = r.id || ((r as any)._id ? String((r as any)._id) : undefined);
   const masterList = PREDEFINED_INGREDIENTS;
+  const ingredients = Array.isArray(r.ingredients)
+    ? r.ingredients
+        .filter((ing) => ing && ing.name && ing.name.trim() !== "")
+        .map((ing) => {
+          let name = ing.name || "";
+          name = name.replace(/Grated Coconut/gi, "Coconut");
+          name = name.replace(/Pure Ghee\s*&\s*Curry Leaves/gi, "Curry Leaves");
+
+          const matchedMaster = masterList.find(
+            (m) =>
+              m.name.toLowerCase().includes(name.toLowerCase()) ||
+              name.toLowerCase().includes(m.name.toLowerCase())
+          );
+
+          const imageUrl =
+            ing.imageUrl && ing.imageUrl.trim() !== ""
+              ? ing.imageUrl
+              : matchedMaster?.imageUrl || "/images/grated_coconut.jpg";
+
+          return {
+            ...ing,
+            name: name,
+            imageUrl: imageUrl,
+          };
+        })
+    : [];
+
   return {
     ...r,
-    ingredients: r.ingredients
-      .filter((ing) => ing && ing.name && ing.name.trim() !== "")
-      .map((ing) => {
-        let name = ing.name || "";
-        name = name.replace(/Grated Coconut/gi, "Coconut");
-        name = name.replace(/Pure Ghee\s*&\s*Curry Leaves/gi, "Curry Leaves");
-
-        const matchedMaster = masterList.find(
-          (m) =>
-            m.name.toLowerCase().includes(name.toLowerCase()) ||
-            name.toLowerCase().includes(m.name.toLowerCase())
-        );
-
-        const imageUrl =
-          ing.imageUrl && ing.imageUrl.trim() !== ""
-            ? ing.imageUrl
-            : matchedMaster?.imageUrl || "/images/grated_coconut.jpg";
-
-        return {
-          ...ing,
-          name: name,
-          imageUrl: imageUrl,
-        };
-      }),
+    id: recipeId || r.id,
+    ingredients,
   };
 };
 
@@ -815,9 +1057,18 @@ export const getRecipes = (): Recipe[] => {
   }
   try {
     const list = JSON.parse(stored);
-    return Array.isArray(list) && list.length > 0
-      ? list.map(sanitizeRecipe)
-      : DEFAULT_RECIPES.map(sanitizeRecipe);
+    if (Array.isArray(list) && list.length > 0) {
+      const map = new Map<string, Recipe>();
+      DEFAULT_RECIPES.forEach((r) => map.set(r.id, sanitizeRecipe(r)));
+      list.forEach((r: Recipe) => {
+        const id = r.id || ((r as any)._id ? String((r as any)._id) : null);
+        if (id) {
+          map.set(id, sanitizeRecipe({ ...r, id }));
+        }
+      });
+      return Array.from(map.values());
+    }
+    return DEFAULT_RECIPES.map(sanitizeRecipe);
   } catch {
     return DEFAULT_RECIPES.map(sanitizeRecipe);
   }
@@ -829,12 +1080,19 @@ export const fetchRecipesFromDB = async (): Promise<Recipe[]> => {
     if (!res.ok) return getRecipes();
     const data = await res.json();
     if (data.success && Array.isArray(data.recipes)) {
-      const sanitizedDB = data.recipes.map(sanitizeRecipe);
+      const sanitizedDB = data.recipes.map((r: any) => {
+        const id = r.id || (r._id ? String(r._id) : `rec-${Math.random()}`);
+        return sanitizeRecipe({ ...r, id });
+      });
       
       // Always merge default built-in recipes with DB recipes so defaults are never lost
       const map = new Map<string, Recipe>();
       DEFAULT_RECIPES.forEach((r) => map.set(r.id, sanitizeRecipe(r)));
-      sanitizedDB.forEach((r: Recipe) => map.set(r.id, r));
+      sanitizedDB.forEach((r: Recipe) => {
+        if (r && r.id) {
+          map.set(r.id, r);
+        }
+      });
       
       const merged = Array.from(map.values());
       safeSetItem(RECIPES_KEY, JSON.stringify(merged));

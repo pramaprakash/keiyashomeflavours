@@ -1,10 +1,18 @@
 import mongoose from "mongoose";
+import dns from "dns";
+
+// Fix for macOS / Node.js SRV DNS lookup blocking for MongoDB Atlas
+try {
+  dns.setServers(["8.8.8.8", "1.1.1.1", "8.8.4.4"]);
+} catch {
+  // Ignore if custom DNS configuration is constrained
+}
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
 interface MongooseCache {
   conn: typeof mongoose | null;
-  promise: Promise<typeof mongoose> | null;
+  promise: Promise<typeof mongoose | null> | null;
 }
 
 declare global {
@@ -30,18 +38,27 @@ export async function connectToDatabase() {
   if (!cached?.promise) {
     const opts = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
     };
 
-    cached!.promise = mongoose.connect(MONGODB_URI, opts).then((mongooseInstance) => {
-      return mongooseInstance;
-    });
+    cached!.promise = mongoose
+      .connect(MONGODB_URI, opts)
+      .then((mongooseInstance) => {
+        return mongooseInstance;
+      })
+      .catch((err) => {
+        console.warn("MongoDB connection failed or timed out (falling back to memory):", err.message || err);
+        return null;
+      });
   }
 
   try {
     cached!.conn = await cached!.promise;
   } catch (e) {
     cached!.promise = null;
-    throw e;
+    cached!.conn = null;
+    return null;
   }
 
   return cached!.conn;

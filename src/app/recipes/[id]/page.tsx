@@ -129,13 +129,17 @@ export default async function RecipeDetailPage({ params }: PageProps) {
     recipeYield: `${recipe.serves || 4} servings`,
     recipeCategory: recipe.category,
     recipeCuisine: "Kerala Indian",
-    recipeIngredient: recipe.ingredients.map((ing) => `${ing.amount} ${ing.name}`),
-    recipeInstructions: recipe.steps.map((step, idx) => ({
-      "@type": "HowToStep",
-      position: idx + 1,
-      name: `Step ${idx + 1}`,
-      text: typeof step === "string" ? step : step.text,
-    })),
+    recipeIngredient: Array.isArray(recipe.ingredients)
+      ? recipe.ingredients.map((ing) => `${ing?.amount || ""} ${ing?.name || ""}`.trim())
+      : [],
+    recipeInstructions: Array.isArray(recipe.steps)
+      ? recipe.steps.map((step, idx) => ({
+          "@type": "HowToStep",
+          position: idx + 1,
+          name: `Step ${idx + 1}`,
+          text: typeof step === "string" ? step : step?.text || "",
+        }))
+      : [],
   };
 
   // 2. Schema.org BreadcrumbList JSON-LD for Google Search Breadcrumbs

@@ -1,21 +1,24 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import RecipeCard from "@/components/RecipeCard";
 import OnamSadyaNavigator from "@/components/OnamSadyaNavigator";
 import { getRecipes, fetchRecipesFromDB, Recipe } from "@/utils/recipeStore";
 
-export default function DiscoverPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ search?: string }>;
-}) {
-  const resolvedSearchParams = use(searchParams);
-  const urlSearch = resolvedSearchParams.search || "";
+function DiscoverFeed() {
+  const searchParams = useSearchParams();
+  const urlSearch = searchParams ? searchParams.get("search") || "" : "";
 
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>(() => {
+    const list = getRecipes();
+    return list.filter((r) => !r.status || String(r.status).toLowerCase() !== "draft");
+  });
+  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(() => {
+    const list = getRecipes();
+    return list.filter((r) => !r.status || String(r.status).toLowerCase() !== "draft");
+  });
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
@@ -42,20 +45,15 @@ export default function DiscoverPage({
     const loadRecipes = async () => {
       // 1. Initial fast load from local cache & defaults
       const cached = getRecipes();
-      const cachedPublished = cached.filter((r) => r.status === "published" || !r.status);
-      setRecipes(cachedPublished);
+      const cachedValid = cached.filter((r) => !r.status || String(r.status).toLowerCase() !== "draft");
+      setRecipes(cachedValid);
 
       // 2. Fetch fresh published recipes directly from MongoDB Cloud database
       const dbRecipes = await fetchRecipesFromDB();
-      if (dbRecipes && dbRecipes.length > 0) {
-        const publishedFromDB = dbRecipes.filter((r) => r.status === "published" || !r.status);
-        if (publishedFromDB.length > 0) {
-          const map = new Map<string, Recipe>();
-          // Fill defaults/cached first
-          cachedPublished.forEach((r) => map.set(r.id, r));
-          // DB recipes take precedence or add additional items
-          publishedFromDB.forEach((r) => map.set(r.id, r));
-          setRecipes(Array.from(map.values()));
+      if (dbRecipes && Array.isArray(dbRecipes) && dbRecipes.length > 0) {
+        const validFromDB = dbRecipes.filter((r) => !r.status || String(r.status).toLowerCase() !== "draft");
+        if (validFromDB.length > 0) {
+          setRecipes(validFromDB);
         }
       }
     };
@@ -75,24 +73,38 @@ export default function DiscoverPage({
 
   // Filter recipes based on search query and selected category
   useEffect(() => {
-    let result = recipes;
+    let result = Array.isArray(recipes) ? recipes : [];
 
     // Filter by category
     if (selectedCategory !== "all") {
-      result = result.filter(
-        (recipe) => recipe.category.toLowerCase() === selectedCategory.toLowerCase()
-      );
+      const sel = selectedCategory.toLowerCase();
+      result = result.filter((recipe) => {
+        if (!recipe) return false;
+        const cat = (recipe.category || "").toLowerCase();
+        if (cat === sel) return true;
+        if (sel === "lunch" && (cat.includes("curry") || cat.includes("main") || cat.includes("lunch") || cat.includes("sadya") || cat.includes("spices") || cat.includes("produce"))) return true;
+        if (sel === "dessert" && (cat.includes("payasam") || cat.includes("sweet") || cat.includes("dessert") || cat.includes("kheer"))) return true;
+        if (sel === "snack" && (cat.includes("pickle") || cat.includes("achar") || cat.includes("relish") || cat.includes("snack") || cat.includes("chip"))) return true;
+        if (sel === "signature" && (cat.includes("signature") || cat.includes("chef"))) return true;
+        if (sel === "breakfast" && (cat.includes("breakfast") || cat.includes("morning"))) return true;
+        return false;
+      });
     }
 
     // Filter by search query
     if (searchQuery.trim() !== "") {
-      const q = searchQuery.toLowerCase();
-      result = result.filter(
-        (recipe) =>
-          recipe.title.toLowerCase().includes(q) ||
-          recipe.description.toLowerCase().includes(q) ||
-          recipe.ingredients.some((ing) => ing.name.toLowerCase().includes(q))
-      );
+      const q = searchQuery.trim().toLowerCase();
+      result = result.filter((recipe) => {
+        if (!recipe) return false;
+        const titleMatch = (recipe.title || "").toLowerCase().includes(q);
+        const descMatch = (recipe.description || "").toLowerCase().includes(q);
+        const categoryMatch = (recipe.category || "").toLowerCase().includes(q);
+        const storyMatch = (recipe.story || "").toLowerCase().includes(q);
+        const ingMatch =
+          Array.isArray(recipe.ingredients) &&
+          recipe.ingredients.some((ing) => ing && ing.name && ing.name.toLowerCase().includes(q));
+        return titleMatch || descMatch || categoryMatch || storyMatch || ingMatch;
+      });
     }
 
     setFilteredRecipes(result);
@@ -207,5 +219,17 @@ export default function DiscoverPage({
         </section>
       </main>
     </>
+  );
+}
+
+export default function DiscoverPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-surface flex items-center justify-center p-8">
+        <div className="animate-pulse text-primary font-bold">Loading Keiya&apos;s Home Flavours...</div>
+      </div>
+    }>
+      <DiscoverFeed />
+    </Suspense>
   );
 }

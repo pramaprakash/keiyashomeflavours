@@ -17,24 +17,28 @@ export default function RecipeCard({
 }: RecipeCardProps) {
   const [fav, setFav] = useState(false);
 
+  const recipeId = recipe?.id || (recipe as any)?._id || "";
+
   useEffect(() => {
-    if (showFavorite) {
-      setFav(isFavorite(recipe.id));
+    if (showFavorite && recipeId) {
+      setFav(isFavorite(recipeId));
     }
-  }, [recipe.id, showFavorite]);
+  }, [recipeId, showFavorite]);
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const newFavStatus = toggleFavorite(recipe.id);
+    if (!recipeId) return;
+    const newFavStatus = toggleFavorite(recipeId);
     setFav(newFavStatus);
     if (onFavoriteToggle) {
       onFavoriteToggle();
     }
   };
 
-  const getDifficultyColor = (diff: string) => {
-    switch (diff.toLowerCase()) {
+  const getDifficultyColor = (diff: string = "Easy") => {
+    const safeDiff = (diff || "Easy").toLowerCase();
+    switch (safeDiff) {
       case "easy":
         return "bg-primary-fixed text-on-primary-fixed";
       case "hard":
@@ -45,20 +49,28 @@ export default function RecipeCard({
     }
   };
 
+  if (!recipe) return null;
+
+  const title = recipe.title || "Untitled Recipe";
+  const category = recipe.category || "Recipe";
+  const description = recipe.description || "Authentic Kerala delicacy.";
+  const difficulty = recipe.difficulty || "Easy";
+  const imageUrl = recipe.imageUrl || "/images/parippu_curry_thumbnail.jpg";
+
   return (
-    <Link href={`/recipes/${recipe.id}`} className="group block">
+    <Link href={`/recipes/${recipeId}`} className="group block">
       <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/30 hover:border-primary/30 shadow-[0_4px_20px_rgba(45,75,55,0.04)] hover:shadow-[0_8px_30px_rgba(45,75,55,0.12)] transition-all duration-300 overflow-hidden flex flex-col h-full cursor-pointer">
         {/* Image & Overlays */}
         <div className="relative aspect-[4/3] bg-surface-variant overflow-hidden">
           <img
-            src={recipe.imageUrl}
-            alt={recipe.title}
+            src={imageUrl}
+            alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
           />
           {/* Category Tag */}
           <span className="absolute top-4 left-4 inline-block px-3 py-1 rounded-full bg-surface/90 backdrop-blur-sm text-primary font-label-md text-xs uppercase tracking-wider font-bold">
-            {recipe.category}
+            {category}
           </span>
 
           {/* Favorite Button (Optional) */}
@@ -97,14 +109,14 @@ export default function RecipeCard({
           <div>
             <div className="flex justify-between items-start gap-2 mb-2">
               <h3 className="font-headline-sm text-headline-sm text-primary group-hover:text-primary-container transition-colors duration-200 line-clamp-1">
-                {recipe.title}
+                {title}
               </h3>
-              <span className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${getDifficultyColor(recipe.difficulty)}`}>
-                {recipe.difficulty}
+              <span className={`text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${getDifficultyColor(difficulty)}`}>
+                {difficulty}
               </span>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 leading-relaxed">
-              {recipe.description}
+              {description}
             </p>
           </div>
         </div>

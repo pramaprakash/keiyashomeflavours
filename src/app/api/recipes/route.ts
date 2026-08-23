@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db";
 import RecipeModel from "@/models/Recipe";
+import { DEFAULT_RECIPES } from "@/utils/recipeStore";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -9,15 +10,22 @@ export async function GET() {
   try {
     const conn = await connectToDatabase();
     if (!conn) {
-      return NextResponse.json({ success: false, source: "memory", recipes: [] });
+      return NextResponse.json({ success: true, source: "fallback", recipes: DEFAULT_RECIPES });
     }
 
-    const recipes = await RecipeModel.find({}).sort({ createdAt: -1 }).lean();
+    const dbRecipes = await RecipeModel.find({}).sort({ createdAt: -1 }).lean();
 
-    return NextResponse.json({ success: true, source: "mongodb", recipes });
+    const map = new Map();
+    DEFAULT_RECIPES.forEach((r) => map.set(r.id, r));
+    if (Array.isArray(dbRecipes)) {
+      dbRecipes.forEach((r: any) => map.set(r.id, r));
+    }
+    const merged = Array.from(map.values());
+
+    return NextResponse.json({ success: true, source: "mongodb", recipes: merged });
   } catch (error) {
     console.error("MongoDB GET Recipes error:", error);
-    return NextResponse.json({ success: false, error: "Failed to fetch recipes" }, { status: 500 });
+    return NextResponse.json({ success: true, source: "fallback", recipes: DEFAULT_RECIPES });
   }
 }
 

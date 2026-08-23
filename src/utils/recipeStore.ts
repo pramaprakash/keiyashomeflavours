@@ -716,7 +716,7 @@ const safeSetItem = (key: string, value: string) => {
 };
 
 const MASTER_INGREDIENTS_KEY = 'khf_master_ingredients_v64';
-const RECIPES_KEY = 'khf_recipes_v46';
+const RECIPES_KEY = 'khf_recipes_v47';
 
 // Master Ingredients Store
 export const getMasterIngredients = (): MasterIngredient[] => {

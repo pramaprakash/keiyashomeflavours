@@ -9,9 +9,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let allRecipes: Recipe[] = [...DEFAULT_RECIPES];
 
   try {
-    const conn = await connectToDatabase();
+    const timeoutPromise = new Promise<null>((resolve) =>
+      setTimeout(() => resolve(null), 2000)
+    );
+    const conn = await Promise.race([connectToDatabase(), timeoutPromise]);
+
     if (conn) {
-      const dbRecipes = await RecipeModel.find({ status: { $ne: "draft" } }).lean();
+      const dbRecipes = await RecipeModel.find({ status: { $ne: "draft" } })
+        .sort({ createdAt: -1 })
+        .lean();
+
       if (dbRecipes && dbRecipes.length > 0) {
         const map = new Map<string, Recipe>();
         DEFAULT_RECIPES.forEach((r) => map.set(r.id, r));

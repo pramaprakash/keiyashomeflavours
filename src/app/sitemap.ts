@@ -1,8 +1,27 @@
 import type { MetadataRoute } from "next";
-import { DEFAULT_RECIPES } from "@/utils/recipeStore";
+import { DEFAULT_RECIPES, Recipe } from "@/utils/recipeStore";
+import { connectToDatabase } from "@/lib/db";
+import RecipeModel from "@/models/Recipe";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://keiyashomeflavours.com";
+
+  let allRecipes: Recipe[] = [...DEFAULT_RECIPES];
+
+  try {
+    const conn = await connectToDatabase();
+    if (conn) {
+      const dbRecipes = await RecipeModel.find({ status: { $ne: "draft" } }).lean();
+      if (dbRecipes && dbRecipes.length > 0) {
+        const map = new Map<string, Recipe>();
+        DEFAULT_RECIPES.forEach((r) => map.set(r.id, r));
+        dbRecipes.forEach((r: any) => map.set(r.id, r as Recipe));
+        allRecipes = Array.from(map.values());
+      }
+    }
+  } catch (err) {
+    console.error("Sitemap DB fetch error:", err);
+  }
 
   const staticPages: MetadataRoute.Sitemap = [
     {
@@ -19,7 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const recipePages: MetadataRoute.Sitemap = DEFAULT_RECIPES.map((recipe) => ({
+  const recipePages: MetadataRoute.Sitemap = allRecipes.map((recipe) => ({
     url: `${baseUrl}/recipes/${recipe.id}`,
     lastModified: new Date(recipe.createdDate || Date.now()),
     changeFrequency: "weekly",

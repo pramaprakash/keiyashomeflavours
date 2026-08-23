@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Script from "next/script";
+import { DEFAULT_RECIPES } from "@/utils/recipeStore";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -152,7 +153,7 @@ export default function RootLayout({
             {/* Grid Layout: Brand Note on the Left, Explore & Legal on the Right */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
               {/* Brand Note Column (Left Side of Explore) */}
-              <div className="md:col-span-6 space-y-4">
+              <div className="md:col-span-5 space-y-4">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10 shadow-sm bg-white flex items-center justify-center">
                     <img src="/logo.jpg" alt="Keiya's Home Flavours Logo" className="w-full h-full object-cover scale-105" />
@@ -166,8 +167,24 @@ export default function RootLayout({
                 </p>
               </div>
 
-              {/* Explore Column */}
+              {/* All Recipes Column */}
               <div className="md:col-span-3 space-y-3">
+                <p className="font-label-md text-xs font-black text-secondary-fixed-dim uppercase tracking-widest pt-2">All Recipes</p>
+                <div className="flex flex-col gap-2">
+                  {DEFAULT_RECIPES.map((recipe) => (
+                    <Link
+                      key={recipe.id}
+                      href={`/recipes/${recipe.id}`}
+                      className="font-body-sm text-sm text-on-primary/75 hover:text-white transition-colors truncate"
+                    >
+                      {recipe.title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Explore Column */}
+              <div className="md:col-span-2 space-y-3">
                 <p className="font-label-md text-xs font-black text-secondary-fixed-dim uppercase tracking-widest pt-2">Explore</p>
                 <div className="flex flex-col gap-2">
                   <Link href="/" className="font-body-sm text-sm text-on-primary/75 hover:text-white transition-colors">
@@ -183,7 +200,7 @@ export default function RootLayout({
               </div>
 
               {/* Legal Column */}
-              <div className="md:col-span-3 space-y-3">
+              <div className="md:col-span-2 space-y-3">
                 <p className="font-label-md text-xs font-black text-secondary-fixed-dim uppercase tracking-widest pt-2">Legal</p>
                 <div className="flex flex-col gap-2">
                   <a href="#" className="font-body-sm text-sm text-on-primary/75 hover:text-white transition-colors">

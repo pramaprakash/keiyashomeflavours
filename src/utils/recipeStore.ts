@@ -826,6 +826,7 @@ export const getRecipes = (): Recipe[] => {
 export const fetchRecipesFromDB = async (): Promise<Recipe[]> => {
   try {
     const res = await fetch('/api/recipes', { cache: 'no-store' });
+    if (!res.ok) return getRecipes();
     const data = await res.json();
     if (data.success && Array.isArray(data.recipes)) {
       const sanitizedDB = data.recipes.map(sanitizeRecipe);
@@ -848,6 +849,7 @@ export const fetchRecipesFromDB = async (): Promise<Recipe[]> => {
 export const fetchMasterIngredientsFromDB = async (): Promise<MasterIngredient[]> => {
   try {
     const res = await fetch('/api/ingredients', { cache: 'no-store' });
+    if (!res.ok) return getMasterIngredients();
     const data = await res.json();
     if (data.success && Array.isArray(data.ingredients) && data.ingredients.length > 0) {
       const map = new Map<string, MasterIngredient>();

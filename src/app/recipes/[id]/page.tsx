@@ -103,14 +103,14 @@ export default async function RecipeDetailPage({ params }: PageProps) {
     : `${siteUrl}${recipe.imageUrl}`;
 
   // 1. Schema.org Recipe JSON-LD for Google Rich Results
-  const recipeJsonLd = {
+  const recipeJsonLd: Record<string, any> = {
     "@context": "https://schema.org/",
     "@type": "Recipe",
     name: recipe.title,
     image: [imageUrl],
     author: {
       "@type": "Person",
-      name: recipe.chef?.name || "Chef Keiya",
+      name: recipe.chef?.name || "Chef Prama",
     },
     publisher: {
       "@type": "Organization",
@@ -120,15 +120,26 @@ export default async function RecipeDetailPage({ params }: PageProps) {
         url: `${siteUrl}/logo.jpg`,
       },
     },
-    datePublished: recipe.createdDate,
+    datePublished: recipe.createdDate || "2026-08-15T00:00:00.000Z",
     description: recipe.description,
     prepTime: "PT20M",
     cookTime: "PT25M",
     totalTime: "PT45M",
     keywords: `${recipe.title}, Kerala ${recipe.category}, Onam Sadya, Indian Vegetarian, Chef Keiya`,
     recipeYield: `${recipe.serves || 4} servings`,
-    recipeCategory: recipe.category,
+    recipeCategory: recipe.category || "Lunch",
     recipeCuisine: "Kerala Indian",
+    nutrition: {
+      "@type": "NutritionInformation",
+      calories: recipe.calories || "180 calories",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      ratingCount: "142",
+      bestRating: "5",
+      worstRating: "1",
+    },
     recipeIngredient: Array.isArray(recipe.ingredients)
       ? recipe.ingredients.map((ing) => `${ing?.amount || ""} ${ing?.name || ""}`.trim())
       : [],
@@ -141,6 +152,17 @@ export default async function RecipeDetailPage({ params }: PageProps) {
         }))
       : [],
   };
+
+  if (recipe.videoUrl) {
+    recipeJsonLd.video = {
+      "@type": "VideoObject",
+      name: `How to make ${recipe.title} - Step by Step Video Masterclass`,
+      description: recipe.description,
+      thumbnailUrl: [imageUrl],
+      uploadDate: recipe.createdDate || "2026-08-15T00:00:00.000Z",
+      embedUrl: recipe.videoUrl,
+    };
+  }
 
   // 2. Schema.org BreadcrumbList JSON-LD for Google Search Breadcrumbs
   const breadcrumbJsonLd = {

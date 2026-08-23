@@ -110,7 +110,7 @@ export default async function RecipeDetailPage({ params }: PageProps) {
     image: [imageUrl],
     author: {
       "@type": "Person",
-      name: recipe.chef?.name || "Chef Prama",
+      name: recipe.chef?.name || "Chef Keiya",
     },
     publisher: {
       "@type": "Organization",

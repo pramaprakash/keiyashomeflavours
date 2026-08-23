@@ -74,6 +74,38 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": "https://keiyashomeflavours.com/#organization",
+                  "name": "Keiya's Home Flavours",
+                  "url": "https://keiyashomeflavours.com",
+                  "logo": "https://keiyashomeflavours.com/logo.jpg",
+                  "description": "Authentic Kerala Onam Sadya Recipes & Masterclass Video Guides by Chef Keiya.",
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://keiyashomeflavours.com/#website",
+                  "url": "https://keiyashomeflavours.com",
+                  "name": "Keiya's Home Flavours",
+                  "publisher": {
+                    "@id": "https://keiyashomeflavours.com/#organization",
+                  },
+                  "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://keiyashomeflavours.com/?search={search_term_string}",
+                    "query-input": "required name=search_term_string",
+                  },
+                },
+              ],
+            }),
+          }}
+        />
       </head>
       <body className="bg-background text-on-background font-body-md min-h-full flex flex-col" suppressHydrationWarning>
         {/* Google Tag (gtag.js) */}

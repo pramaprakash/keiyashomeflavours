@@ -119,8 +119,26 @@ function DiscoverFeed() {
     { id: "breakfast", name: "Breakfasts", icon: "sunny" },
   ];
 
+  // Schema.org ItemList JSON-LD for Home Page indexing all recipes
+  const homeItemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Kerala Onam Sadya Recipes by Chef Keiya",
+    description: "Complete authentic step-by-step Kerala Onam Sadya recipe collection.",
+    itemListElement: recipes.map((r, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: r.title,
+      url: `https://keiyashomeflavours.com/recipes/${r.id}`,
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeItemListJsonLd) }}
+      />
       <Navbar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
       <main className="pt-28 md:pt-32 pb-20">

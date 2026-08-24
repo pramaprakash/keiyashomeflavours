@@ -690,7 +690,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
     createdDate: "2026-08-19T19:40:00.000Z"
   },
   {
-    id: "beetroor-kichadi",
+    id: "beetroot-kichadi",
     title: "Beetroot Kichadi",
     description: "Vibrant magenta-hued Kerala Sadya relish made with grated beetroot, fresh yogurt, ground coconut, green chilies, and tempered mustard seeds & curry leaves.",
     prepTime: "15 Mins",

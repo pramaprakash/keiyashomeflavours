@@ -31,7 +31,7 @@ export default function OnamSadyaNavigator({
       category: "Main Curry",
       description: "Crown jewel of garden vegetables in ground coconut & yogurt",
       icon: "eco",
-      recipeId: "avial-curry",
+      recipeId: "kerala-sadya-avial",
     },
     {
       id: "parippu",
@@ -58,7 +58,7 @@ export default function OnamSadyaNavigator({
       category: "Spiced Curry",
       description: "Comforting potato curry in roasted coconut spices",
       icon: "skillet",
-      recipeId: "masala-curry",
+      recipeId: "kerala-vegetable-masala-curry",
     },
     {
       id: "beetroot-kichadi",
@@ -130,7 +130,7 @@ export default function OnamSadyaNavigator({
       category: "Roast Relish",
       description: "Long green beans slow roasted in coconut oil & garlic",
       icon: "skillet",
-      recipeId: "payar-mezhukkupuratti",
+      recipeId: "payar-mezhukupurati",
     },
   ];
 

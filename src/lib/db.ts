@@ -31,15 +31,22 @@ export async function connectToDatabase() {
     return null;
   }
 
-  if (cached?.conn) {
+  if (cached?.conn && cached.conn.connection.readyState === 1) {
     return cached.conn;
   }
 
-  if (!cached?.promise) {
+  if (!cached?.promise || (cached.conn && cached.conn.connection.readyState !== 1)) {
+    cached!.conn = null;
     const opts = {
       bufferCommands: false,
       serverSelectionTimeoutMS: 5000,
       connectTimeoutMS: 5000,
+      socketTimeoutMS: 5000,
+      maxIdleTimeMS: 10000,
+      maxPoolSize: 10,
+      minPoolSize: 0,
+      retryWrites: true,
+      retryReads: true,
     };
 
     cached!.promise = mongoose
@@ -48,7 +55,7 @@ export async function connectToDatabase() {
         return mongooseInstance;
       })
       .catch((err) => {
-        console.warn("MongoDB connection failed or timed out (falling back to memory):", err.message || err);
+        console.warn("MongoDB connection failed or timed out:", err.message || err);
         return null;
       });
   }

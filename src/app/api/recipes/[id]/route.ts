@@ -10,11 +10,12 @@ export async function DELETE(
     const { id } = await params;
     const conn = await connectToDatabase();
 
-    if (!conn) {
+    if (!conn || !conn.connection || !conn.connection.db) {
       return NextResponse.json({ success: false, message: "No DB connection configured" });
     }
 
-    await RecipeModel.deleteOne({ id });
+    const db = conn.connection.db;
+    await db.collection("recipes").deleteOne({ id });
     return NextResponse.json({ success: true, message: `Recipe ${id} deleted` });
   } catch (error) {
     console.error("MongoDB DELETE Recipe error:", error);

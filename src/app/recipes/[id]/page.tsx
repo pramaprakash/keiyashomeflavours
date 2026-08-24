@@ -1,21 +1,60 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getRecipeById, slugify, DEFAULT_RECIPES } from "@/utils/recipeStore";
+import mongoose from "mongoose";
+import { connectToDatabase } from "@/lib/db";
+import { getRecipeById, slugify, DEFAULT_RECIPES, sanitizeRecipe, Recipe } from "@/utils/recipeStore";
 import RecipeDetailClient from "@/components/RecipeDetailClient";
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const resolvedParams = await params;
-  const id = resolvedParams.id;
-  const cleanId = id.toLowerCase().trim();
+async function fetchRecipeForDetail(id: string): Promise<Recipe | undefined> {
+  const cleanId = decodeURIComponent(id).toLowerCase().trim();
+  try {
+    const conn = await Promise.race([
+      connectToDatabase(),
+      new Promise<null>((resolve) => setTimeout(() => resolve(null), 1200)),
+    ]);
+    const db = conn?.connection?.db || mongoose.connection.db;
+    if (db) {
+      const matched = await db.collection("recipes").findOne(
+        {
+          $or: [
+            { id: cleanId },
+            { id: id },
+          ],
+        },
+        { maxTimeMS: 1500 }
+      );
 
-  const recipe =
+      if (matched) {
+        const recipeId = matched.id || String(matched._id);
+        const plainDoc = JSON.parse(JSON.stringify(matched));
+        delete plainDoc._id;
+        delete plainDoc.__v;
+        return sanitizeRecipe({ ...plainDoc, id: recipeId } as any);
+      }
+    }
+  } catch {
+    // Silent fallback to local/default store without clogging server console
+  }
+
+  const fallback =
     DEFAULT_RECIPES.find(
       (r) => r.id.toLowerCase() === cleanId || slugify(r.title) === cleanId
     ) || getRecipeById(id);
+
+  if (fallback) {
+    return sanitizeRecipe(fallback);
+  }
+  return undefined;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
+  const recipe = await fetchRecipeForDetail(id);
 
   if (!recipe) {
     return {
@@ -85,12 +124,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function RecipeDetailPage({ params }: PageProps) {
   const resolvedParams = await params;
   const id = resolvedParams.id;
-  const cleanId = id.toLowerCase().trim();
-
-  const recipe =
-    DEFAULT_RECIPES.find(
-      (r) => r.id.toLowerCase() === cleanId || slugify(r.title) === cleanId
-    ) || getRecipeById(id);
+  const recipe = await fetchRecipeForDetail(id);
 
   if (!recipe) {
     notFound();

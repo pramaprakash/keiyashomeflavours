@@ -698,7 +698,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
     calories: "140 kcal",
     difficulty: "Easy",
     imageUrl: "/uploads/1787488368303-Firefly__3_.png",
-    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    videoUrl: "https://www.youtube.com/embed/VINpI6LPKg4?si=sRd8aF7eLaHvBEf9",
     flavorProfile: { spicy: 1, tangy: 3, creamy: 4 },
     story: "A stunning colorful yogurt-based dish essential for the authentic Onam Sadya plantain leaf layout.",
     chef: {
@@ -733,7 +733,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
     calories: "160 kcal",
     difficulty: "Easy",
     imageUrl: "/uploads/1787488929904-Gemini_Generated_Image_rehsekrehsekrehs.png",
-    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    videoUrl: "https://www.youtube.com/embed/pEu4tWgQGLQ?si=9E1UxlZ4Xmo23Ip2",
     flavorProfile: { spicy: 2, tangy: 5, creamy: 2 },
     story: "Delightful sweet-and-sour raw mango preparation that elevates the traditional Sadya taste palette.",
     chef: {
@@ -767,7 +767,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
     calories: "220 kcal",
     difficulty: "Medium",
     imageUrl: "/uploads/1787489430102-Gemini_Generated_Image_wkfu5dwkfu5dwkfu.png",
-    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    videoUrl: "https://www.youtube.com/embed/GUMwqLhuXy4?si=UzGElhSV-bDOrgHe",
     flavorProfile: { spicy: 1, tangy: 3, creamy: 4 },
     story: "A festive sweet curry served during traditional South Kerala Sadya feasts.",
     chef: {
@@ -801,7 +801,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
     calories: "60 kcal",
     difficulty: "Easy",
     imageUrl: "/uploads/1787490803874-Firefly__8_.png",
-    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    videoUrl: "https://www.youtube.com/embed/WLJ6wl-Q6ec?si=VlysAkVRubyuxc7V",
     flavorProfile: { spicy: 5, tangy: 5, creamy: 1 },
     story: "Essential spicy side relish placed on the bottom-left corner of the Onam Sadya plantain leaf.",
     chef: {
@@ -822,7 +822,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
       { stepNumber: 3, text: "Add red chili powder, asafoetida, and roasted fenugreek powder into the warm oil." },
       { stepNumber: 4, text: "Mix oil spice blend into salted lemon pieces and let mature." }
     ],
-    category: "snack",
+    category: "lunch",
     status: "published",
     createdDate: "2026-08-21T08:00:00.000Z"
   },
@@ -835,7 +835,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
     calories: "80 kcal",
     difficulty: "Medium",
     imageUrl: "/uploads/1787491482689-Firefly.png",
-    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    videoUrl: "https://www.youtube.com/embed/Y1uWdcFX_Go?si=kGrrxa3Z8pAwtJdf",
     flavorProfile: { spicy: 4, tangy: 4, creamy: 1 },
     story: "A unique bitter-spicy-tangy relish that balances the rich sweetness of Sadya Payasams.",
     chef: {
@@ -855,7 +855,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
       { stepNumber: 3, text: "Add chili powder, asafoetida, fenugreek powder, salt, and vinegar." },
       { stepNumber: 4, text: "Toss fried bitter gourd pieces into the warm pickle gravy." }
     ],
-    category: "snack",
+    category: "lunch",
     status: "published",
     createdDate: "2026-08-21T09:00:00.000Z"
   },
@@ -868,7 +868,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
     calories: "90 kcal",
     difficulty: "Easy",
     imageUrl: "/uploads/1787492220510-Firefly_copy.png",
-    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    videoUrl: "https://www.youtube.com/embed/-K8vhvYFMco?si=_hr-gN5sEPx24Mnj",
     flavorProfile: { spicy: 4, tangy: 5, creamy: 1 },
     story: "Considered equivalent to 108 dishes in traditional Kerala Sadya lore.",
     chef: {
@@ -888,7 +888,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
       { stepNumber: 3, text: "Simmer until reduced to a thick dark sauce, then stir in jaggery syrup." },
       { stepNumber: 4, text: "Finish with roasted fenugreek powder and oil tempering." }
     ],
-    category: "snack",
+    category: "lunch",
     status: "published",
     createdDate: "2026-08-21T10:00:00.000Z"
   },
@@ -901,7 +901,7 @@ export const DEFAULT_RECIPES: Recipe[] = [
     calories: "120 kcal",
     difficulty: "Easy",
     imageUrl: "/uploads/1787492763085-Gemini_Generated_Image_j8wy5j8wy5j8wy5j.png",
-    videoUrl: "https://www.youtube.com/embed/ArPdf_X5wKs?si=HzFe87PcfEcDsvJC",
+    videoUrl: "https://www.youtube.com/embed/BVoy6R49PhQ?si=9swY8TDYQxnwnVkL",
     flavorProfile: { spicy: 2, tangy: 1, creamy: 2 },
     story: "Standard home-style and Sadya vegetable side dish prized for its crisp texture and garlic-shallot aroma.",
     chef: {
@@ -924,6 +924,45 @@ export const DEFAULT_RECIPES: Recipe[] = [
     category: "lunch",
     status: "published",
     createdDate: "2026-08-21T11:00:00.000Z"
+  },
+  {
+    id: "elaneer-payasam",
+    title: "Elaneer Payasam (Tender Coconut Payasam)",
+    description: "A heavenly, cooling Kerala delicacy made with tender coconut flesh, tender coconut water, full cream milk, and condensed milk.",
+    prepTime: "15 Mins",
+    serves: 4,
+    calories: "210 kcal",
+    difficulty: "Easy",
+    imageUrl: "/images/elaneer_payasam_thumbnail.jpg",
+    videoUrl: "https://www.youtube.com/embed/RO2aoUFFlmQ?si=UMHW-xk97rwOGYT1",
+    flavorProfile: { spicy: 0, tangy: 1, creamy: 5 },
+    story: "A luxurious and delicate dessert served during Onam Sadya, celebrated for its natural tropical sweetness and silky texture.",
+    chef: {
+      name: "Chef Keiya",
+      role: "Executive Chef & Founder",
+      avatarUrl: "/images/chef_keiya_avatar.jpg"
+    },
+    ingredients: [
+      { name: "Full Cream Milk", amount: "3 cups", benefit: "Rich creamy base", imageUrl: "/images/condensed_milk.jpg" },
+      { name: "Condensed Milk", amount: "1/2 cup", benefit: "Deep sweetness & thickness", imageUrl: "/images/condensed_milk.jpg" },
+      { name: "Fresh Cream", amount: "1/2 cup", benefit: "Silky velvet mouthfeel", imageUrl: "/images/fresh_cream.jpg" },
+      { name: "Organic Sugar (Chini / Cheeni)", amount: "3 tbsp", benefit: "Balanced natural sweetness", imageUrl: "/images/jaggery_user.jpg" },
+      { name: "Tender Coconut Flesh (Elaneer Peedha)", amount: "1 cup", benefit: "Soft velvety coconut bits", imageUrl: "/images/grated_coconut.jpg" },
+      { name: "Tender Coconut Water (Elaneer Vellam)", amount: "1/2 cup", benefit: "Natural refreshing sweetness", imageUrl: "/images/coconut_oil_user.jpg" },
+      { name: "Pure Ghee (Neyy)", amount: "1 tbsp", benefit: "Aromatic gloss", imageUrl: "/images/ghee_user.jpg" },
+      { name: "Cashews", amount: "10 roasted", benefit: "Crunchy golden garnish", imageUrl: "/images/cashews.jpg" }
+    ],
+    steps: [
+      { stepNumber: 1, text: "Add milk and condensed milk to a heavy-bottomed pan. Cook over medium heat, stirring occasionally, until the mixture thickens to your desired consistency." },
+      { stepNumber: 2, text: "Blend the tender coconut flesh with tender coconut water until smooth. Set aside." },
+      { stepNumber: 3, text: "Allow the cooked milk and condensed milk mixture to cool completely." },
+      { stepNumber: 4, text: "Once completely cooled, add fresh cream and mix gently until well combined." },
+      { stepNumber: 5, text: "Pour in the blended tender coconut mixture and mix thoroughly." },
+      { stepNumber: 6, text: "Drizzle with a little ghee and garnish with roasted cashews. Mix gently and chill before serving for the best taste." }
+    ],
+    category: "dessert",
+    status: "published",
+    createdDate: "2026-08-24T17:28:00.000Z"
   }
 ];
 
@@ -952,7 +991,7 @@ const safeSetItem = (key: string, value: string) => {
 };
 
 const MASTER_INGREDIENTS_KEY = 'khf_master_ingredients_v64';
-const RECIPES_KEY = 'khf_recipes_v58';
+const RECIPES_KEY = 'khf_recipes_v88';
 
 // Master Ingredients Store
 export const getMasterIngredients = (): MasterIngredient[] => {
@@ -1009,18 +1048,17 @@ export const deleteMasterIngredient = async (id: string): Promise<boolean> => {
   return true;
 };
 
-const sanitizeRecipe = (r: Recipe): Recipe => {
+export const sanitizeRecipe = (r: Recipe): Recipe => {
   if (!r) return r;
-  const recipeId = r.id || ((r as any)._id ? String((r as any)._id) : undefined);
-  const masterList = PREDEFINED_INGREDIENTS;
-  const ingredients = Array.isArray(r.ingredients)
-    ? r.ingredients
-        .filter((ing) => ing && ing.name && ing.name.trim() !== "")
-        .map((ing) => {
-          let name = ing.name || "";
-          name = name.replace(/Grated Coconut/gi, "Coconut");
-          name = name.replace(/Pure Ghee\s*&\s*Curry Leaves/gi, "Curry Leaves");
+  const plain = JSON.parse(JSON.stringify(r));
+  const recipeId = plain.id || (plain._id ? String(plain._id) : undefined);
 
+  const masterList = PREDEFINED_INGREDIENTS;
+  const ingredients = Array.isArray(plain.ingredients)
+    ? plain.ingredients
+        .filter((ing: any) => ing && ing.name && ing.name.trim() !== "")
+        .map((ing: any) => {
+          const name = ing.name ? ing.name.trim() : "";
           const matchedMaster = masterList.find(
             (m) =>
               m.name.toLowerCase().includes(name.toLowerCase()) ||
@@ -1033,18 +1071,35 @@ const sanitizeRecipe = (r: Recipe): Recipe => {
               : matchedMaster?.imageUrl || "/images/grated_coconut.jpg";
 
           return {
-            ...ing,
             name: name,
+            amount: ing.amount || "As needed",
+            benefit: ing.benefit || "",
             imageUrl: imageUrl,
           };
         })
     : [];
 
-  return {
-    ...r,
-    id: recipeId || r.id,
+  const sanitized: Recipe = {
+    id: recipeId || plain.id || "",
+    title: plain.title || "",
+    description: plain.description || "",
+    prepTime: plain.prepTime || "20 Mins",
+    serves: plain.serves || 4,
+    calories: plain.calories || "180 kcal",
+    difficulty: plain.difficulty || "Easy",
+    imageUrl: plain.imageUrl || "/images/parippu_curry_thumbnail.jpg",
+    videoUrl: plain.videoUrl || "",
+    flavorProfile: plain.flavorProfile || { spicy: 2, tangy: 2, creamy: 3 },
+    story: plain.story || "",
+    chef: plain.chef || { name: "Chef Keiya", role: "Executive Chef & Founder", avatarUrl: "/images/chef_keiya_avatar.jpg" },
     ingredients,
+    steps: plain.steps || [],
+    category: plain.category || "lunch",
+    status: plain.status || "published",
+    createdDate: plain.createdDate || new Date().toISOString(),
   };
+
+  return sanitized;
 };
 
 // Recipe Store
@@ -1079,15 +1134,20 @@ export const fetchRecipesFromDB = async (): Promise<Recipe[]> => {
     const res = await fetch('/api/recipes', { cache: 'no-store' });
     if (!res.ok) return getRecipes();
     const data = await res.json();
-    if (data.success && Array.isArray(data.recipes)) {
+    if (data.success && data.source === 'mongodb' && Array.isArray(data.recipes)) {
       const sanitizedDB = data.recipes.map((r: any) => {
         const id = r.id || (r._id ? String(r._id) : `rec-${Math.random()}`);
         return sanitizeRecipe({ ...r, id });
       });
       
-      // Always merge default built-in recipes with DB recipes so defaults are never lost
       const map = new Map<string, Recipe>();
       DEFAULT_RECIPES.forEach((r) => map.set(r.id, sanitizeRecipe(r)));
+
+      // Merge existing client local storage edits
+      const currentStored = getRecipes();
+      currentStored.forEach((r) => map.set(r.id, r));
+
+      // Overwrite with fresh MongoDB cloud database recipes
       sanitizedDB.forEach((r: Recipe) => {
         if (r && r.id) {
           map.set(r.id, r);

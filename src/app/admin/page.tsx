@@ -189,10 +189,13 @@ export default function AdminDashboardPage() {
         };
       });
 
+    const isNewRecipe = editingRecipe.id.startsWith("recipe-");
     const recipeSlug = slugify(editingRecipe.title);
+    const finalId = isNewRecipe && recipeSlug ? recipeSlug : editingRecipe.id;
+
     const recipeToSave: Recipe = {
       ...editingRecipe,
-      id: recipeSlug || editingRecipe.id,
+      id: finalId,
       ingredients: cleanedIngredients,
       status: targetStatus,
     };
@@ -844,9 +847,17 @@ export default function AdminDashboardPage() {
                             placeholder="Ingredient Name"
                             value={ing.name}
                             onChange={(e) => {
-                              const newIngs = [...editingRecipe.ingredients];
-                              newIngs[idx].name = e.target.value;
-                              setEditingRecipe({ ...editingRecipe, ingredients: newIngs });
+                              const val = e.target.value;
+                              setEditingRecipe((prev) =>
+                                prev
+                                  ? {
+                                      ...prev,
+                                      ingredients: prev.ingredients.map((item, i) =>
+                                        i === idx ? { ...item, name: val } : item
+                                      ),
+                                    }
+                                  : null
+                              );
                             }}
                             className="flex-1 p-2 border rounded-lg bg-surface-container-lowest text-xs font-bold text-primary"
                           />
@@ -855,9 +866,17 @@ export default function AdminDashboardPage() {
                             placeholder="Amount (e.g. 2 cups)"
                             value={ing.amount}
                             onChange={(e) => {
-                              const newIngs = [...editingRecipe.ingredients];
-                              newIngs[idx].amount = e.target.value;
-                              setEditingRecipe({ ...editingRecipe, ingredients: newIngs });
+                              const val = e.target.value;
+                              setEditingRecipe((prev) =>
+                                prev
+                                  ? {
+                                      ...prev,
+                                      ingredients: prev.ingredients.map((item, i) =>
+                                        i === idx ? { ...item, amount: val } : item
+                                      ),
+                                    }
+                                  : null
+                              );
                             }}
                             className="w-36 p-2 border rounded-lg bg-surface-container-lowest text-xs font-medium text-primary"
                           />
@@ -875,9 +894,17 @@ export default function AdminDashboardPage() {
                             placeholder="Health Benefit / Note (Optional)"
                             value={ing.benefit || ""}
                             onChange={(e) => {
-                              const newIngs = [...editingRecipe.ingredients];
-                              newIngs[idx].benefit = e.target.value;
-                              setEditingRecipe({ ...editingRecipe, ingredients: newIngs });
+                              const val = e.target.value;
+                              setEditingRecipe((prev) =>
+                                prev
+                                  ? {
+                                      ...prev,
+                                      ingredients: prev.ingredients.map((item, i) =>
+                                        i === idx ? { ...item, benefit: val } : item
+                                      ),
+                                    }
+                                  : null
+                              );
                             }}
                             className="w-full p-2 border rounded-lg bg-surface-container-lowest text-xs text-outline"
                           />
@@ -887,9 +914,17 @@ export default function AdminDashboardPage() {
                               placeholder="Ingredient Image URL"
                               value={ing.imageUrl || ""}
                               onChange={(e) => {
-                                const newIngs = [...editingRecipe.ingredients];
-                                newIngs[idx].imageUrl = e.target.value;
-                                setEditingRecipe({ ...editingRecipe, ingredients: newIngs });
+                                const val = e.target.value;
+                                setEditingRecipe((prev) =>
+                                  prev
+                                    ? {
+                                        ...prev,
+                                        ingredients: prev.ingredients.map((item, i) =>
+                                          i === idx ? { ...item, imageUrl: val } : item
+                                        ),
+                                      }
+                                    : null
+                                );
                               }}
                               className="flex-1 p-2 border rounded-lg bg-surface-container-lowest text-xs text-outline"
                             />
@@ -903,9 +938,16 @@ export default function AdminDashboardPage() {
                                 onChange={async (e) => {
                                   if (e.target.files && e.target.files[0]) {
                                     const url = await uploadImageFile(e.target.files[0]);
-                                    const newIngs = [...editingRecipe.ingredients];
-                                    newIngs[idx].imageUrl = url;
-                                    setEditingRecipe({ ...editingRecipe, ingredients: newIngs });
+                                    setEditingRecipe((prev) =>
+                                      prev
+                                        ? {
+                                            ...prev,
+                                            ingredients: prev.ingredients.map((item, i) =>
+                                              i === idx ? { ...item, imageUrl: url } : item
+                                            ),
+                                          }
+                                        : null
+                                    );
                                   }
                                 }}
                               />

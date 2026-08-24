@@ -211,6 +211,9 @@ export default function RootLayout({
                   <Link href="/upload" className="font-body-sm text-sm text-on-primary/75 hover:text-white transition-colors">
                     Submit Recipe
                   </Link>
+                  <Link href="/admin" className="font-body-sm text-sm text-on-primary/75 hover:text-white transition-colors">
+                    Admin Portal
+                  </Link>
                   <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="font-body-sm text-sm text-on-primary/75 hover:text-white transition-colors">
                     Sitemap
                   </a>

@@ -5,18 +5,18 @@ import { useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import RecipeCard from "@/components/RecipeCard";
 import OnamSadyaNavigator from "@/components/OnamSadyaNavigator";
-import { getRecipes, fetchRecipesFromDB, Recipe } from "@/utils/recipeStore";
+import { getRecipes, fetchRecipesFromDB, DEFAULT_RECIPES, Recipe } from "@/utils/recipeStore";
 
 function DiscoverFeed() {
   const searchParams = useSearchParams();
   const urlSearch = searchParams ? searchParams.get("search") || "" : "";
 
   const [recipes, setRecipes] = useState<Recipe[]>(() => {
-    const list = getRecipes();
+    const list = DEFAULT_RECIPES;
     return list.filter((r) => !r.status || String(r.status).toLowerCase() !== "draft");
   });
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(() => {
-    const list = getRecipes();
+    const list = DEFAULT_RECIPES;
     return list.filter((r) => !r.status || String(r.status).toLowerCase() !== "draft");
   });
   const [searchQuery, setSearchQuery] = useState("");
@@ -138,6 +138,7 @@ function DiscoverFeed() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeItemListJsonLd) }}
+        suppressHydrationWarning
       />
       <Navbar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 

@@ -11,6 +11,8 @@ interface PageProps {
 
 async function fetchRecipeForDetail(id: string): Promise<Recipe | undefined> {
   const cleanId = decodeURIComponent(id).toLowerCase().trim();
+  const normalizedSearch = cleanId.replace(/[-_]/g, "");
+
   try {
     const conn = await Promise.race([
       connectToDatabase(),
@@ -18,15 +20,17 @@ async function fetchRecipeForDetail(id: string): Promise<Recipe | undefined> {
     ]);
     const db = conn?.connection?.db || mongoose.connection.db;
     if (db) {
-      const matched = await db.collection("recipes").findOne(
-        {
-          $or: [
-            { id: cleanId },
-            { id: id },
-          ],
-        },
-        { maxTimeMS: 1500 }
-      );
+      const allDocs = await db.collection("recipes").find({}, { maxTimeMS: 1500 }).toArray();
+      const matched = allDocs.find((doc: any) => {
+        const docId = (doc.id || "").toLowerCase().replace(/[-_]/g, "");
+        const docSlug = slugify(doc.title || "").replace(/[-_]/g, "");
+        return (
+          docId === normalizedSearch ||
+          docSlug === normalizedSearch ||
+          docId.includes(normalizedSearch) ||
+          normalizedSearch.includes(docId)
+        );
+      });
 
       if (matched) {
         const recipeId = matched.id || String(matched._id);
@@ -37,13 +41,19 @@ async function fetchRecipeForDetail(id: string): Promise<Recipe | undefined> {
       }
     }
   } catch {
-    // Silent fallback to local/default store without clogging server console
+    // Silent fallback to default store
   }
 
-  const fallback =
-    DEFAULT_RECIPES.find(
-      (r) => r.id.toLowerCase() === cleanId || slugify(r.title) === cleanId
-    ) || getRecipeById(id);
+  const fallback = DEFAULT_RECIPES.find((r) => {
+    const rId = r.id.toLowerCase().replace(/[-_]/g, "");
+    const rSlug = slugify(r.title).replace(/[-_]/g, "");
+    return (
+      rId === normalizedSearch ||
+      rSlug === normalizedSearch ||
+      rId.includes(normalizedSearch) ||
+      normalizedSearch.includes(rId)
+    );
+  }) || getRecipeById(id);
 
   if (fallback) {
     return sanitizeRecipe(fallback);

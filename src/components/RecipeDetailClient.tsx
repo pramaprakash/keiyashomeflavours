@@ -22,13 +22,17 @@ export default function RecipeDetailClient({ initialRecipe, id }: RecipeDetailCl
     fetchRecipesFromDB().then((all) => {
       if (!isMounted) return;
       const cleanId = decodeURIComponent(id).toLowerCase().trim();
-      const found = all.find(
-        (item) =>
-          (item.id && item.id.toLowerCase() === cleanId) ||
-          (item.title && slugify(item.title) === cleanId) ||
-          (item.id && cleanId.includes(item.id.toLowerCase())) ||
-          (item.id && item.id.toLowerCase().includes(cleanId))
-      );
+      const normalizedSearch = cleanId.replace(/[-_]/g, "");
+      const found = all.find((item) => {
+        const itemId = (item.id || "").toLowerCase().replace(/[-_]/g, "");
+        const itemSlug = slugify(item.title || "").replace(/[-_]/g, "");
+        return (
+          itemId === normalizedSearch ||
+          itemSlug === normalizedSearch ||
+          itemId.includes(normalizedSearch) ||
+          normalizedSearch.includes(itemId)
+        );
+      });
       if (found) {
         setRecipe(found);
       }
